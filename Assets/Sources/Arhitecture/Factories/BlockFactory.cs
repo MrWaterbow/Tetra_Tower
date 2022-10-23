@@ -1,4 +1,5 @@
 ﻿using Sources.BlockLogic;
+using Sources.GridLogic;
 using UnityEngine;
 using Zenject;
 
@@ -10,20 +11,24 @@ namespace Sources.Factories
         Random
     }
 
-    public class BlockFactoryInstaller : IFactory<BlockType, BlockView>
+    public class BlockFactory : IFactory<BlockType, int, IBlock>
     {
         private readonly BlockView _startTile;
         private readonly BlockView[] _blocksList;
 
-        public BlockFactoryInstaller(BlockView startTile, BlockView[] blocksList)
+        private readonly IGrid _grid;
+
+        public BlockFactory(BlockView startTile, BlockView[] blocksList, IGrid grid)
         {
             _startTile = startTile;
             _blocksList = blocksList;
+
+            _grid = grid;
         }
 
-        public BlockView Create(BlockType type)
+        public IBlock Create(BlockType type, int height)
         {
-            return Object.Instantiate(GetBlock(type)); // TODO
+            return Object.Instantiate(GetBlock(type), _grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
         }
 
         private BlockView GetBlock(BlockType type)

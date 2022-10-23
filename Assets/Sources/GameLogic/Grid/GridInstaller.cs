@@ -7,6 +7,14 @@ namespace Sources.GridLogic
     {
         [SerializeField] private GridView _grid;
 
+        private void OnValidate()
+        {
+            if(_grid == null)
+            {
+                _grid = FindObjectOfType<GridView>();
+            }
+        }
+
         public override void InstallBindings()
         {
             Container.Bind<IGrid>().FromInstance(_grid).AsSingle();
