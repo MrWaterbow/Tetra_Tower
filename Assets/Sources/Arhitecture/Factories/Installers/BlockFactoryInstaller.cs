@@ -28,7 +28,7 @@ namespace Sources.Factories
         {
             _factory = new BlockFactory(_startBlock, _blockList, _grid);
 
-            Container.Bind<BlockFactory>().FromInstance(_factory).AsSingle()C;
+            Container.Bind<BlockFactory>().FromInstance(_factory).AsSingle();
         }
     }
 }
