@@ -31,7 +31,7 @@ namespace Sources.GridLogic
 
         public Vector3 GetWorldPosition(Vector3 position)
         {
-            return position * _gridCellMesh.bounds.size.magnitude + _anchor.position;
+            return _anchor.position;// + position;//position * _gridCellMesh.bounds.size.magnitude + _anchor.position;
         }
 
         private void DrawGizmosGrid()

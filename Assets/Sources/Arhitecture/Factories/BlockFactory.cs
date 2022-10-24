@@ -28,7 +28,11 @@ namespace Sources.Factories
 
         public IBlock Create(BlockType type, int height)
         {
-            return Object.Instantiate(GetBlock(type), _grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
+            BlockView instance = Object.Instantiate(GetBlock(type), _grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
+
+            instance.Initialize(Vector3.up * height, _grid);
+
+            return instance;
         }
 
         private BlockView GetBlock(BlockType type)
