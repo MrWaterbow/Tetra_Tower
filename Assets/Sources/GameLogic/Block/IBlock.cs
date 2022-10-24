@@ -6,6 +6,8 @@ namespace Sources.BlockLogic
     {
         Vector3 Position { get; }
 
+        void Move(Vector3 direction);
+
         void Fall();
     }
 }

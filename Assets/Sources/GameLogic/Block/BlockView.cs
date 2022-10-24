@@ -12,12 +12,6 @@ namespace Sources.BlockLogic
 
         private Vector3 _position;
 
-        //[Inject]
-        //private void Construct(IGrid grid)
-        //{
-        //    _grid = grid;
-        //}
-
         public Vector3 Position => _position;
 
         public void Fall()
@@ -32,6 +26,13 @@ namespace Sources.BlockLogic
             _position = position;
 
             _grid = grid;
+        }
+
+        public void Move(Vector3 direction)
+        {
+            _position += direction;
+
+            _transform.position = _grid.GetWorldPosition(_position);
         }
     }
 }
