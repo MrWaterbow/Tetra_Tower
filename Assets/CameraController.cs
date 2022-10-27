@@ -26,6 +26,6 @@ public class CameraController : MonoBehaviour
             float pos = _camera.ScreenToWorldPoint(Input.mousePosition).y - _startPos.y;
             _targetPos = Mathf.Clamp(transform.position.y - pos, _downCamBorder, _upCamBorder);
         }
-        transform.position = new Vector3(Mathf.Lerp(transform.position.y, _targetPos, _speed * Time.deltaTime), transform.position.x, transform.position.z);
+        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, _targetPos, _speed * Time.deltaTime), transform.position.z);
     }
 }
