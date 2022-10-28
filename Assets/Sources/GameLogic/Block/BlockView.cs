@@ -14,18 +14,19 @@ namespace Sources.BlockLogic
 
         public Vector3 Position => _position;
 
-        public void Fall()
-        {
-            _position.y--;
-
-            _transform.position = _grid.GetWorldPosition(_position);
-        }
 
         public void Initialize(Vector3 position, IGrid grid)
         {
             _position = position;
 
             _grid = grid;
+        }
+
+        public void Fall()
+        {
+            _position.y--;
+
+            _transform.position = _grid.GetWorldPosition(_position);
         }
 
         public void Move(Vector3 direction)
