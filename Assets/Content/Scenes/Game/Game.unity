@@ -1238,7 +1238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55dd00403202d0045a6f95604f1cfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _height: 10
+  _height: 5
   _fallTick: 1.5
 --- !u!114 &1610863010
 MonoBehaviour:
