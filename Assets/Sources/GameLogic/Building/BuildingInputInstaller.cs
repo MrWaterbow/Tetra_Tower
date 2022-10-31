@@ -7,8 +7,15 @@ namespace Sources.BuildingLogic
     {
         [SerializeField] private BuildingInput _buildingInput;
 
+        private void OnDisable()
+        {
+            _buildingInput.Disable();
+        }
+
         public override void InstallBindings()
         {
+            _buildingInput.Enable();
+
             Container.Bind<IBuildingInput>().FromInstance(_buildingInput).AsSingle();
         }
     }

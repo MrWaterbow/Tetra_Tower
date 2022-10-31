@@ -16,7 +16,7 @@ namespace Sources.BuildingLogic
         [SerializeField] private Button _rightButton;
         [SerializeField] private Button _leftButton;
 
-        private void Enable()
+        public override void Enable()
         {
             _upButton.onClick.AddListener(InvokeMovingUp);
             _downButton.onClick.AddListener(InvokeMovingDown);
@@ -24,7 +24,7 @@ namespace Sources.BuildingLogic
             _leftButton.onClick.AddListener(InvokeMovingLeft);
         }
 
-        private void Disable()
+        public override void Disable()
         {
             _upButton.onClick.RemoveListener(InvokeMovingUp);
             _downButton.onClick.RemoveListener(InvokeMovingDown);
