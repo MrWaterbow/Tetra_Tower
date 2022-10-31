@@ -5,7 +5,11 @@ namespace Sources.BlockLogic
 {
     public interface IBlock
     {
-        public event Action<Vector3> Moved;
+        event Action<Vector3> Moved;
+        event Action Placed;
+
+        MeshRenderer MeshRenderer { get; }
+        MeshFilter MeshFilter { get; }
 
         Vector3 Position { get; }
 

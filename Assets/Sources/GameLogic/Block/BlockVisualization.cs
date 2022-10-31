@@ -22,6 +22,8 @@ namespace Sources.BlockLogic
             _meshRenderer.sharedMaterial.color = color;
 
             SetVisualizationEffect();
+
+            _gameObject.SetActive(true);
         }
 
         public void Hide()

@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 1610863012}
   - component: {fileID: 1610863010}
   - component: {fileID: 1610863011}
+  - component: {fileID: 1610863015}
   - component: {fileID: 1610863014}
   - component: {fileID: 1610863009}
   m_Layer: 0
@@ -1285,6 +1286,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 1610863010}
   - {fileID: 1610863011}
+  - {fileID: 1610863015}
   - {fileID: 1610863014}
   - {fileID: 1610863009}
   _installerPrefabs: []
@@ -1332,6 +1334,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingInput: {fileID: 57664743}
+--- !u!114 &1610863015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610863008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecbeef2024c3bf4bae3d5d4b4a1dca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 6792947280273902517, guid: 9eba08440d2d86d41ae8948ea9774d67, type: 3}
+  _visualizationType: 1
 --- !u!1 &1749288425
 GameObject:
   m_ObjectHideFlags: 0

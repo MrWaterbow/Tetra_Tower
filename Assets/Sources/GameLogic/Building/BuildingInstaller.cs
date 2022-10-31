@@ -1,5 +1,6 @@
 using Sources.BlockLogic;
 using Sources.Factories;
+using Sources.GridLogic;
 using UnityEngine;
 using Zenject;
 
@@ -12,17 +13,21 @@ namespace Sources.BuildingLogic
 
         private IBuildingInput _input;
         private BlockFactory _blockFactory;
-        private BlockVisualizationFactory _visualizationFactory;
 
         private IBlock _currentBlock;
+        private IBlockVisualization _visualization;
+
+        private IGrid _grid;
 
         private float _tick;
 
         [Inject]
-        private void Construct(BlockFactory blockFactory, BlockVisualizationFactory visualizationFactory, IBuildingInput input)
+        private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input)
         {
+            _grid = grid;
+
             _blockFactory = blockFactory;
-            _visualizationFactory = visualizationFactory;
+            _visualization = visualization;
             _input = input;
         }
 
@@ -64,17 +69,20 @@ namespace Sources.BuildingLogic
         {
             _currentBlock = _blockFactory.Create(BlockType.Start, _height);
 
+            _visualization.Show(_currentBlock.MeshFilter.mesh, _currentBlock.MeshRenderer.sharedMaterial.color);
+            UpdateVisualization(_currentBlock.Position);
+
             _currentBlock.Moved += UpdateVisualization;
+            _currentBlock.Placed += _visualization.Hide;
         }
 
-        private void UpdateVisualization(Vector3 position)
+        private void UpdateVisualization(Vector3 blockPosition)
         {
+            Vector3 visualizationPosition = _currentBlock.Position;
 
-        }
+            visualizationPosition.y = 0;
 
-        private void InitializeVisualization()
-        {
-
+            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition));
         }
 
         private void MovingUp()
