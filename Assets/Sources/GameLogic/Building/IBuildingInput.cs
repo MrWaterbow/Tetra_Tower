@@ -9,6 +9,9 @@ namespace Sources.BuildingLogic
         public abstract event Action MovingDown;
         public abstract event Action MovingRight;
         public abstract event Action MovingLeft;
+
+        public abstract void Enable();
+        public abstract void Disable();
     }
 
     public interface IBuildingInput

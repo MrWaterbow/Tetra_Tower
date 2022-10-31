@@ -48,7 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2564af33bbc87094c906692c3a3a4cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveSmoothDuration: 0.4
   _transform: {fileID: 7905780385627707323}
+  _meshRenderer: {fileID: 4887454952470865125}
+  _meshFilter: {fileID: 4887454952470865124}
 --- !u!1 &4887454951143652433
 GameObject:
   m_ObjectHideFlags: 0
