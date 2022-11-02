@@ -7,7 +7,6 @@ namespace Sources.Factories
     public class BlockVisualizationInstaller : MonoInstaller
     {
         [SerializeField] private BlockVisualization _prefab;
-        [SerializeField] private VisualizationType _visualizationType;
 
         private BlockVisualizationFactory _factory;
 
