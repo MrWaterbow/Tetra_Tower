@@ -66,6 +66,8 @@ namespace Sources.BuildingLogic
         {
             _height = Mathf.Clamp(_height, 0, int.MaxValue);
             _fallTick = Mathf.Clamp(_fallTick, 0, float.MaxValue);
+
+            _currentBlock.Initial
         }
 
         public override void InstallBindings()
