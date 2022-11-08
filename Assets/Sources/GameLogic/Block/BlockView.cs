@@ -11,11 +11,17 @@ namespace Sources.BlockLogic
         public event Action<Vector3> Moved;
         public event Action Placed;
 
+        [SerializeField] private Vector3[] _size;
+        [SerializeField] private Color _gizmosColor = Color.white;
+
+        [Space]
+
         [SerializeField] private float _moveSmoothDuration;
 
         [Space]
 
         [SerializeField] private Transform _transform;
+        [SerializeField] private Transform _offsetTransform;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private MeshFilter _meshFilter;
 
@@ -25,9 +31,50 @@ namespace Sources.BlockLogic
 
         public Vector3 Position => _position;
 
+        public Transform OffsetTransform => _offsetTransform;
         public MeshRenderer MeshRenderer => _meshRenderer;
-
         public MeshFilter MeshFilter => _meshFilter;
+
+        private void OnDrawGizmosSelected()
+        {
+            foreach (Vector3 move in _size)
+            {
+                Vector2 position = move + _transform.position;
+
+                Gizmos.DrawCube(position, Vector3.one * 3);
+            }
+
+            //if (_moves == null || _attackMoves == null) return;
+
+            //foreach (Vector2 move in _moves)
+            //{
+            //    Vector2 position = move * _transform.localScale * _spacing + (Vector2)_transform.localPosition;
+
+            //    if (_attackMoves.Any(attackMove => attackMove == move))
+            //    {
+            //        Gizmos.color = _universalColor;
+
+            //        Gizmos.DrawWireCube(position, _transform.localScale);
+
+            //        continue;
+            //    }
+
+            //    Gizmos.color = _moveColor;
+
+            //    Gizmos.DrawWireCube(position, _transform.localScale);
+            //}
+
+            //Gizmos.color = _attackColor;
+
+            //foreach (Vector2 attackMove in _attackMoves)
+            //{
+            //    Vector2 position = attackMove * _transform.localScale * _spacing + (Vector2)_transform.localPosition;
+
+            //    if (_moves.Any(move => move == attackMove)) continue;
+
+            //    Gizmos.DrawWireCube(position, _transform.localScale);
+            //}
+        }
 
         private void OnValidate()
         {

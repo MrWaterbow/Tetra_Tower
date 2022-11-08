@@ -1,6 +1,7 @@
 using Sources.BlockLogic;
 using Sources.Factories;
 using Sources.GridLogic;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,8 @@ namespace Sources.BuildingLogic
     {
         [SerializeField] private int _height;
         [SerializeField] private float _fallTick;
+
+        private List<IBlock> _blocks = new List<IBlock>();
 
         private IBuildingInput _input;
         private BlockFactory _blockFactory;
@@ -63,17 +66,34 @@ namespace Sources.BuildingLogic
         {
             _height = Mathf.Clamp(_height, 0, int.MaxValue);
             _fallTick = Mathf.Clamp(_fallTick, 0, float.MaxValue);
+
+            _currentBlock.Initial
         }
 
         public override void InstallBindings()
         {
-            _currentBlock = _blockFactory.Create(BlockType.Start, _height);
+            SpawnNext();
+        }
+
+        public void SpawnNext()
+        {
+            if(_currentBlock != null)
+            {
+                _currentBlock.Moved -= UpdateVisualization;
+                _currentBlock.Placed -= _visualization.Hide;
+                _currentBlock.Placed -= AddBlockToList;
+                _currentBlock.Placed -= SpawnNext;
+            }
+
+            _currentBlock = _blockFactory.Create(_currentBlock == null ? BlockType.Start : BlockType.Random, _height);
 
             _visualization.Show(_currentBlock.MeshFilter.mesh, _currentBlock.MeshRenderer.sharedMaterial.color);
             UpdateVisualization(_currentBlock.Position);
 
             _currentBlock.Moved += UpdateVisualization;
             _currentBlock.Placed += _visualization.Hide;
+            _currentBlock.Placed += AddBlockToList;
+            _currentBlock.Placed += SpawnNext;
         }
 
         private void UpdateVisualization(Vector3 blockPosition)
@@ -82,7 +102,12 @@ namespace Sources.BuildingLogic
 
             visualizationPosition.y = 0;
 
-            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition));
+            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition) +_currentBlock.OffsetTransform.localPosition);
+        }
+
+        private void AddBlockToList()
+        {
+            _blocks.Add(_currentBlock);
         }
 
         private void MovingUp()

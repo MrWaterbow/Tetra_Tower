@@ -503,6 +503,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0.5, y: 540}
   m_SizeDelta: {x: -1, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &514193768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 514193770}
+  - component: {fileID: 514193769}
+  m_Layer: 0
+  m_Name: LeanTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &514193769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514193768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217c8e972fc1ae74abf64e3200253b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultTiming: -1
+--- !u!4 &514193770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514193768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541241257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,9 +1311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27ff8f2028ce2449bdfdc63559ee265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startBlock: {fileID: 442334751933808882, guid: 6918d4fa3d424204d9216df9e908c028, type: 3}
+  _startBlock: {fileID: 3497901336496340354, guid: c2e24881b43fa494ea3090080cd4b096, type: 3}
   _blockList:
-  - {fileID: 442334751933808882, guid: 6918d4fa3d424204d9216df9e908c028, type: 3}
+  - {fileID: 3497901336496340354, guid: c2e24881b43fa494ea3090080cd4b096, type: 3}
   _grid: {fileID: 330827016}
 --- !u!114 &1610863012
 MonoBehaviour:
@@ -1347,7 +1392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6792947280273902517, guid: 9eba08440d2d86d41ae8948ea9774d67, type: 3}
-  _visualizationType: 1
 --- !u!1 &1749288425
 GameObject:
   m_ObjectHideFlags: 0
