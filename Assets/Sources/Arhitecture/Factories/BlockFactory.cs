@@ -1,4 +1,5 @@
 ﻿using Sources.BlockLogic;
+using Sources.BuildingLogic;
 using Sources.GridLogic;
 using UnityEngine;
 using Zenject;
@@ -16,21 +17,21 @@ namespace Sources.Factories
         private readonly BlockView _startTile;
         private readonly BlockView[] _blocksList;
 
-        private readonly IGrid _grid;
+        private readonly BuildingInstaller _buildingInstaller;
 
-        public BlockFactory(BlockView startTile, BlockView[] blocksList, IGrid grid)
+        public BlockFactory(BlockView startTile, BlockView[] blocksList, BuildingInstaller buildingInstaller)
         {
             _startTile = startTile;
             _blocksList = blocksList;
 
-            _grid = grid;
+            _buildingInstaller = buildingInstaller;
         }
 
         public IBlock Create(BlockType type, int height)
         {
-            BlockView instance = Object.Instantiate(GetBlock(type), _grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
+            BlockView instance = Object.Instantiate(GetBlock(type), _buildingInstaller.Grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
 
-            instance.Initialize(Vector3.up * height, _grid);
+            instance.Initialize(Vector3.up * height, _buildingInstaller);
 
             return instance;
         }

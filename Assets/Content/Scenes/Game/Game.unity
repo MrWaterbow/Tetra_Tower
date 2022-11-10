@@ -1314,7 +1314,7 @@ MonoBehaviour:
   _startBlock: {fileID: 3497901336496340354, guid: c2e24881b43fa494ea3090080cd4b096, type: 3}
   _blockList:
   - {fileID: 3497901336496340354, guid: c2e24881b43fa494ea3090080cd4b096, type: 3}
-  _grid: {fileID: 330827016}
+  _buildingInstaller: {fileID: 1610863009}
 --- !u!114 &1610863012
 MonoBehaviour:
   m_ObjectHideFlags: 0

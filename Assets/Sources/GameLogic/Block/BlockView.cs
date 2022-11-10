@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Sources.BuildingLogic;
 using Sources.GridLogic;
 using System;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Sources.BlockLogic
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private MeshFilter _meshFilter;
 
-        private IGrid _grid;
+        private BuildingInstaller _buildingInstaller;
 
         private Vector3 _position;
 
@@ -91,11 +92,11 @@ namespace Sources.BlockLogic
             }
         }
 
-        public void Initialize(Vector3 position, IGrid grid)
+        public void Initialize(Vector3 position, BuildingInstaller buildingInstaller)
         {
             _position = position;
 
-            _grid = grid;
+            _buildingInstaller = buildingInstaller;
         }
 
         public void Fall()
@@ -104,7 +105,7 @@ namespace Sources.BlockLogic
 
             _position.y--;
 
-            _transform.DOMove(_grid.GetWorldPosition(_position), _moveSmoothDuration);
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _moveSmoothDuration);
 
             if(_position.y == 0)
             {
@@ -118,9 +119,9 @@ namespace Sources.BlockLogic
 
             _position += direction;
 
-            _position = new Vector3(Mathf.Clamp(_position.x, -1, _grid.Size.x - 1), _position.y, Mathf.Clamp(_position.z, -1, _grid.Size.y - 1));
+            _position = new Vector3(Mathf.Clamp(_position.x, -1, _buildingInstaller.Grid.Size.x - 1), _position.y, Mathf.Clamp(_position.z, -1, _buildingInstaller.Grid.Size.y - 1));
 
-            _transform.DOMove(_grid.GetWorldPosition(_position), _moveSmoothDuration);
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _moveSmoothDuration);
 
             Moved?.Invoke(Position);
         }
