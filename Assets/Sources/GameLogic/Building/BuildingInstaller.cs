@@ -34,6 +34,8 @@ namespace Sources.BuildingLogic
             _input = input;
         }
 
+        public IGrid Grid => _grid;
+
         private void Update()
         {
             _tick += Time.deltaTime;
@@ -66,12 +68,12 @@ namespace Sources.BuildingLogic
         {
             _height = Mathf.Clamp(_height, 0, int.MaxValue);
             _fallTick = Mathf.Clamp(_fallTick, 0, float.MaxValue);
-
-            _currentBlock.Initial
         }
 
         public override void InstallBindings()
         {
+            Container.Bind<BuildingInstaller>().FromInstance(this).AsSingle();
+
             SpawnNext();
         }
 

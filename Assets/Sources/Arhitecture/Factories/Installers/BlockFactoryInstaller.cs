@@ -1,4 +1,5 @@
 ﻿using Sources.BlockLogic;
+using Sources.BuildingLogic;
 using Sources.GridLogic;
 using UnityEngine;
 using Zenject;
@@ -12,21 +13,21 @@ namespace Sources.Factories
 
         [Space]
 
-        [SerializeField] private GridView _grid;
+        [SerializeField] private BuildingInstaller _buildingInstaller;
 
         private BlockFactory _factory;
 
         private void OnValidate()
         {
-            if(_grid == null)
+            if(_buildingInstaller == null)
             {
-                _grid = FindObjectOfType<GridView>();
+                _buildingInstaller = FindObjectOfType<BuildingInstaller>();
             }
         }
 
         public override void InstallBindings()
         {
-            _factory = new BlockFactory(_startBlock, _blockList, _grid);
+            _factory = new BlockFactory(_startBlock, _blockList, _buildingInstaller);
 
             Container.Bind<BlockFactory>().FromInstance(_factory).AsSingle();
         }
