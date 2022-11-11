@@ -12,7 +12,7 @@ namespace Sources.BuildingLogic
         [SerializeField] private int _height;
         [SerializeField] private float _fallTick;
 
-        private List<IBlock> _blocks = new List<IBlock>();
+        private List<Vector3Int> _fullPositions = new List<Vector3Int>();
 
         private IBuildingInput _input;
         private BlockFactory _blockFactory;
@@ -109,7 +109,7 @@ namespace Sources.BuildingLogic
 
         private void AddBlockToList()
         {
-            _blocks.Add(_currentBlock);
+            _fullPositions.Add(_currentBlock);
         }
 
         private void MovingUp()
