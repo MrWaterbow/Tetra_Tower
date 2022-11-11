@@ -8,11 +8,12 @@ namespace Sources.BlockLogic
         event Action<Vector3> Moved;
         event Action Placed;
 
+        Vector3Int[] Size { get; }
+        Vector3 Position { get; }
+
         Transform OffsetTransform { get; }
         MeshRenderer MeshRenderer { get; }
         MeshFilter MeshFilter { get; }
-
-        Vector3 Position { get; }
 
         void Move(Vector3 direction);
 

@@ -1,9 +1,7 @@
 ﻿using DG.Tweening;
 using Sources.BuildingLogic;
-using Sources.GridLogic;
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace Sources.BlockLogic
 {
@@ -12,8 +10,7 @@ namespace Sources.BlockLogic
         public event Action<Vector3> Moved;
         public event Action Placed;
 
-        [SerializeField] private Vector3[] _size;
-        [SerializeField] private Color _gizmosColor = Color.white;
+        [SerializeField] private Vector3Int[] _size;
 
         [Space]
 
@@ -30,11 +27,13 @@ namespace Sources.BlockLogic
 
         private Vector3 _position;
 
+        public Vector3Int[] Size => _size;
         public Vector3 Position => _position;
 
         public Transform OffsetTransform => _offsetTransform;
         public MeshRenderer MeshRenderer => _meshRenderer;
         public MeshFilter MeshFilter => _meshFilter;
+
 
         private void OnDrawGizmosSelected()
         {
@@ -81,12 +80,12 @@ namespace Sources.BlockLogic
         {
             _moveSmoothDuration = Mathf.Clamp(_moveSmoothDuration, 0, float.MaxValue);
 
-            if(_transform == null)
+            if (_transform == null)
             {
                 _transform = transform;
             }
 
-            if(_meshFilter == null)
+            if (_meshFilter == null)
             {
                 _meshFilter = GetComponent<MeshFilter>();
             }
@@ -107,7 +106,7 @@ namespace Sources.BlockLogic
 
             _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _moveSmoothDuration);
 
-            if(_position.y == 0)
+            if (_position.y == 0)
             {
                 Placed?.Invoke();
             }
