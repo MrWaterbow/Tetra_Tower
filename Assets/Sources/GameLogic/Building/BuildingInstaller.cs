@@ -1,18 +1,23 @@
 using Sources.BlockLogic;
 using Sources.Factories;
 using Sources.GridLogic;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace Sources.BuildingLogic
 {
     public class BuildingInstaller : MonoInstaller
     {
+        public event Action NextBlock;
+
         [SerializeField] private int _height;
         [SerializeField] private float _fallTick;
 
-        private List<Vector3Int> _fullPositions = new List<Vector3Int>();
+        private List<Vector3> _fullPositions = new List<Vector3>();
 
         private IBuildingInput _input;
         private BlockFactory _blockFactory;
@@ -83,8 +88,10 @@ namespace Sources.BuildingLogic
             {
                 _currentBlock.Moved -= UpdateVisualization;
                 _currentBlock.Placed -= _visualization.Hide;
-                _currentBlock.Placed -= AddBlockToList;
+                _currentBlock.Placed -= UpdateFullPositions;
+                _currentBlock.Placed -= AddHeight;
                 _currentBlock.Placed -= SpawnNext;
+                _currentBlock.Placed -= NextBlock;
             }
 
             _currentBlock = _blockFactory.Create(_currentBlock == null ? BlockType.Start : BlockType.Random, _height);
@@ -94,22 +101,85 @@ namespace Sources.BuildingLogic
 
             _currentBlock.Moved += UpdateVisualization;
             _currentBlock.Placed += _visualization.Hide;
-            _currentBlock.Placed += AddBlockToList;
+            _currentBlock.Placed += UpdateFullPositions;
+            _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
+            _currentBlock.Placed += NextBlock;
         }
 
         private void UpdateVisualization(Vector3 blockPosition)
         {
-            Vector3 visualizationPosition = _currentBlock.Position;
+            Vector3 visualizationPosition = blockPosition;
 
-            visualizationPosition.y = 0;
+            visualizationPosition.y = GetMaxHeight(_currentBlock);
 
-            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition) +_currentBlock.OffsetTransform.localPosition);
+            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition, _currentBlock.HalfSize ? new Vector3(0.55f, 0, 0.65f) : Vector3.zero) + _currentBlock.OffsetTransform.localPosition);
         }
 
-        private void AddBlockToList()
+        public bool OnGround(IBlock block)
         {
-            _fullPositions.Add(_currentBlock);
+            if (block.Position.y == 0)
+            {
+                return true;
+            }
+
+            bool grounded = false;
+
+            foreach (Vector3 size in block.Size)
+            {
+                if (_fullPositions.FirstOrDefault(_ => _.x == size.x + block.Position.x && _.z == size.z + block.Position.z).y == block.Position.y)
+                {
+                    grounded = true;
+                }
+            }
+
+            print(grounded);
+
+            return grounded;
+        }
+
+        private void AddHeight()
+        {
+            _height++;
+        }
+
+        private void UpdateFullPositions()
+        {
+            foreach (Vector3 size in _currentBlock.Size)
+            {
+                HeightByPosition(size + _currentBlock.Position);
+            }
+        }
+
+        private void HeightByPosition(Vector3 size)
+        {
+            int index = _fullPositions.FindIndex(_ => _.x == size.x && _.z == size.z);
+
+            if (index == -1)
+            {
+                _fullPositions.Add(size);
+            }
+            else
+            {
+                _fullPositions[index] = size;
+            }
+        }
+
+        private float GetMaxHeight(IBlock block)
+        {
+            float max = 0;
+
+            foreach (Vector3 size in block.Size)
+            {
+                Vector3 height = _fullPositions.FirstOrDefault(_ => _.x == size.x + block.Position.x && _.z == size.z + block.Position.z);
+
+                if (height.y > max)
+                {
+                    max = height.y;
+                }
+            }
+
+            return max;
         }
 
         private void MovingUp()

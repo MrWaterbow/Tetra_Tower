@@ -29,9 +29,9 @@ namespace Sources.GridLogic
             }
         }
 
-        public Vector3 GetWorldPosition(Vector3 position)
+        public Vector3 GetWorldPosition(Vector3 position, Vector3 offset)
         {
-            return _anchor.position + position + _gridCellMesh.bounds.size * 0.5f;// + position;//position * _gridCellMesh.bounds.size.magnitude + _anchor.position;
+            return _anchor.position + position - offset + _gridCellMesh.bounds.size * 0.5f;// + position;//position * _gridCellMesh.bounds.size.magnitude + _anchor.position;
         }
 
         private void DrawGizmosGrid()

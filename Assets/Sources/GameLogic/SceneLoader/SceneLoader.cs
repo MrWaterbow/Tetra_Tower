@@ -25,7 +25,7 @@ namespace Sources.Scenes
 
         public void Load(string sceneName)
         {
-            OnLoading?.Invoke(ScreenShowingComplete);
+            //OnLoading?.Invoke(ScreenShowingComplete);
             _sceneName = sceneName;
         }
 
