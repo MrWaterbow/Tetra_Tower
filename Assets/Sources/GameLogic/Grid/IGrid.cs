@@ -6,6 +6,6 @@ namespace Sources.GridLogic
     {
         public Vector2Int Size { get; }
 
-        public Vector3 GetWorldPosition(Vector3 position);
+        public Vector3 GetWorldPosition(Vector3 position, Vector3 offset);
     }
 }
