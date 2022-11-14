@@ -37,7 +37,6 @@ namespace Sources.BlockLogic
         public MeshRenderer MeshRenderer => _meshRenderer;
         public MeshFilter MeshFilter => _meshFilter;
 
-
         private void OnValidate()
         {
             _moveSmoothDuration = Mathf.Clamp(_moveSmoothDuration, 0, float.MaxValue);

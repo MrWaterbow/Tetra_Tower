@@ -30,7 +30,7 @@ namespace Sources.Factories
         public IBlock Create(BlockType type, int height)
         {
             BlockView instance = Object.Instantiate(GetBlock(type), _buildingInstaller.Grid.GetWorldPosition(Vector3.up * height, Vector3.zero), Quaternion.identity);
-
+            
             instance.Initialize(Vector3.up * height, _buildingInstaller);
 
             return instance;
