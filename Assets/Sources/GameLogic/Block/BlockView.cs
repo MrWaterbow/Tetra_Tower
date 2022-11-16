@@ -67,10 +67,7 @@ namespace Sources.BlockLogic
 
             _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, _halfSize ? new Vector3(0.55f, 0, 0.65f) : Vector3.zero), _moveSmoothDuration);
 
-            if (_buildingInstaller.OnGround(this))
-            {
-                Placed?.Invoke();
-            }
+            CheckGrounded();
 
             Moved?.Invoke(Position);
         }
@@ -85,7 +82,17 @@ namespace Sources.BlockLogic
 
             _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, _halfSize ? new Vector3(0.55f, 0, 0.65f) : Vector3.zero), _moveSmoothDuration);
 
+            CheckGrounded();
+
             Moved?.Invoke(Position);
+        }
+
+        private void CheckGrounded()
+        {
+            if (_buildingInstaller.OnGround(this))
+            {
+                Placed?.Invoke();
+            }
         }
     }
 }

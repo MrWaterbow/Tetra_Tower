@@ -59,6 +59,8 @@ namespace Sources.BuildingLogic
             _input.MovingDown += MovingDown;
             _input.MovingRight += MovingRight;
             _input.MovingLeft += MovingLeft;
+
+            _input.MovingGround += MovingGround;
         }
 
         private void OnDisable()
@@ -67,6 +69,8 @@ namespace Sources.BuildingLogic
             _input.MovingDown -= MovingDown;
             _input.MovingRight -= MovingRight;
             _input.MovingLeft -= MovingLeft;
+
+            _input.MovingGround -= MovingGround;
         }
 
         private void OnValidate()
@@ -200,6 +204,11 @@ namespace Sources.BuildingLogic
         private void MovingLeft()
         {
             _currentBlock.Move(Vector3.left);
+        }
+
+        private void MovingGround()
+        {
+            _currentBlock.Move(Vector3.down * (_currentBlock.Position.y - GetMaxHeight(_currentBlock)));
         }
     }
 }
