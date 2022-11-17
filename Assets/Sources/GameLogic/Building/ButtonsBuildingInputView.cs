@@ -11,10 +11,14 @@ namespace Sources.BuildingLogic
         public override event Action MovingRight;
         public override event Action MovingLeft;
 
+        public override event Action MovingGround;
+
         [SerializeField] private Button _upButton;
         [SerializeField] private Button _downButton;
         [SerializeField] private Button _rightButton;
         [SerializeField] private Button _leftButton;
+
+        [SerializeField] private Button _groundButton;
 
         public override void Enable()
         {
@@ -22,6 +26,8 @@ namespace Sources.BuildingLogic
             _downButton.onClick.AddListener(InvokeMovingDown);
             _rightButton.onClick.AddListener(InvokeMovingRight);
             _leftButton.onClick.AddListener(InvokeMovingLeft);
+
+            _groundButton.onClick.AddListener(InvokeMovingGround);
         }
 
         public override void Disable()
@@ -30,6 +36,8 @@ namespace Sources.BuildingLogic
             _downButton.onClick.RemoveListener(InvokeMovingDown);
             _rightButton.onClick.RemoveListener(InvokeMovingRight);
             _leftButton.onClick.RemoveListener(InvokeMovingLeft);
+
+            _groundButton.onClick.RemoveListener(InvokeMovingGround);
         }
 
         private void InvokeMovingUp()
@@ -50,6 +58,11 @@ namespace Sources.BuildingLogic
         private void InvokeMovingLeft()
         {
             MovingLeft?.Invoke();
+        }
+
+        private void InvokeMovingGround()
+        {
+            MovingGround?.Invoke();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace Sources.Scenes
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader
     {
         public event Action<UnityAction> OnLoading;
         public event Action OnLoadingComplete;

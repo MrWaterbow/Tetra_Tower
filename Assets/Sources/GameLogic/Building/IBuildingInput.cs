@@ -9,6 +9,7 @@ namespace Sources.BuildingLogic
         public abstract event Action MovingDown;
         public abstract event Action MovingRight;
         public abstract event Action MovingLeft;
+        public abstract event Action MovingGround;
 
         public abstract void Enable();
         public abstract void Disable();
@@ -20,5 +21,6 @@ namespace Sources.BuildingLogic
         public event Action MovingDown;
         public event Action MovingRight;
         public event Action MovingLeft;
+        public event Action MovingGround;
     }
 }
