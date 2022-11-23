@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Sources.RotationLogic;
 using Zenject;
 
 namespace Sources.BuildingLogic
@@ -27,16 +28,21 @@ namespace Sources.BuildingLogic
 
         private IGrid _grid;
 
+        private RotationInstaller _rotation;
+
         private float _tick;
 
         [Inject]
-        private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input)
+        private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input, RotationInstaller rotation)
         {
             _grid = grid;
 
             _blockFactory = blockFactory;
             _visualization = visualization;
             _input = input;
+
+            _rotation = rotation;
+
         }
 
         public IGrid Grid => _grid;
@@ -109,6 +115,8 @@ namespace Sources.BuildingLogic
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
             _currentBlock.Placed += NextBlock;
+
+            _rotation.CurrentBlock = _currentBlock;
         }
 
         private void UpdateVisualization(Vector3 blockPosition)

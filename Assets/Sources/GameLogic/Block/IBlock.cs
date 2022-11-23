@@ -20,5 +20,7 @@ namespace Sources.BlockLogic
         void Move(Vector3 direction);
 
         void Fall();
+
+        void Rotate(Vector3 direction);
     }
 }

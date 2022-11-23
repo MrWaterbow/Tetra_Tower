@@ -94,5 +94,11 @@ namespace Sources.BlockLogic
                 Placed?.Invoke();
             }
         }
+
+        public void Rotate(Vector3 direction)
+        {
+            transform.rotation = Quaternion.Euler(direction);
+        }
     }
+
 }
