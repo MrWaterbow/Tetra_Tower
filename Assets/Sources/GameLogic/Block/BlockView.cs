@@ -95,9 +95,10 @@ namespace Sources.BlockLogic
             }
         }
 
-        public void Rotate(Vector3 direction)
+        public void Rotate(Vector3 direction, int degree)
         {
-            transform.rotation = Quaternion.Euler(direction);
+            _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+            //Moved?.Invoke(Position);
         }
     }
 

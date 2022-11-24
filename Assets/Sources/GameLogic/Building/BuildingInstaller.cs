@@ -190,7 +190,6 @@ namespace Sources.BuildingLogic
                     max = height.y;
                 }
             }
-
             return max;
         }
 

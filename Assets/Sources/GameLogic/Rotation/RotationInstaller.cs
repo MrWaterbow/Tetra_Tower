@@ -42,20 +42,19 @@ namespace Sources.RotationLogic
 
         private void RotateUp()
         {
-            CurrentBlock.Rotate(new Vector3(0, 0, 90));
-            print(CurrentBlock);
+            CurrentBlock.Rotate(Vector3.right, 90);
         }
         private void RotateDown()
         {
-            
+            CurrentBlock.Rotate(Vector3.right, -90);
         }
         private void RotateRight()
         {
-           
+            CurrentBlock.Rotate(Vector3.up, 90);
         }
         private void RotateLeft()
-        {  
-
+        {
+            CurrentBlock.Rotate(Vector3.up, -90);
         }
     }
 }
