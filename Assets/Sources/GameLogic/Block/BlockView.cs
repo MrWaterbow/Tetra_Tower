@@ -94,5 +94,12 @@ namespace Sources.BlockLogic
                 Placed?.Invoke();
             }
         }
+
+        public void Rotate(Vector3 direction, int degree)
+        {
+            _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+            //Moved?.Invoke(Position);
+        }
     }
+
 }
