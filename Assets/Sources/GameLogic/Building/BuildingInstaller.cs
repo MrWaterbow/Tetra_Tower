@@ -125,7 +125,7 @@ namespace Sources.BuildingLogic
 
             visualizationPosition.y = GetMaxHeight(_currentBlock);
 
-            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition, _currentBlock.HalfSize ? new Vector3(0.55f, 0, 0.65f) : Vector3.zero) + _currentBlock.OffsetTransform.localPosition);
+            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition, Vector3.zero + _currentBlock.Transform.localPosition));
         }
 
         public bool OnGround(IBlock block)

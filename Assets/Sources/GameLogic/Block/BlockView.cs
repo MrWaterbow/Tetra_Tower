@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Sources.BuildingLogic;
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Sources.BlockLogic
@@ -10,8 +11,7 @@ namespace Sources.BlockLogic
         public event Action<Vector3> Moved;
         public event Action Placed;
 
-        [SerializeField] private Vector3[] _size;
-        [SerializeField] private bool _halfSize;
+        [SerializeField] private Vector3Int[] _size;
 
         [Space]
 
@@ -20,7 +20,6 @@ namespace Sources.BlockLogic
         [Space]
 
         [SerializeField] private Transform _transform;
-        [SerializeField] private Transform _offsetTransform;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private MeshFilter _meshFilter;
 
@@ -28,12 +27,11 @@ namespace Sources.BlockLogic
 
         private Vector3 _position;
 
-        public Vector3[] Size => _size;
-        public bool HalfSize => _halfSize;
+        public Vector3Int[] Size => _size;
 
         public Vector3 Position => _position;
 
-        public Transform OffsetTransform => _offsetTransform;
+        public Transform Transform => _transform;
         public MeshRenderer MeshRenderer => _meshRenderer;
         public MeshFilter MeshFilter => _meshFilter;
 
@@ -52,6 +50,16 @@ namespace Sources.BlockLogic
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            foreach (Vector3Int size in _size)
+            {
+                Gizmos.color = new Color(0, 0, 0, 0.4f);
+
+                Gizmos.DrawCube(_transform.position + size, Vector3.one * 1.1f);
+            }
+        }
+
         public void Initialize(Vector3 position, BuildingInstaller buildingInstaller)
         {
             _position = position;
@@ -65,7 +73,7 @@ namespace Sources.BlockLogic
 
             _position.y--;
 
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, _halfSize ? new Vector3(0.55f, 0, 0.65f) : Vector3.zero), _moveSmoothDuration);
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, Vector3.zero), _moveSmoothDuration);
 
             CheckGrounded();
 
@@ -74,17 +82,24 @@ namespace Sources.BlockLogic
 
         public void Move(Vector3 direction)
         {
-            if (_position.y == 0) return;
+            if (CanMove(direction) == false) return;
 
             _position += direction;
 
             _position = new Vector3(Mathf.Clamp(_position.x, -1, _buildingInstaller.Grid.Size.x - 1), _position.y, Mathf.Clamp(_position.z, -1, _buildingInstaller.Grid.Size.y - 1));
 
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, _halfSize ? new Vector3(0.55f, 0, 0.65f) : Vector3.zero), _moveSmoothDuration);
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, Vector3.zero), _moveSmoothDuration);
 
             CheckGrounded();
 
             Moved?.Invoke(Position);
+        }
+
+        private bool CanMove(Vector3 direction)
+        {
+            if (_position.y == 0) return false;
+
+            return true;
         }
 
         private void CheckGrounded()
