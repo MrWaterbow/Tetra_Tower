@@ -165,9 +165,7 @@ MonoBehaviour:
   - {x: 0, y: 1, z: -1}
   - {x: 1, y: 1, z: -1}
   - {x: 0, y: 1, z: 1}
-  _halfSize: 1
   _moveSmoothDuration: 0.4
   _transform: {fileID: 4736827640416301935}
-  _offsetTransform: {fileID: 1992805855346814217}
   _meshRenderer: {fileID: 2707268481003360305}
   _meshFilter: {fileID: 3361933548414821668}
