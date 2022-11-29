@@ -9,14 +9,16 @@ namespace Sources.BlockLogic
         event Action Placed;
 
         Vector3Int[] Size { get; }
+        Vector3 VisualizationOffset { get; }
 
-        Vector3 Position { get; }
+        Vector3Int Position { get; }
 
         Transform Transform { get; }
+        Transform ModelTransform { get; }
         MeshRenderer MeshRenderer { get; }
         MeshFilter MeshFilter { get; }
 
-        void Move(Vector3 direction);
+        void Move(Vector3Int direction);
 
         void Fall();
 
