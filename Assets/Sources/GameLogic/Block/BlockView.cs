@@ -12,33 +12,31 @@ namespace Sources.BlockLogic
         public event Action Placed;
 
         [SerializeField] private Vector3Int[] _size;
-
-        [Space]
-
-        [SerializeField] private float _moveSmoothDuration;
+        [SerializeField] private Vector3 _visualizationOffset;
 
         [Space]
 
         [SerializeField] private Transform _transform;
+        [SerializeField] private Transform _modelTransform;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private MeshFilter _meshFilter;
 
         private BuildingInstaller _buildingInstaller;
 
-        private Vector3 _position;
+        private Vector3Int _position;
 
         public Vector3Int[] Size => _size;
+        public Vector3 VisualizationOffset => _visualizationOffset;
 
-        public Vector3 Position => _position;
+        public Vector3Int Position => _position;
 
         public Transform Transform => _transform;
+        public Transform ModelTransform => _modelTransform;
         public MeshRenderer MeshRenderer => _meshRenderer;
         public MeshFilter MeshFilter => _meshFilter;
 
         private void OnValidate()
         {
-            _moveSmoothDuration = Mathf.Clamp(_moveSmoothDuration, 0, float.MaxValue);
-
             if (_transform == null)
             {
                 _transform = transform;
@@ -52,7 +50,7 @@ namespace Sources.BlockLogic
 
         private void OnDrawGizmos()
         {
-            foreach (Vector3Int size in _size)
+            foreach (Vector3 size in _size)
             {
                 Gizmos.color = new Color(0, 0, 0, 0.4f);
 
@@ -60,7 +58,7 @@ namespace Sources.BlockLogic
             }
         }
 
-        public void Initialize(Vector3 position, BuildingInstaller buildingInstaller)
+        public void Initialize(Vector3Int position, BuildingInstaller buildingInstaller)
         {
             _position = position;
 
@@ -73,33 +71,34 @@ namespace Sources.BlockLogic
 
             _position.y--;
 
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, Vector3.zero), _moveSmoothDuration);
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
 
             CheckGrounded();
 
             Moved?.Invoke(Position);
         }
 
-        public void Move(Vector3 direction)
+        public void Move(Vector3Int direction)
         {
             if (CanMove(direction) == false) return;
 
             _position += direction;
 
-            _position = new Vector3(Mathf.Clamp(_position.x, -1, _buildingInstaller.Grid.Size.x - 1), _position.y, Mathf.Clamp(_position.z, -1, _buildingInstaller.Grid.Size.y - 1));
+            OnMoving();
+        }
 
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position, Vector3.zero), _moveSmoothDuration);
+        private void OnMoving()
+        {
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
 
             CheckGrounded();
 
             Moved?.Invoke(Position);
         }
 
-        private bool CanMove(Vector3 direction)
+        private bool CanMove(Vector3Int direction)
         {
-            if (_position.y == 0) return false;
-
-            return true;
+            return _buildingInstaller.CanMove(this, direction);
         }
 
         private void CheckGrounded()
