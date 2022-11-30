@@ -22,6 +22,7 @@ namespace Sources.BuildingLogic
         [SerializeField] private float _moveSmooth;
 
         private List<Vector3Int> _fullPositions = new List<Vector3Int>();
+        private List<IBlock> _blocks = new List<IBlock>();
 
         private IBuildingInput _input;
         private BlockFactory _blockFactory;
@@ -45,7 +46,6 @@ namespace Sources.BuildingLogic
             _input = input;
 
             _rotation = rotation;
-
         }
 
         public float MoveSmooth => _moveSmooth;
@@ -118,20 +118,12 @@ namespace Sources.BuildingLogic
             _currentBlock.Moved += UpdateVisualization;
             _currentBlock.Placed += _visualization.Hide;
             _currentBlock.Placed += UpdateFullPositions;
+            _currentBlock.Placed += CheckBlockStability;
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
             _currentBlock.Placed += NextBlock;
 
             _rotation.CurrentBlock = _currentBlock;
-        }
-
-        private void UpdateVisualization(Vector3 blockPosition)
-        {
-            Vector3 visualizationPosition = blockPosition;
-
-            visualizationPosition.y = GetMaxHeight(_currentBlock);
-
-            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition + _currentBlock.VisualizationOffset));
         }
 
         public bool OnGround(IBlock block)
@@ -167,6 +159,41 @@ namespace Sources.BuildingLogic
             return false;
         }
 
+        private void UpdateVisualization(Vector3 blockPosition)
+        {
+            Vector3 visualizationPosition = blockPosition;
+
+            visualizationPosition.y = GetMaxHeight(_currentBlock);
+
+            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition + _currentBlock.VisualizationOffset));
+        }
+
+        private void CheckBlockStability()
+        {
+            int joinCount = 0;
+
+            foreach (Vector3Int size in _currentBlock.Size)
+            {
+                Vector3Int position = size + _currentBlock.Position;
+
+                if (FindJoin(size + _currentBlock.Position))
+                {
+                    joinCount++;
+
+                    continue;
+                }
+            }
+
+            print( joinCount / _currentBlock.Size.Length > 0.5f);
+        }
+
+        private bool FindJoin(Vector3Int position)
+        {
+            if (position.y == -1 && OnPlatform(position)) return true;
+
+            return false;
+        }
+
         private bool CheckCollision(IBlock block, Vector3Int direction)
         {
             bool result = true;
@@ -191,15 +218,26 @@ namespace Sources.BuildingLogic
 
             foreach (Vector3Int size in block.Size)
             {
-                Vector3 position = block.Position + direction + size;
+                Vector3Int position = block.Position + direction + size;
 
-                if (position.x > -1 && position.x < 3 && position.z > -1 && position.z < 3)
+                if (OnPlatform(position))
                 {
                     result = true;
                 }
             }
 
             return result;
+        }
+
+
+        private bool OnPlatform(Vector3Int position)
+        {
+            if(position.x > -1 && position.x < 3 && position.z > -1 && position.z < 3)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void AddHeight()
