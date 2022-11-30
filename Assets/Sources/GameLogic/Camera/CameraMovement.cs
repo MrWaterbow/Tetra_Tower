@@ -42,6 +42,11 @@ namespace Sources.CameraLogic
             _buildingInstaller.NextBlock -= MoveCamera;
         }
 
+        private void OnValidate()
+        {
+            _camera.position = _root.position + _offset;
+        }
+
         private void MoveCamera()
         {
             _offset.y += _moveOffset;
