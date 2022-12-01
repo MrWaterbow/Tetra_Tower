@@ -50,6 +50,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 1}
   - {x: 0, y: 0, z: -1}
   - {x: 1, y: 0, z: -1}
+  _visualizationOffset: {x: 0, y: 0, z: 0}
   _transform: {fileID: 1622142305574284349}
   _modelTransform: {fileID: 1622142306510540652}
   _meshRenderer: {fileID: 1622142306510540653}

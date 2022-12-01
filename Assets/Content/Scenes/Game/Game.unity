@@ -1058,7 +1058,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895797589}
   m_LocalRotation: {x: 0.3536683, y: 0.3528829, z: -0.14616887, w: 0.8538308}
-  m_LocalPosition: {x: -6.95, y: 16.63, z: -7.41}
+  m_LocalPosition: {x: -6.95, y: 10.407, z: -7.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1512,7 +1512,6 @@ MonoBehaviour:
   _startBlock: {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
   _blockList:
   - {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
-  - {fileID: 1622142305574284348, guid: cbf5c3e3bb1e8364c843a4924c9f9d87, type: 3}
   _buildingInstaller: {fileID: 1610863009}
 --- !u!114 &1610863012
 MonoBehaviour:
