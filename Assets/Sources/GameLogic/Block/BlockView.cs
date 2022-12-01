@@ -21,6 +21,7 @@ namespace Sources.BlockLogic
         [SerializeField] private Transform _modelTransform;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private MeshFilter _meshFilter;
+        [SerializeField] private Rigidbody _rigidbody;
 
         private BuildingInstaller _buildingInstaller;
 
@@ -124,6 +125,11 @@ namespace Sources.BlockLogic
             {
                 Placed?.Invoke();
             }
+        }
+
+        public void ActivePhysics()
+        {
+            _rigidbody.isKinematic = false;
         }
     }
 }

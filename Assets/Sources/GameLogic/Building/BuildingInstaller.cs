@@ -121,7 +121,7 @@ namespace Sources.BuildingLogic
             _currentBlock.Placed += UpdateFullPositions;
             _currentBlock.Placed += CheckBlockStability;
             _currentBlock.Placed += AddBlock;
-         //   _currentBlock.Placed += () => DeleteBlock(_currentBlock);
+            _currentBlock.Placed += ActivePhysics;
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
             _currentBlock.Placed += NextBlock;
@@ -283,6 +283,11 @@ namespace Sources.BuildingLogic
         private void AddBlock()
         {
             _blocks.Add(_currentBlock);
+        }
+
+        private void ActivePhysics()
+        {
+            _currentBlock.ActivePhysics();
         }
 
         private void AddHeight()
