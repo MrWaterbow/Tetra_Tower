@@ -23,6 +23,8 @@ namespace Sources.BlockLogic
         void Fall();
         void Destroy();
 
+        void ActivePhysics();
+
         void Rotate(Vector3 direction, int degree);
     }
 }
