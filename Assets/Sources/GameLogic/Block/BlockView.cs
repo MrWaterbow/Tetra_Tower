@@ -16,6 +16,7 @@ namespace Sources.BlockLogic
 
         [Space]
 
+        [SerializeField] private GameObject _gameObject;
         [SerializeField] private Transform _transform;
         [SerializeField] private Transform _modelTransform;
         [SerializeField] private MeshRenderer _meshRenderer;
@@ -37,6 +38,11 @@ namespace Sources.BlockLogic
 
         private void OnValidate()
         {
+            if(_gameObject == null)
+            {
+                _gameObject = gameObject;
+            }
+
             if (_transform == null)
             {
                 _transform = transform;
@@ -87,6 +93,17 @@ namespace Sources.BlockLogic
             OnMoving();
         }
 
+        public void Rotate(Vector3 direction, int degree)
+        {
+            _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+            //Moved?.Invoke(Position);
+        }
+
+        public void Destroy()
+        {
+            Destroy(_gameObject);
+        }
+
         private void OnMoving()
         {
             _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
@@ -108,12 +125,5 @@ namespace Sources.BlockLogic
                 Placed?.Invoke();
             }
         }
-
-        public void Rotate(Vector3 direction, int degree)
-        {
-            _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
-            //Moved?.Invoke(Position);
-        }
     }
-
 }

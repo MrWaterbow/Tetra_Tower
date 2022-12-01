@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace Sources.BuildingLogic
@@ -119,6 +120,8 @@ namespace Sources.BuildingLogic
             _currentBlock.Placed += _visualization.Hide;
             _currentBlock.Placed += UpdateFullPositions;
             _currentBlock.Placed += CheckBlockStability;
+            _currentBlock.Placed += AddBlock;
+         //   _currentBlock.Placed += () => DeleteBlock(_currentBlock);
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
             _currentBlock.Placed += NextBlock;
@@ -170,7 +173,7 @@ namespace Sources.BuildingLogic
 
         private void CheckBlockStability()
         {
-            int joinCount = 0;
+            float joinCount = 0;
 
             foreach (Vector3Int size in _currentBlock.Size)
             {
@@ -184,14 +187,51 @@ namespace Sources.BuildingLogic
                 }
             }
 
-            print( joinCount / _currentBlock.Size.Length > 0.5f);
+            print(joinCount);
         }
 
         private bool FindJoin(Vector3Int position)
         {
-            if (position.y == -1 && OnPlatform(position)) return true;
+            if (position.y == 0 && OnPlatform(position) || FindBlock(position - Vector3Int.up) != null) return true;
 
             return false;
+        }
+
+        private IBlock FindBlock(Vector3Int position)
+        {
+            foreach (IBlock block in _blocks)
+            {
+                foreach (Vector3Int size in block.Size)
+                {
+                    if(size + block.Position == position)
+                    {
+                        return block;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void DeleteBlock(IBlock block)
+        {
+            foreach (Vector3Int size in block.Size)
+            {
+                RefreshHeight(size + block.Position);
+            }
+
+            _blocks.Remove(block);
+            block.Destroy();
+        }
+
+        private void RefreshHeight(Vector3Int position)
+        {
+            if(GetHeight(position.x, position.z) == position.y)
+            {
+                int index = _fullPositions.FindIndex(_ => _.x == position.x && _.z == position.z);
+
+                _fullPositions[index] = position - Vector3Int.up;
+            }
         }
 
         private bool CheckCollision(IBlock block, Vector3Int direction)
@@ -238,6 +278,11 @@ namespace Sources.BuildingLogic
             }
 
             return false;
+        }
+
+        private void AddBlock()
+        {
+            _blocks.Add(_currentBlock);
         }
 
         private void AddHeight()
