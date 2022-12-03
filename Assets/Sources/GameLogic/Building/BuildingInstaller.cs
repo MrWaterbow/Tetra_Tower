@@ -119,9 +119,9 @@ namespace Sources.BuildingLogic
             _currentBlock.Moved += UpdateVisualization;
             _currentBlock.Placed += _visualization.Hide;
             _currentBlock.Placed += UpdateFullPositions;
-            _currentBlock.Placed += CheckBlockStability;
             _currentBlock.Placed += AddBlock;
-            _currentBlock.Placed += ActivePhysics;
+            _currentBlock.Placed += CheckBlocksStability;
+           // _currentBlock.Placed += ActivePhysics;
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
             _currentBlock.Placed += NextBlock;
@@ -171,15 +171,63 @@ namespace Sources.BuildingLogic
             _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition + _currentBlock.VisualizationOffset));
         }
 
-        private void CheckBlockStability()
+        private void CheckBlocksStability()
+        {
+            List<IBlock> _destroyingBlocks = new();
+
+            foreach (IBlock block in _blocks)
+            {
+                float joinArea = GetJoinArea(block);
+
+                //float joinCount = 0;
+
+                //foreach (Vector3Int size in block.Size)
+                //{
+                //    Vector3Int position = size + block.Position;
+
+                //    if (FindJoin(size + block.Position))
+                //    {
+                //        joinCount++;
+
+                //        continue;
+                //    }
+                //}
+
+                if (joinArea / block.Size.Length == 0.5f)
+                {
+                    if (block.Instable) _destroyingBlocks.Add(block);
+                    else block.MakeInstable();
+                } 
+                else if (joinArea / block.Size.Length < 0.5f)
+                {
+                    _destroyingBlocks.Add(block);
+                }
+            }
+
+            _destroyingBlocks.ForEach(_ => DestroyBlock(_));
+        }
+
+        private List<IBlock> CheckNodeStability(IBlock block)
+        {
+            List<IBlock> result = new();
+
+            foreach (Vector3Int size in block.Size)
+            {
+                 result.Add(FindBlock(block.Position + size + Vector3Int.up));
+            }
+
+            return result;
+        }
+
+        private float GetJoinArea(IBlock block)
         {
             float joinCount = 0;
 
-            foreach (Vector3Int size in _currentBlock.Size)
+            foreach (Vector3Int size in block.Size)
             {
-                Vector3Int position = size + _currentBlock.Position;
+                Vector3Int position = size + block.Position;
 
-                if (FindJoin(size + _currentBlock.Position))
+                if (FindJoin(size + block.Position))
                 {
                     joinCount++;
 
@@ -187,7 +235,7 @@ namespace Sources.BuildingLogic
                 }
             }
 
-            print(joinCount);
+            return joinCount / block.Size.Length;
         }
 
         private bool FindJoin(Vector3Int position)
@@ -213,7 +261,7 @@ namespace Sources.BuildingLogic
             return null;
         }
 
-        private void DeleteBlock(IBlock block)
+        private void DestroyBlock(IBlock block)
         {
             foreach (Vector3Int size in block.Size)
             {
@@ -226,11 +274,11 @@ namespace Sources.BuildingLogic
 
         private void RefreshHeight(Vector3Int position)
         {
-            if(GetHeight(position.x, position.z) == position.y)
+            if(GetHeight(position.x, position.z) == position.y + 1)
             {
                 int index = _fullPositions.FindIndex(_ => _.x == position.x && _.z == position.z);
 
-                _fullPositions[index] = position - Vector3Int.up;
+                _fullPositions[index] = position;
             }
         }
 
@@ -329,6 +377,7 @@ namespace Sources.BuildingLogic
 
         private int GetMaxHeight(IBlock block)
         {
+            //return (int)Mathf.Round(_currentBlock.GetRaycast().y);
             int max = 0;
 
             foreach (Vector3 size in block.Size)
