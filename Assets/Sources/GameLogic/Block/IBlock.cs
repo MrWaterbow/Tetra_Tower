@@ -13,6 +13,8 @@ namespace Sources.BlockLogic
 
         Vector3Int Position { get; }
 
+        bool Instable { get; }
+
         Transform Transform { get; }
         Transform ModelTransform { get; }
         MeshRenderer MeshRenderer { get; }
@@ -23,8 +25,11 @@ namespace Sources.BlockLogic
         void Fall();
         void Destroy();
 
+        void MakeInstable(); 
         void ActivePhysics();
 
         void Rotate(Vector3 direction, int degree);
+
+        Vector3 GetRaycast();
     }
 }
