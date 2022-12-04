@@ -4,6 +4,7 @@ using Sources.GridLogic;
 using Sources.RotationLogic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -105,7 +106,11 @@ namespace Sources.BuildingLogic
             {
                 _currentBlock.Moved -= UpdateVisualization;
                 _currentBlock.Placed -= _visualization.Hide;
-                _currentBlock.Placed -= UpdateFullPositions;
+                //_currentBlock.Placed += UpdateFullPositions;
+                _currentBlock.Placed -= AddBlock;
+                _currentBlock.Placed -= CheckBlocksStability;
+                _currentBlock.Placed -= RefreshHeight;
+                // _currentBlock.Placed += ActivePhysics;
                 _currentBlock.Placed -= AddHeight;
                 _currentBlock.Placed -= SpawnNext;
                 _currentBlock.Placed -= NextBlock;
@@ -118,9 +123,10 @@ namespace Sources.BuildingLogic
 
             _currentBlock.Moved += UpdateVisualization;
             _currentBlock.Placed += _visualization.Hide;
-            _currentBlock.Placed += UpdateFullPositions;
+            //_currentBlock.Placed += UpdateFullPositions;
             _currentBlock.Placed += AddBlock;
             _currentBlock.Placed += CheckBlocksStability;
+            _currentBlock.Placed += RefreshHeight;
            // _currentBlock.Placed += ActivePhysics;
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
@@ -171,49 +177,88 @@ namespace Sources.BuildingLogic
             _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition + _currentBlock.VisualizationOffset));
         }
 
+        private List<IBlock> GetInstableBlock(List<IBlock> blocks)
+        {
+            List<IBlock> result = new();
+
+            foreach (IBlock block in blocks)
+            {
+                float joinArea = GetJoinArea(block);
+
+                if (joinArea == 0.5f)
+                {
+                    if (block.Instable) result.Add(block);
+                    else block.MakeInstable();
+                } 
+                else if (joinArea < 0.5f)
+                {
+                    result.Add(block);
+                }
+
+                List<IBlock> nodes = GetNode(block);
+
+                //if (nodes.Count > 0)
+                //{
+                //    foreach (IBlock nodeBlock in GetInstableBlock(nodes))
+                //    {
+                //        result.Add(nodeBlock);
+                //    }
+                //}
+            }
+
+            return result;
+        }
+
         private void CheckBlocksStability()
         {
-            List<IBlock> _destroyingBlocks = new();
+            List<IBlock> destroyingBlocks = new();
+            List<IBlock> nodes = new();
 
             foreach (IBlock block in _blocks)
             {
                 float joinArea = GetJoinArea(block);
 
-                //float joinCount = 0;
+                if (joinArea == 0.5f)
+                {
+                    if (block.Instable) destroyingBlocks.Add(block);
+                    else if(block.Position.y == 0) block.MakeInstable();
+                }
+                else if (joinArea < 0.5f)
+                {
+                    destroyingBlocks.Add(block);
+                }
 
-                //foreach (Vector3Int size in block.Size)
+                GetNode(block).ForEach(_ => nodes.Add(_));
+
+                // GARBAGE
+                //if(node.Count > 0)
                 //{
-                //    Vector3Int position = size + block.Position;
-
-                //    if (FindJoin(size + block.Position))
+                //    foreach(IBlock nodeBlock in GetInstableBlock(node))
                 //    {
-                //        joinCount++;
-
-                //        continue;
+                //        nodes.Add(nodeBlock);
                 //    }
                 //}
-
-                if (joinArea / block.Size.Length == 0.5f)
-                {
-                    if (block.Instable) _destroyingBlocks.Add(block);
-                    else block.MakeInstable();
-                } 
-                else if (joinArea / block.Size.Length < 0.5f)
-                {
-                    _destroyingBlocks.Add(block);
-                }
             }
 
-            _destroyingBlocks.ForEach(_ => DestroyBlock(_));
+            destroyingBlocks.ForEach(_ => DestroyBlock(_));
+            GetInstableBlock(nodes).ForEach(_ => DestroyBlock(_));
         }
 
-        private List<IBlock> CheckNodeStability(IBlock block)
+        private List<IBlock> GetNode(IBlock block)
         {
             List<IBlock> result = new();
 
             foreach (Vector3Int size in block.Size)
             {
-                 result.Add(FindBlock(block.Position + size + Vector3Int.up));
+                IBlock node = FindBlock(block.Position + size + Vector3Int.up);
+
+                if(node != null && result.Any(_ => _ == node) == false && GetJoinArea(node) != 1)
+                {
+                    result.Add(node);
+
+                    GetNode(node).ForEach(_ => result.Add(_));
+                }
+
             }
 
             return result;
@@ -225,8 +270,6 @@ namespace Sources.BuildingLogic
 
             foreach (Vector3Int size in block.Size)
             {
-                Vector3Int position = size + block.Position;
-
                 if (FindJoin(size + block.Position))
                 {
                     joinCount++;
@@ -263,23 +306,49 @@ namespace Sources.BuildingLogic
 
         private void DestroyBlock(IBlock block)
         {
-            foreach (Vector3Int size in block.Size)
-            {
-                RefreshHeight(size + block.Position);
-            }
+            // The part of refreshing algoritm
+            //foreach (Vector3Int size in block.Size)
+            //{
+            //    RefreshHeight(size + block.Position);
+            //}
 
             _blocks.Remove(block);
             block.Destroy();
         }
 
-        private void RefreshHeight(Vector3Int position)
+        private void RefreshHeight()
         {
-            if(GetHeight(position.x, position.z) == position.y + 1)
-            {
-                int index = _fullPositions.FindIndex(_ => _.x == position.x && _.z == position.z);
+            List<Vector3Int> refreshed = new();
 
-                _fullPositions[index] = position;
+            foreach (IBlock block in _blocks)
+            {
+                foreach (Vector3Int size in block.Size)
+                {
+                    // Maybe conflict with rotating system! Warning!
+
+                    int index = refreshed.FindIndex(_ => _.x == size.x + block.Position.x && _.z == size.z + block.Position.z);
+
+                    if (index == -1)
+                    {
+                        refreshed.Add(size + block.Position + Vector3Int.up);
+                    }
+                    else if(size.y + block.Position.y + 1 > refreshed[index].y)
+                    {
+                        refreshed[index] = size + block.Position + Vector3Int.up;
+                    }
+                }
             }
+
+            _fullPositions.Clear();
+            refreshed.ForEach(_ => _fullPositions.Add(_));
+
+            // OLD REFRESH ALGORITM
+            //if (GetHeight(position.x, position.z) == position.y + 1)
+            //{
+            //    int index = _fullPositions.FindIndex(_ => _.x == position.x && _.z == position.z);
+
+            //    _fullPositions[index] = position;
+            //}
         }
 
         private bool CheckCollision(IBlock block, Vector3Int direction)
