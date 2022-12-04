@@ -288,6 +288,7 @@ namespace Sources.BuildingLogic
             return false;
         }
 
+        // IN PROCESS..
         private bool FindUpJoin(Vector3Int position)
         {
             if (FindBlock(position + Vector3Int.up) != null) return true;
