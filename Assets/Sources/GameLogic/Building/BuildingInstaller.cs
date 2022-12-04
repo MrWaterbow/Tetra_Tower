@@ -227,20 +227,20 @@ namespace Sources.BuildingLogic
                 {
                     destroyingBlocks.Add(block);
                 }
+            }
 
-                GetNode(block).ForEach(_ => nodes.Add(_));
-
-                // GARBAGE
-                //if(node.Count > 0)
-                //{
-                //    foreach(IBlock nodeBlock in GetInstableBlock(node))
-                //    {
-                //        nodes.Add(nodeBlock);
-                //    }
-                //}
+            foreach (IBlock block2 in _blocks)
+            {
+                GetNode(block2).ForEach(_ => nodes.Add(_));
             }
 
             destroyingBlocks.ForEach(_ => DestroyBlock(_));
+
+            foreach (IBlock block1 in destroyingBlocks)
+            {
+                GetNode(block1).ForEach(_ => nodes.Add(_));
+            }
+
             GetInstableBlock(nodes).ForEach(_ => DestroyBlock(_));
         }
 
@@ -270,7 +270,7 @@ namespace Sources.BuildingLogic
 
             foreach (Vector3Int size in block.Size)
             {
-                if (FindJoin(size + block.Position))
+                if (FindDownJoin(size + block.Position))
                 {
                     joinCount++;
 
@@ -281,9 +281,16 @@ namespace Sources.BuildingLogic
             return joinCount / block.Size.Length;
         }
 
-        private bool FindJoin(Vector3Int position)
+        private bool FindDownJoin(Vector3Int position)
         {
             if (position.y == 0 && OnPlatform(position) || FindBlock(position - Vector3Int.up) != null) return true;
+
+            return false;
+        }
+
+        private bool FindUpJoin(Vector3Int position)
+        {
+            if (FindBlock(position + Vector3Int.up) != null) return true;
 
             return false;
         }
@@ -306,12 +313,6 @@ namespace Sources.BuildingLogic
 
         private void DestroyBlock(IBlock block)
         {
-            // The part of refreshing algoritm
-            //foreach (Vector3Int size in block.Size)
-            //{
-            //    RefreshHeight(size + block.Position);
-            //}
-
             _blocks.Remove(block);
             block.Destroy();
         }
@@ -341,14 +342,6 @@ namespace Sources.BuildingLogic
 
             _fullPositions.Clear();
             refreshed.ForEach(_ => _fullPositions.Add(_));
-
-            // OLD REFRESH ALGORITM
-            //if (GetHeight(position.x, position.z) == position.y + 1)
-            //{
-            //    int index = _fullPositions.FindIndex(_ => _.x == position.x && _.z == position.z);
-
-            //    _fullPositions[index] = position;
-            //}
         }
 
         private bool CheckCollision(IBlock block, Vector3Int direction)
@@ -402,23 +395,19 @@ namespace Sources.BuildingLogic
             _blocks.Add(_currentBlock);
         }
 
-        private void ActivePhysics()
-        {
-            _currentBlock.ActivePhysics();
-        }
-
         private void AddHeight()
         {
             _height++;
         }
 
-        private void UpdateFullPositions()
-        {
-            foreach (Vector3Int size in _currentBlock.Size)
-            {
-                HeightByPosition(size + _currentBlock.Position + Vector3Int.up);
-            }
-        }
+        // OLD
+        //private void UpdateFullPositions()
+        //{
+        //    foreach (Vector3Int size in _currentBlock.Size)
+        //    {
+        //        HeightByPosition(size + _currentBlock.Position + Vector3Int.up);
+        //    }
+        //}
 
         private void HeightByPosition(Vector3Int size)
         {
@@ -439,10 +428,11 @@ namespace Sources.BuildingLogic
             return _fullPositions.FirstOrDefault(_ => _.x == x && _.z == z).y;
         }
 
-        private bool FindHeight(int x, int z)
-        {
-            return _fullPositions.Any(_ => _.x == x && _.z == z);
-        }
+        // OLD
+        //private bool FindHeight(int x, int z)
+        //{
+        //    return _fullPositions.Any(_ => _.x == x && _.z == z);
+        //}
 
         private int GetMaxHeight(IBlock block)
         {
