@@ -1514,11 +1514,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27ff8f2028ce2449bdfdc63559ee265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startBlock: {fileID: 7460254763801309008, guid: 944d41be46261104bb4495f26c28651f, type: 3}
+  _startBlock: {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
   _blockList:
-  - {fileID: 1622142305574284348, guid: cbf5c3e3bb1e8364c843a4924c9f9d87, type: 3}
   - {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
-  - {fileID: 7460254763801309008, guid: 944d41be46261104bb4495f26c28651f, type: 3}
   _buildingInstaller: {fileID: 1610863009}
 --- !u!114 &1610863012
 MonoBehaviour:
