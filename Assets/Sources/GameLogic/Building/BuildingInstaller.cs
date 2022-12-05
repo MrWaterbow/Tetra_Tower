@@ -4,10 +4,8 @@ using Sources.GridLogic;
 using Sources.RotationLogic;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace Sources.BuildingLogic
@@ -104,11 +102,11 @@ namespace Sources.BuildingLogic
         {
             if (_currentBlock != null)
             {
-                _currentBlock.Moved -= UpdateVisualization;
+                _currentBlock.Moved -= UpdateVisualizationPosition;
                 _currentBlock.Placed -= _visualization.Hide;
                 //_currentBlock.Placed += UpdateFullPositions;
                 _currentBlock.Placed -= AddBlock;
-                _currentBlock.Placed -= CheckBlocksStability;
+                _currentBlock.Placed -= UpdateBlocksState;
                 _currentBlock.Placed -= RefreshHeight;
                 // _currentBlock.Placed += ActivePhysics;
                 _currentBlock.Placed -= AddHeight;
@@ -119,15 +117,15 @@ namespace Sources.BuildingLogic
             _currentBlock = _blockFactory.Create(_currentBlock == null ? BlockType.Start : BlockType.Random, _height);
 
             _visualization.Show(_currentBlock.MeshFilter.mesh, _currentBlock.MeshRenderer.sharedMaterial.color);
-            UpdateVisualization(_currentBlock.Position);
+            UpdateVisualizationPosition(_currentBlock.Position);
 
-            _currentBlock.Moved += UpdateVisualization;
+            _currentBlock.Moved += UpdateVisualizationPosition;
             _currentBlock.Placed += _visualization.Hide;
             //_currentBlock.Placed += UpdateFullPositions;
             _currentBlock.Placed += AddBlock;
-            _currentBlock.Placed += CheckBlocksStability;
+            _currentBlock.Placed += UpdateBlocksState;
             _currentBlock.Placed += RefreshHeight;
-           // _currentBlock.Placed += ActivePhysics;
+            // _currentBlock.Placed += ActivePhysics;
             _currentBlock.Placed += AddHeight;
             _currentBlock.Placed += SpawnNext;
             _currentBlock.Placed += NextBlock;
@@ -155,95 +153,46 @@ namespace Sources.BuildingLogic
             return grounded;
         }
 
-        public bool CanMove(IBlock block, Vector3Int direction)
+        private void UpdateBlocksState()
         {
-            if (block.Position.y == 0) return false;
+            //List<IBlock> destroyingBlocks = new();
+            //List<IBlock> nodes = new();
 
-            //print(CheckCollision(block, direction));
+            //foreach (IBlock block in _blocks)
+            //{
+            //    float joinArea = GetJoinArea(block);
 
-            if (StayOnGround(block, direction) && CheckCollision(block, direction)) return true;
+            //    if (joinArea == 0.5f)
+            //    {
+            //        if (block.Instable) destroyingBlocks.Add(block);
+            //        else if(block.Position.y == 0) block.MakeInstable();
+            //    }
+            //    else if (joinArea < 0.5f)
+            //    {
+            //        destroyingBlocks.Add(block);
+            //    }
+            //}
 
-            //if (CheckCollision(block, direction)) return false;
+            //foreach (IBlock block2 in _blocks)
+            //{
+            //    GetNode(block2).ForEach(_ => nodes.Add(_));
+            //}
 
-            return false;
+            //destroyingBlocks.ForEach(_ => DestroyBlock(_));
+
+            //foreach (IBlock block1 in destroyingBlocks)
+            //{
+            //    GetNode(block1).ForEach(_ => nodes.Add(_));
+            //}
+
+            //GetInstableBlock(nodes).ForEach(_ => DestroyBlock(_));
         }
 
-        private void UpdateVisualization(Vector3 blockPosition)
-        {
-            Vector3 visualizationPosition = blockPosition;
-
-            visualizationPosition.y = GetMaxHeight(_currentBlock);
-
-            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition + _currentBlock.VisualizationOffset));
-        }
-
-        private List<IBlock> GetInstableBlock(List<IBlock> blocks)
-        {
-            List<IBlock> result = new();
-
-            foreach (IBlock block in blocks)
-            {
-                float joinArea = GetJoinArea(block);
-
-                if (joinArea == 0.5f)
-                {
-                    if (block.Instable) result.Add(block);
-                    else block.MakeInstable();
-                } 
-                else if (joinArea < 0.5f)
-                {
-                    result.Add(block);
-                }
-
-                List<IBlock> nodes = GetNode(block);
-
-                //if (nodes.Count > 0)
-                //{
-                //    foreach (IBlock nodeBlock in GetInstableBlock(nodes))
-                //    {
-                //        result.Add(nodeBlock);
-                //    }
-                //}
-            }
-
-            return result;
-        }
-
-        private void CheckBlocksStability()
-        {
-            List<IBlock> destroyingBlocks = new();
-            List<IBlock> nodes = new();
-
-            foreach (IBlock block in _blocks)
-            {
-                float joinArea = GetJoinArea(block);
-
-                if (joinArea == 0.5f)
-                {
-                    if (block.Instable) destroyingBlocks.Add(block);
-                    else if(block.Position.y == 0) block.MakeInstable();
-                }
-                else if (joinArea < 0.5f)
-                {
-                    destroyingBlocks.Add(block);
-                }
-            }
-
-            foreach (IBlock block2 in _blocks)
-            {
-                GetNode(block2).ForEach(_ => nodes.Add(_));
-            }
-
-            destroyingBlocks.ForEach(_ => DestroyBlock(_));
-
-            foreach (IBlock block1 in destroyingBlocks)
-            {
-                GetNode(block1).ForEach(_ => nodes.Add(_));
-            }
-
-            GetInstableBlock(nodes).ForEach(_ => DestroyBlock(_));
-        }
-
+        /// <summary>
+        /// Get upper connected blocks
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns>List of the connected blocks</returns>
         private List<IBlock> GetNode(IBlock block)
         {
             List<IBlock> result = new();
@@ -252,7 +201,7 @@ namespace Sources.BuildingLogic
             {
                 IBlock node = FindBlock(block.Position + size + Vector3Int.up);
 
-                if(node != null && result.Any(_ => _ == node) == false && GetJoinArea(node) != 1)
+                if (node != null && result.Any(_ => _ == node) == false && GetJoinArea(node) != 1)
                 {
                     result.Add(node);
 
@@ -264,6 +213,33 @@ namespace Sources.BuildingLogic
             return result;
         }
 
+        /// <summary>
+        /// Checking the block stability. Make the block instable.
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns>true - if block falling | false - if block instable/normal</returns>
+        private bool CheckBlockStability(IBlock block)
+        {
+            float joinArea = GetJoinArea(block);
+
+            if (joinArea == 0.5f)
+            {
+                if (block.Instable) return true;
+                else if (block.Position.y == 0) block.MakeInstable();
+            }
+            else if (joinArea < 0.5f)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Return block join area. The area of contact of the block with the surface.
+        /// </summary>
+        /// <param name="block">concrete block</param>
+        /// <returns>Join area is a value from 0 to 1.</returns>
         private float GetJoinArea(IBlock block)
         {
             float joinCount = 0;
@@ -281,41 +257,26 @@ namespace Sources.BuildingLogic
             return joinCount / block.Size.Length;
         }
 
+        // MAYBE OLD
         private bool FindDownJoin(Vector3Int position)
         {
-            if (position.y == 0 && OnPlatform(position) || FindBlock(position - Vector3Int.up) != null) return true;
+            if (position.y == 0 && OnPlatform(position.x, position.z) || FindBlock(position - Vector3Int.up) != null) return true;
 
             return false;
         }
 
-        private int GetBlockSupportCount(IBlock block)
-        {
-            int result = 0;
-
-            foreach (IBlock node in GetNode(block))
-            {
-                foreach (Vector3Int size in node.Size)
-                {
-
-                }
-            }
-        }
-
-        // IN PROCESS..
-        private bool FindUpJoin(Vector3Int position)
-        {
-            if (FindBlock(position + Vector3Int.up) != null) return true;
-
-            return false;
-        }
-
+        /// <summary>
+        /// Find the block by position
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns>concrete block</returns>
         private IBlock FindBlock(Vector3Int position)
         {
             foreach (IBlock block in _blocks)
             {
                 foreach (Vector3Int size in block.Size)
                 {
-                    if(size + block.Position == position)
+                    if (size + block.Position == position)
                     {
                         return block;
                     }
@@ -325,12 +286,9 @@ namespace Sources.BuildingLogic
             return null;
         }
 
-        private void DestroyBlock(IBlock block)
-        {
-            _blocks.Remove(block);
-            block.Destroy();
-        }
-
+        /// <summary>
+        /// Refreshing the heights list
+        /// </summary>
         private void RefreshHeight()
         {
             List<Vector3Int> refreshed = new();
@@ -339,7 +297,7 @@ namespace Sources.BuildingLogic
             {
                 foreach (Vector3Int size in block.Size)
                 {
-                    // Maybe conflict with rotating system! Warning!
+                    // Maybe conflict with the rotating system! Warning!
 
                     int index = refreshed.FindIndex(_ => _.x == size.x + block.Position.x && _.z == size.z + block.Position.z);
 
@@ -347,7 +305,7 @@ namespace Sources.BuildingLogic
                     {
                         refreshed.Add(size + block.Position + Vector3Int.up);
                     }
-                    else if(size.y + block.Position.y + 1 > refreshed[index].y)
+                    else if (size.y + block.Position.y + 1 > refreshed[index].y)
                     {
                         refreshed[index] = size + block.Position + Vector3Int.up;
                     }
@@ -358,7 +316,42 @@ namespace Sources.BuildingLogic
             refreshed.ForEach(_ => _fullPositions.Add(_));
         }
 
-        private bool CheckCollision(IBlock block, Vector3Int direction)
+
+        /// <summary>
+        /// Update visualization position
+        /// </summary>
+        /// <param name="blockPosition"></param>
+        private void UpdateVisualizationPosition(Vector3 blockPosition)
+        {
+            Vector3 visualizationPosition = blockPosition;
+
+            visualizationPosition.y = GetMaxBlockHeight(_currentBlock);
+
+            _visualization.SetPosition(_grid.GetWorldPosition(visualizationPosition + _currentBlock.VisualizationOffset));
+        }
+
+        /// <summary>
+        /// Checking the block moving direction.
+        /// </summary>
+        /// <param name="block"></param>
+        /// <param name="direction"></param>
+        /// <returns>true - if move is possible | false - if moving is unpossible</returns>
+        public bool CheckMovingDirection(IBlock block, Vector3Int direction)
+        {
+            if (block.Position.y == 0) return false;
+
+            if (BlockOnPlatfrom(block, direction) && CheckBlockTilesForEntering(block, direction)) return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check the block tiles for entering into the other blocks
+        /// </summary>
+        /// <param name="block"></param>
+        /// <param name="direction">moving direction</param>
+        /// <returns>true - out of the other blocks | false - entered in the other blocks</returns>
+        private bool CheckBlockTilesForEntering(IBlock block, Vector3Int direction)
         {
             bool result = true;
 
@@ -376,7 +369,13 @@ namespace Sources.BuildingLogic
             return result;
         }
 
-        private bool StayOnGround(IBlock block, Vector3Int direction)
+        /// <summary>
+        /// Checking the block for entering into the platform
+        /// </summary>
+        /// <param name="block"></param>
+        /// <param name="direction">moving direction</param>
+        /// <returns>true - enter | false - out of the platform</returns>
+        private bool BlockOnPlatfrom(IBlock block, Vector3Int direction)
         {
             bool result = false;
 
@@ -384,7 +383,7 @@ namespace Sources.BuildingLogic
             {
                 Vector3Int position = block.Position + direction + size;
 
-                if (OnPlatform(position))
+                if (OnPlatform(position.x, position.z))
                 {
                     result = true;
                 }
@@ -393,64 +392,13 @@ namespace Sources.BuildingLogic
             return result;
         }
 
-
-        private bool OnPlatform(Vector3Int position)
+        /// <summary>
+        /// Return max height of the block ( checking everything block*tile )
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns>max height</returns>
+        private int GetMaxBlockHeight(IBlock block)
         {
-            if(position.x > -1 && position.x < 3 && position.z > -1 && position.z < 3)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private void AddBlock()
-        {
-            _blocks.Add(_currentBlock);
-        }
-
-        private void AddHeight()
-        {
-            _height++;
-        }
-
-        // OLD
-        //private void UpdateFullPositions()
-        //{
-        //    foreach (Vector3Int size in _currentBlock.Size)
-        //    {
-        //        HeightByPosition(size + _currentBlock.Position + Vector3Int.up);
-        //    }
-        //}
-
-        private void HeightByPosition(Vector3Int size)
-        {
-            int index = _fullPositions.FindIndex(_ => _.x == size.x && _.z == size.z);
-
-            if (index == -1)
-            {
-                _fullPositions.Add(size);
-            }
-            else
-            {
-                _fullPositions[index] = size;
-            }
-        }
-
-        private int GetHeight(int x, int z)
-        {
-            return _fullPositions.FirstOrDefault(_ => _.x == x && _.z == z).y;
-        }
-
-        // OLD
-        //private bool FindHeight(int x, int z)
-        //{
-        //    return _fullPositions.Any(_ => _.x == x && _.z == z);
-        //}
-
-        private int GetMaxHeight(IBlock block)
-        {
-            //return (int)Mathf.Round(_currentBlock.GetRaycast().y);
             int max = 0;
 
             foreach (Vector3 size in block.Size)
@@ -462,7 +410,57 @@ namespace Sources.BuildingLogic
                     max = height.y;
                 }
             }
+
             return max;
+        }
+
+        /// <summary>
+        /// Check position for entering into the platform
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns>true - enter | false - out of the platform</returns>
+        private bool OnPlatform(int x, int z)
+        {
+            if (x > -1 && x < 3 && z > -1 && z < 3)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Destroying the block
+        /// </summary>
+        /// <param name="block"></param>
+        private void DestroyBlock(IBlock block)
+        {
+            _blocks.Remove(block);
+            block.Destroy();
+        }
+
+        /// <summary>
+        /// Get height by position
+        /// </summary>
+        /// <param name="x">X position</param>
+        /// <param name="z">Y position</param>
+        /// <returns>value of height</returns>
+        private int GetHeight(int x, int z)
+        {
+            return _fullPositions.FirstOrDefault(_ => _.x == x && _.z == z).y;
+        }
+
+        /// <summary>
+        /// Add block to list
+        /// </summary>
+        private void AddBlock()
+        {
+            _blocks.Add(_currentBlock);
+        }
+
+        private void AddHeight()
+        {
+            _height++;
         }
 
         private void MovingUp()
@@ -487,7 +485,7 @@ namespace Sources.BuildingLogic
 
         private void MovingGround()
         {
-            _currentBlock.Move(Vector3Int.down * (_currentBlock.Position.y - GetMaxHeight(_currentBlock)));
+            _currentBlock.Move(Vector3Int.down * (_currentBlock.Position.y - GetMaxBlockHeight(_currentBlock)));
         }
     }
 }

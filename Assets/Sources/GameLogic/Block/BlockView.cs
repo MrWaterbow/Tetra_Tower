@@ -147,7 +147,7 @@ namespace Sources.BlockLogic
 
         private bool CanMove(Vector3Int direction)
         {
-            return _buildingInstaller.CanMove(this, direction);
+            return _buildingInstaller.CheckMovingDirection(this, direction);
         }
 
         private void CheckGrounded()
