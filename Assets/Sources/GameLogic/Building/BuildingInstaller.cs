@@ -288,19 +288,6 @@ namespace Sources.BuildingLogic
             return false;
         }
 
-        private int GetBlockSupportCount(IBlock block)
-        {
-            int result = 0;
-
-            foreach (IBlock node in GetNode(block))
-            {
-                foreach (Vector3Int size in node.Size)
-                {
-
-                }
-            }
-        }
-
         // IN PROCESS..
         private bool FindUpJoin(Vector3Int position)
         {
