@@ -1,17 +1,19 @@
-﻿using System;
+﻿using Sources.StateMachines;
+using System;
 using UnityEngine;
 
 namespace Sources.BlockLogic
 {
     public interface IBlock
     {
-        event Action<Vector3> Moved;
-        event Action Placed;
+        event Action<Vector3> Transforming;
 
         Vector3Int[] Size { get; }
         Vector3 VisualizationOffset { get; }
 
         Vector3Int Position { get; }
+
+        IReadonlyStateMachine<BlockState> StateMachine { get; }
 
         bool Instable { get; }
 
@@ -25,11 +27,9 @@ namespace Sources.BlockLogic
         void Fall();
         void Destroy();
 
-        void MakeInstable(); 
-        void ActivePhysics();
+        void InvokeInstable(); 
+        void InvokeRigidbody();
 
         void Rotate(Vector3 direction, int degree);
-
-        Vector3 GetRaycast();
     }
 }

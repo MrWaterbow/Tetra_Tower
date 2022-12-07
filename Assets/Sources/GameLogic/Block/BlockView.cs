@@ -1,16 +1,22 @@
 ﻿using DG.Tweening;
-using Lean.Transition;
 using Sources.BuildingLogic;
+using Sources.StateMachines;
 using System;
-using System.Linq;
 using UnityEngine;
 
 namespace Sources.BlockLogic
 {
+    public enum BlockState
+    {
+        Placing,
+        Placed,
+        Instable,
+        Falling
+    }
+
     public class BlockView : MonoBehaviour, IBlock
     {
-        public event Action<Vector3> Moved;
-        public event Action Placed;
+        public event Action<Vector3> Transforming;
 
         [SerializeField] private Vector3Int[] _size;
         [SerializeField] private Vector3 _visualizationOffset;
@@ -34,7 +40,9 @@ namespace Sources.BlockLogic
         [SerializeField] private MeshFilter _meshFilter;
         [SerializeField] private Rigidbody _rigidbody;
 
-        private BuildingInstaller _buildingInstaller;
+        private StateMachine<BlockState> _stateMachine;
+
+        private BuildingRoot _buildingInstaller;
 
         private Vector3Int _position;
 
@@ -44,6 +52,8 @@ namespace Sources.BlockLogic
         public Vector3 VisualizationOffset => _visualizationOffset;
 
         public Vector3Int Position => _position;
+
+        public IReadonlyStateMachine<BlockState> StateMachine => _stateMachine;
 
         public Transform Transform => _transform;
         public Transform ModelTransform => _modelTransform;
@@ -56,7 +66,7 @@ namespace Sources.BlockLogic
         {
             _hideTime = Mathf.Clamp(_hideTime, 0, float.MaxValue);
 
-            if(_gameObject == null)
+            if (_gameObject == null)
             {
                 _gameObject = gameObject;
             }
@@ -82,29 +92,34 @@ namespace Sources.BlockLogic
             }
         }
 
-        public void Initialize(Vector3Int position, BuildingInstaller buildingInstaller)
+        public void Initialize(Vector3Int position, BuildingRoot buildingInstaller)
         {
-            _position = position;
-
+            _stateMachine = new StateMachine<BlockState>(BlockState.Placing);
             _buildingInstaller = buildingInstaller;
+
+            _position = position;
         }
 
+        /// <summary>
+        /// Fall block.
+        /// </summary>
         public void Fall()
         {
-            if (_position.y == 0) return;
+            if (_stateMachine.CurrentState == BlockState.Placing)
+            {
+                _position.y--;
 
-            _position.y--;
-
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
-
-            CheckGrounded();
-
-            Moved?.Invoke(Position);
+                OnMoving();
+            }
         }
 
+        /// <summary>
+        /// Move the block to the direction.
+        /// </summary>
+        /// <param name="direction">moving direction</param>
         public void Move(Vector3Int direction)
         {
-            if (CanMove(direction) == false) return;
+            if (_buildingInstaller.CheckMovingDirection(this, direction) == false) return;
 
             _position += direction;
 
@@ -113,19 +128,49 @@ namespace Sources.BlockLogic
 
         public void Rotate(Vector3 direction, int degree)
         {
-            _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
-            //Moved?.Invoke(Position);
+            // OLD
+            //_transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+            //Transforming?.Invoke(Position);
         }
 
+        /// <summary>
+        /// Update the transform position, Checking join and invoke events.
+        /// </summary>
+        private void OnMoving()
+        {
+            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
+
+            Transforming?.Invoke(Position);
+
+            if(_buildingInstaller.CheckingJoin(this))
+            {
+                _stateMachine.SetState(BlockState.Placed);
+            }
+        }
+
+        /// <summary>
+        /// Invoke the rigidbody.
+        /// </summary>
+        public void InvokeRigidbody()
+        {
+            _rigidbody.isKinematic = false;
+        }
+
+        /// <summary>
+        /// Invoke all actions to destroy the block.
+        /// </summary>
         public void Destroy()
         {
             _meshRenderer.material.DOKill();
 
-            ActivePhysics();
+            InvokeRigidbody();
 
             Invoke(nameof(DestroyAnimation), _buildingInstaller.MoveSmooth);
         }
 
+        /// <summary>
+        /// Invoke destroy animation and destroy block on complete.
+        /// </summary>
         private void DestroyAnimation()
         {
             _meshRenderer.material.DOFade(0, _hideTime).onComplete += () =>
@@ -136,64 +181,27 @@ namespace Sources.BlockLogic
             };
         }
 
-        private void OnMoving()
-        {
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
-
-            CheckGrounded();
-
-            Moved?.Invoke(Position);
-        }
-
-        private bool CanMove(Vector3Int direction)
-        {
-            return _buildingInstaller.CheckMovingDirection(this, direction);
-        }
-
-        private void CheckGrounded()
-        {
-            if (_buildingInstaller.OnGround(this))
-            {
-                Placed?.Invoke();
-            }
-        }
-
-        public void ActivePhysics()
-        {
-            _rigidbody.isKinematic = false;
-        }
-
         /// <summary>
-        /// Скорее всего бесполезная хреня, но пусть будет по рофлу
+        /// Set block instable and active tween.
         /// </summary>
-        /// <returns></returns>
-        public Vector3 GetRaycast()
-        {
-            Ray ray = new(_modelTransform.position - new Vector3(0, 0.5f, 0), Vector3.down);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if(hit.transform.TryGetComponent(out ViewCollider collider))
-                {
-                    return hit.point;
-                }
-            }
-
-            return Vector3.zero;
-        }
-
-        public void MakeInstable()
+        public void InvokeInstable()
         {
             DOInstableColor();
 
             _instable = true;
         }
 
+        /// <summary>
+        /// Part of the instable tween.
+        /// </summary>
         private void DOInstableColor()
         {
             _meshRenderer.material.DOColor(_instableColor, _instableAnimationTime).onComplete += DODefaultColor;
         }
-        
+
+        /// <summary>
+        /// Part of the instable tween.
+        /// </summary>
         private void DODefaultColor()
         {
             _meshRenderer.material.DOColor(_defaultColor, _instableAnimationTime).onComplete += DOInstableColor;
