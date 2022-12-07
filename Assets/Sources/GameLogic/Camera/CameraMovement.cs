@@ -25,10 +25,14 @@ namespace Sources.CameraLogic
         [Space]
 
         [SerializeField] private Camera _camera;
-        [SerializeField] private float _sensetivity;
         [SerializeField] Transform _rotationPoint;
 
-        private Vector3 _previousPos;
+        [Space]
+        private Vector2 _startTouchPosition;
+        private Vector2 _endTouchPosition;
+        private bool _isMobile;
+        [SerializeField] private float _minDelta;
+        [SerializeField] private CameraRotation _cameraRotation;
 
         [Inject]
         private void Construct(BuildingInstaller buildingInstaller)
@@ -39,6 +43,7 @@ namespace Sources.CameraLogic
         private void Awake()
         {
             _cameraTransform.position = _root.position + _offset;
+            _isMobile = Application.isMobilePlatform; //checking platform of app
         }
 
         private void OnEnable()
@@ -59,21 +64,67 @@ namespace Sources.CameraLogic
         private void MoveCamera()
         {
             _offset.y += _moveOffset;
-            //_camera.transform.position = new Vector3(transform.position.x, _root.position.y+_offset.y, transform.position.z);
-            _cameraTransform.DOMove(_root.position + _offset, _moveOffset);
+            _rotationPoint.position = new Vector3(_rotationPoint.position.x, _rotationPoint.position.y + 0.6f, _rotationPoint.position.z);
+            _cameraTransform.DOMoveY(_root.position.y + _offset.y, _moveOffset);
         }
        
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            //mobile swipe controll
+            if (_isMobile)
             {
-                _previousPos = _camera.ScreenToViewportPoint(Input.mousePosition);
+                if(Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    _startTouchPosition = Input.GetTouch(0).position; //getting start position of mouse
+                }
+                if(Input.touchCount>0 && (Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetTouch(0).phase == TouchPhase.Canceled))
+                {
+                    _endTouchPosition = Input.GetTouch(0).position;  //getting end position of mouse
+                    //if swipe delta is bigger than minimal value, then deciding right or left swipe
+                    if (Math.Abs(_endTouchPosition.x - _startTouchPosition.x) >= _minDelta)
+                    {
+                        if(_endTouchPosition.x < _startTouchPosition.x)
+                        {
+                            SwipeLeft();
+                        }
+                        else if(_endTouchPosition.x > _startTouchPosition.x )
+                        {
+                            SwipeRight();
+                        }
+                    }
+                }
             }
-            if (Input.GetMouseButton(0))
+            //editor and others (same as mobile)
+            else
             {
-                Vector3 direction = _previousPos - _camera.ScreenToViewportPoint(Input.mousePosition);
-                _camera.transform.RotateAround(_rotationPoint.position, Vector3.up, -direction.x * _sensetivity);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    _startTouchPosition = Input.mousePosition;
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    _endTouchPosition = Input.mousePosition;
+                    if (Math.Abs(_endTouchPosition.x - _startTouchPosition.x) >= _minDelta)
+                    {
+                        if (_endTouchPosition.x < _startTouchPosition.x)
+                        {
+                            SwipeLeft();
+                        }
+                        else if (_endTouchPosition.x > _startTouchPosition.x)
+                        {
+                            SwipeRight();
+                        }
+                    }
+                }
             }
+        }
+        private void SwipeRight()
+        {
+            _cameraRotation.Move(-1);
+        }
+        private void SwipeLeft()
+        {
+            _cameraRotation.Move(1);
         }
     }
 }
