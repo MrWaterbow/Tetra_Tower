@@ -40,15 +40,11 @@ namespace Sources.CameraLogic
             _buildingInstaller = buildingInstaller;
         }
 
-<<<<<<< Updated upstream
         private void Awake()
         {
-            _cameraTransform.position = _root.position + _offset;
-            _isMobile = Application.isMobilePlatform; //checking platform of app
+            _isMobile = Application.isMobilePlatform;
         }
 
-=======
->>>>>>> Stashed changes
         private void OnEnable()
         {
             _buildingInstaller.SpawnBlock += MoveCamera;
