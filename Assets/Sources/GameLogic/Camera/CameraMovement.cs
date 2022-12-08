@@ -14,35 +14,25 @@ namespace Sources.CameraLogic
 
         [SerializeField] private float _moveOffset;
         [SerializeField] private float _moveTime;
+        [SerializeField] private float _minDelta;
 
         [Space]
 
+        [SerializeField] private CameraRotation _cameraRotation;
         [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private Transform _rotationPoint;
         [SerializeField] private Transform _root;
+        [SerializeField] private Camera _camera;
 
         private BuildingRoot _buildingInstaller;
 
-        [Space]
-
-        [SerializeField] private Camera _camera;
-        [SerializeField] Transform _rotationPoint;
-
-        [Space]
         private Vector2 _startTouchPosition;
         private Vector2 _endTouchPosition;
-        private bool _isMobile;
-        [SerializeField] private float _minDelta;
-        [SerializeField] private CameraRotation _cameraRotation;
 
         [Inject]
         private void Construct(BuildingRoot buildingInstaller)
         {
             _buildingInstaller = buildingInstaller;
-        }
-
-        private void Awake()
-        {
-            _isMobile = Application.isMobilePlatform;
         }
 
         private void OnEnable()
@@ -63,64 +53,74 @@ namespace Sources.CameraLogic
         private void MoveCamera()
         {
             _offset.y += _moveOffset;
+
             _rotationPoint.position = new Vector3(_rotationPoint.position.x, _rotationPoint.position.y + 0.6f, _rotationPoint.position.z);
+
             _cameraTransform.DOMoveY(_root.position.y + _offset.y, _moveOffset);
         }
-       
+
         private void Update()
         {
-            //mobile swipe controll
-            if (_isMobile)
+#if UNITY_EDITOR
+            MouseRotation();
+#endif
+#if UNITY_EDITOR == false
+            MobileRotation();
+#endif
+        }
+
+        private void MouseRotation()
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                if(Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Began)
-                {
-                    _startTouchPosition = Input.GetTouch(0).position; //getting start position of mouse
-                }
-                if(Input.touchCount>0 && (Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetTouch(0).phase == TouchPhase.Canceled))
-                {
-                    _endTouchPosition = Input.GetTouch(0).position;  //getting end position of mouse
-                    //if swipe delta is bigger than minimal value, then deciding right or left swipe
-                    if (Math.Abs(_endTouchPosition.x - _startTouchPosition.x) >= _minDelta)
-                    {
-                        if(_endTouchPosition.x < _startTouchPosition.x)
-                        {
-                            SwipeLeft();
-                        }
-                        else if(_endTouchPosition.x > _startTouchPosition.x )
-                        {
-                            SwipeRight();
-                        }
-                    }
-                }
+                _startTouchPosition = Input.mousePosition;
             }
-            //editor and others (same as mobile)
-            else
+            if (Input.GetMouseButtonUp(0))
             {
-                if (Input.GetMouseButtonDown(0))
+                _endTouchPosition = Input.mousePosition;
+                if (Math.Abs(_endTouchPosition.x - _startTouchPosition.x) >= _minDelta)
                 {
-                    _startTouchPosition = Input.mousePosition;
-                }
-                if (Input.GetMouseButtonUp(0))
-                {
-                    _endTouchPosition = Input.mousePosition;
-                    if (Math.Abs(_endTouchPosition.x - _startTouchPosition.x) >= _minDelta)
+                    if (_endTouchPosition.x < _startTouchPosition.x)
                     {
-                        if (_endTouchPosition.x < _startTouchPosition.x)
-                        {
-                            SwipeLeft();
-                        }
-                        else if (_endTouchPosition.x > _startTouchPosition.x)
-                        {
-                            SwipeRight();
-                        }
+                        SwipeLeft();
+                    }
+                    else if (_endTouchPosition.x > _startTouchPosition.x)
+                    {
+                        SwipeRight();
                     }
                 }
             }
         }
+
+        private void MobileRotation()
+        {
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                _startTouchPosition = Input.GetTouch(0).position; //getting start position of mouse
+            }
+            if (Input.touchCount > 0 && (Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetTouch(0).phase == TouchPhase.Canceled))
+            {
+                _endTouchPosition = Input.GetTouch(0).position;  //getting end position of mouse
+                                                                 //if swipe delta is bigger than minimal value, then deciding right or left swipe
+                if (Math.Abs(_endTouchPosition.x - _startTouchPosition.x) >= _minDelta)
+                {
+                    if (_endTouchPosition.x < _startTouchPosition.x)
+                    {
+                        SwipeLeft();
+                    }
+                    else if (_endTouchPosition.x > _startTouchPosition.x)
+                    {
+                        SwipeRight();
+                    }
+                }
+            }
+        }
+
         private void SwipeRight()
         {
             _cameraRotation.Move(-1);
         }
+
         private void SwipeLeft()
         {
             _cameraRotation.Move(1);

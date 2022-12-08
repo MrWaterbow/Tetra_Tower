@@ -36,6 +36,8 @@ namespace Sources.BuildingLogic
 
         private float _tick;
 
+        private bool _haveBlock;
+
         [Inject]
         private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input)
         {
@@ -52,6 +54,8 @@ namespace Sources.BuildingLogic
 
         private void Update()
         {
+            _haveBlock = _currentBlock != null;
+
             if (_currentBlock == null) return;
 
             _tick += Time.deltaTime;
@@ -117,7 +121,7 @@ namespace Sources.BuildingLogic
                 _visualization.Hide();
                 AddBlock(_currentBlock);
                 // Checking nodes HERE....
-                UpdateHeight();
+                UpdateHeightMap();
                 AddHeight();
                 SpawnNext();
                 SpawnBlock?.Invoke();
@@ -186,7 +190,7 @@ namespace Sources.BuildingLogic
         /// <returns>true - if move is possible | false - if moving is unpossible</returns>
         public bool CheckMovingDirection(IBlock block, Vector3Int direction)
         {
-            if (_currentBlock.StateMachine.CurrentState != BlockState.Placing) return false;
+            if (block.StateMachine.CurrentState != BlockState.Placing) return false;
 
             if (BlockOnPlatfrom(block, direction) && CheckBlockTilesForEntering(block, direction)) return true;
 
@@ -282,9 +286,9 @@ namespace Sources.BuildingLogic
 
 
         /// <summary>
-        /// Refreshing the heights list.
+        /// Refreshing the heights map.
         /// </summary>
-        private void UpdateHeight()
+        private void UpdateHeightMap()
         {
             List<Vector3Int> refreshed = new();
 
