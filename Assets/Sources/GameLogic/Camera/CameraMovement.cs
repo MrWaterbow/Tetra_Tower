@@ -20,7 +20,7 @@ namespace Sources.CameraLogic
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Transform _root;
 
-        private BuildingInstaller _buildingInstaller;
+        private BuildingRoot _buildingInstaller;
 
         [Space]
 
@@ -35,25 +35,24 @@ namespace Sources.CameraLogic
         [SerializeField] private CameraRotation _cameraRotation;
 
         [Inject]
-        private void Construct(BuildingInstaller buildingInstaller)
+        private void Construct(BuildingRoot buildingInstaller)
         {
             _buildingInstaller = buildingInstaller;
         }
 
         private void Awake()
         {
-            _cameraTransform.position = _root.position + _offset;
-            _isMobile = Application.isMobilePlatform; //checking platform of app
+            _isMobile = Application.isMobilePlatform;
         }
 
         private void OnEnable()
         {
-            _buildingInstaller.NextBlock += MoveCamera;
+            _buildingInstaller.SpawnBlock += MoveCamera;
         }
 
         private void OnDisable()
         {
-            _buildingInstaller.NextBlock -= MoveCamera;
+            _buildingInstaller.SpawnBlock -= MoveCamera;
         }
 
         private void OnValidate()

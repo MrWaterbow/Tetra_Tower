@@ -13,7 +13,7 @@ namespace Sources.Factories
 
         [Space]
 
-        [SerializeField] private BuildingInstaller _buildingInstaller;
+        [SerializeField] private BuildingRoot _buildingInstaller;
 
         private BlockFactory _factory;
 
@@ -21,7 +21,7 @@ namespace Sources.Factories
         {
             if(_buildingInstaller == null)
             {
-                _buildingInstaller = FindObjectOfType<BuildingInstaller>();
+                _buildingInstaller = FindObjectOfType<BuildingRoot>();
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿using Sources.BlockLogic;
 using Sources.BuildingLogic;
-using Sources.GridLogic;
 using UnityEngine;
 using Zenject;
 
@@ -17,9 +16,9 @@ namespace Sources.Factories
         private readonly BlockView _startTile;
         private readonly BlockView[] _blocksList;
 
-        private readonly BuildingInstaller _buildingInstaller;
+        private readonly BuildingRoot _buildingInstaller;
 
-        public BlockFactory(BlockView startTile, BlockView[] blocksList, BuildingInstaller buildingInstaller)
+        public BlockFactory(BlockView startTile, BlockView[] blocksList, BuildingRoot buildingInstaller)
         {
             _startTile = startTile;
             _blocksList = blocksList;
