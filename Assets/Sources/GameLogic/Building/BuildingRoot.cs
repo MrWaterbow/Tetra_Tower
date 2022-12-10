@@ -1,18 +1,20 @@
-using System.Collections.Generic;
-using System.Linq;
-using System;
-
-using Sources.CompositeRootLogic;
-using Sources.RotationLogic;
 using Sources.BlockLogic;
+using Sources.CompositeRootLogic;
 using Sources.Factories;
 using Sources.GridLogic;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 namespace Sources.BuildingLogic
 {
+    public class BlockStability 
+    {
+
+    }
+
     public class BuildingRoot : CompositeRoot
     {
         public event Action SpawnBlock;
@@ -36,8 +38,6 @@ namespace Sources.BuildingLogic
 
         private float _tick;
 
-        private bool _haveBlock;
-
         [Inject]
         private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input)
         {
@@ -54,8 +54,6 @@ namespace Sources.BuildingLogic
 
         private void Update()
         {
-            _haveBlock = _currentBlock != null;
-
             if (_currentBlock == null) return;
 
             _tick += Time.deltaTime;
@@ -120,7 +118,7 @@ namespace Sources.BuildingLogic
             {
                 _visualization.Hide();
                 AddBlock(_currentBlock);
-                // Checking nodes HERE....
+                CheckStability();
                 UpdateHeightMap();
                 AddHeight();
                 SpawnNext();
@@ -198,6 +196,22 @@ namespace Sources.BuildingLogic
         }
 
         /// <summary>
+        /// Check the block joins
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
+        public bool CheckPlaced(IBlock block)
+        {
+            if (block.StateMachine.CurrentState != BlockState.Placing) return false;
+
+            if (block.Position.y == 0) return true;
+
+            if (GetMaxBlockHeight(block) >= block.Position.y) return true;
+
+            return false;
+        }
+
+        /// <summary>
         /// Check the block tiles for entering into the other blocks.
         /// </summary>
         /// <param name="block"></param>
@@ -245,28 +259,136 @@ namespace Sources.BuildingLogic
         }
 
         /// <summary>
-        /// Checking the block position for joined.
+        /// Return joins count
         /// </summary>
         /// <param name="block"></param>
         /// <returns></returns>
-        public bool CheckingJoin(IBlock block)
+        private float GetJoinsCount(IBlock block)
         {
-            if (block.Position.y == 0)
+            float count = 0;
+
+            foreach (Vector3Int size in block.Size)
+            {
+                if (GetJoin(size + block.Position))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private void CheckStability()
+        {
+            List<IBlock> destroyingBlocks = new();
+
+            foreach (IBlock block in _spawnedBlocks)
+            {
+                float joinArea = GetJoinsCount(block) / block.Size.Length;
+
+                if (joinArea == 0.5f)
+                {
+                    if (block.Instable)
+                    {
+                        destroyingBlocks.Add(block);
+
+                        foreach (IBlock node in GetUpperNode(block))
+                        {
+                            if(IsInstable(node))
+                            {
+                                destroyingBlocks.Add(node);
+                            }
+                        }
+                    }
+                    else block.InvokeInstable();
+                }
+                else if (joinArea < 0.5f)
+                {
+                    destroyingBlocks.Add(block);
+
+                    foreach (IBlock node in GetUpperNode(block))
+                    {
+                        if (IsInstable(node))
+                        {
+                            destroyingBlocks.Add(node);
+                        }
+                    }
+                }
+            }
+
+            destroyingBlocks.ForEach(_ => DestroyBlock(_));
+
+            FixStability(); // простейший костыль
+        }
+
+        private void FixStability()
+        {
+            foreach (IBlock block in _spawnedBlocks)
+            {
+                float joinArea = GetJoinsCount(block) / block.Size.Length;
+
+                if (joinArea == 0.5f)
+                {
+                    block.InvokeInstable();
+                }
+            }
+        }
+
+        private bool IsInstable(IBlock block)
+        {
+            float joinArea = GetJoinsCount(block) / block.Size.Length;
+
+            if (joinArea == 0.5f)
+            {
+                if (block.Instable) return true;
+
+                else block.InvokeInstable();
+            }
+            else if (joinArea < 0.5f)
             {
                 return true;
             }
 
-            bool grounded = false;
+            return false;
+        }
 
-            foreach (Vector3 size in block.Size)
+        /// <summary>
+        /// Return join checking by position
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private bool GetJoin(Vector3Int position)
+        {
+            if (position.y == 0 && OnPlatform(position.x, position.z))
             {
-                if (_heightMap.FirstOrDefault(_ => _.x == size.x + block.Position.x && _.z == size.z + block.Position.z).y == block.Position.y)
+                return true;
+            }
+
+            if (FindBlock(position - Vector3Int.up) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private List<IBlock> GetUpperNode(IBlock start)
+        {
+            List<IBlock> result = new();
+
+            foreach (Vector3Int size in start.Size)
+            {
+                IBlock block = FindBlock(size + start.Position + Vector3Int.up);
+
+                if (block != null && result.Any(_ => _ == block) == false)
                 {
-                    grounded = true;
+                    result.Add(block);
+
+                    result.AddRange(GetUpperNode(block));
                 }
             }
 
-            return grounded;
+            return result;
         }
 
         /// <summary>
@@ -334,7 +456,10 @@ namespace Sources.BuildingLogic
         /// <param name="block"></param>
         private void DestroyBlock(IBlock block)
         {
+            if (_spawnedBlocks.Any(_ => _ == block) == false) return;
+
             _spawnedBlocks.Remove(block);
+
             block.Destroy();
         }
 
