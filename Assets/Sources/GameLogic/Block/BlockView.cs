@@ -42,7 +42,7 @@ namespace Sources.BlockLogic
 
         private StateMachine<BlockState> _stateMachine;
 
-        private BuildingRoot _buildingInstaller;
+        private BuildingRoot _buildingRoot;
 
         private Vector3Int _position;
 
@@ -95,7 +95,7 @@ namespace Sources.BlockLogic
         public void Initialize(Vector3Int position, BuildingRoot buildingInstaller)
         {
             _stateMachine = new StateMachine<BlockState>(BlockState.Placing);
-            _buildingInstaller = buildingInstaller;
+            _buildingRoot = buildingInstaller;
 
             _position = position;
         }
@@ -105,7 +105,7 @@ namespace Sources.BlockLogic
         /// </summary>
         public void Fall()
         {
-            if (_stateMachine.CurrentState == BlockState.Placing)
+            if(_stateMachine.CurrentState == BlockState.Placing)
             {
                 _position.y--;
 
@@ -119,7 +119,7 @@ namespace Sources.BlockLogic
         /// <param name="direction">moving direction</param>
         public void Move(Vector3Int direction)
         {
-            if (_buildingInstaller.CheckMovingDirection(this, direction) == false) return;
+            if (_buildingRoot.CheckMovingDirection(this, direction) == false) return;
 
             _position += direction;
 
@@ -138,11 +138,11 @@ namespace Sources.BlockLogic
         /// </summary>
         private void OnMoving()
         {
-            _transform.DOMove(_buildingInstaller.Grid.GetWorldPosition(_position), _buildingInstaller.MoveSmooth);
+            _transform.DOMove(_buildingRoot.Grid.GetWorldPosition(_position), _buildingRoot.MoveSmooth);
 
             Transforming?.Invoke(Position);
 
-            if(_buildingInstaller.CheckingJoin(this))
+            if (_buildingRoot.CheckPlaced(this))
             {
                 _stateMachine.SetState(BlockState.Placed);
             }
@@ -165,7 +165,7 @@ namespace Sources.BlockLogic
 
             InvokeRigidbody();
 
-            Invoke(nameof(DestroyAnimation), _buildingInstaller.MoveSmooth);
+            Invoke(nameof(DestroyAnimation), _buildingRoot.MoveSmooth);
         }
 
         /// <summary>
