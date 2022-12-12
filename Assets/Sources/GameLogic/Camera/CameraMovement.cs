@@ -24,25 +24,27 @@ namespace Sources.CameraLogic
         [SerializeField] private Transform _root;
         [SerializeField] private Camera _camera;
 
-        private BuildingRoot _buildingInstaller;
+        private BuildingRoot _buildingRoot;
 
         private Vector2 _startTouchPosition;
         private Vector2 _endTouchPosition;
 
+        private int _maxHeight;
+
         [Inject]
         private void Construct(BuildingRoot buildingInstaller)
         {
-            _buildingInstaller = buildingInstaller;
+            _buildingRoot = buildingInstaller;
         }
 
         private void OnEnable()
         {
-            _buildingInstaller.SpawnBlock += MoveCamera;
+            _buildingRoot.SpawnBlock += MoveCamera;
         }
 
         private void OnDisable()
         {
-            _buildingInstaller.SpawnBlock -= MoveCamera;
+            _buildingRoot.SpawnBlock -= MoveCamera;
         }
 
         private void OnValidate()
@@ -52,11 +54,11 @@ namespace Sources.CameraLogic
 
         private void MoveCamera()
         {
-            _offset.y += _moveOffset;
+            _maxHeight = _buildingRoot.GetHeighestFromMap();
 
-            _rotationPoint.position = new Vector3(_rotationPoint.position.x, _rotationPoint.position.y + 0.6f, _rotationPoint.position.z);
+            _rotationPoint.position = new Vector3(_rotationPoint.position.x, _rotationPoint.position.y + _moveOffset, _rotationPoint.position.z);
 
-            _cameraTransform.DOMoveY(_root.position.y + _offset.y, _moveOffset);
+            _cameraTransform.DOMoveY(_root.position.y + _offset.y + (_maxHeight * _moveOffset), _moveTime);
         }
 
         private void Update()
