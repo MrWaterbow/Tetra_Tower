@@ -1,7 +1,6 @@
 using UnityEngine;
 using Zenject;
 
-
 namespace Sources.RotationLogic
 { 
     public class RotationInputInstaller : MonoInstaller

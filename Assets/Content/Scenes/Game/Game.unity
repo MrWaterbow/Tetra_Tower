@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55dd00403202d0045a6f95604f1cfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _height: 5
+  _startHeight: 5
   _fallTick: 1
   _moveSmooth: 0.4
 --- !u!114 &241433720
@@ -1176,8 +1176,8 @@ Camera:
   m_GameObject: {fileID: 895797589}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.27450982, g: 0.30081642, b: 0.30980393, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1742,6 +1742,8 @@ MonoBehaviour:
   _startBlock: {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
   _blockList:
   - {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
+  - {fileID: 1622142305574284348, guid: cbf5c3e3bb1e8364c843a4924c9f9d87, type: 3}
+  - {fileID: 7460254763801309008, guid: 944d41be46261104bb4495f26c28651f, type: 3}
   _buildingInstaller: {fileID: 241433719}
 --- !u!114 &1610863012
 MonoBehaviour:

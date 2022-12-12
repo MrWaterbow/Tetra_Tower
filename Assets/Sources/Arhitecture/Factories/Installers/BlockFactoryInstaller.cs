@@ -8,8 +8,12 @@ namespace Sources.Factories
 {
     public class BlockFactoryInstaller : MonoInstaller
     {
-        [SerializeField] private BlockView _startBlock;
         [SerializeField] private BlockView[] _blockList;
+        [SerializeField] private
+
+        [Space]
+
+        [SerializeField] private BlockView _startBlock;
 
         [Space]
 

@@ -27,7 +27,8 @@ namespace Sources.BlockLogic
         void Fall();
         void Destroy();
 
-        void InvokeInstable(); 
+        void InvokeInstable();
+        void DeinvokeInstable();
         void InvokeRigidbody();
 
         void Rotate(Vector3 direction, int degree);

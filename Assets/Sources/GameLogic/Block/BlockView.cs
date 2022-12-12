@@ -48,6 +48,8 @@ namespace Sources.BlockLogic
 
         private bool _instable;
 
+        private bool _disableAnimation;
+
         public Vector3Int[] Size => _size;
         public Vector3 VisualizationOffset => _visualizationOffset;
 
@@ -186,9 +188,12 @@ namespace Sources.BlockLogic
         /// </summary>
         public void InvokeInstable()
         {
-            DOInstableColor();
+            if (_instable) return;
 
             _instable = true;
+
+            DOInstableColor();
+
         }
 
         /// <summary>
@@ -196,7 +201,19 @@ namespace Sources.BlockLogic
         /// </summary>
         private void DOInstableColor()
         {
-            _meshRenderer.material.DOColor(_instableColor, _instableAnimationTime).onComplete += DODefaultColor;
+            _meshRenderer.material.DOColor(_instableColor, _instableAnimationTime).onComplete += () =>
+            {
+                if (_disableAnimation == false)
+                {
+                    DODefaultColor();
+                }
+                else
+                {
+                    _disableAnimation = false;
+
+                    DeactiveInstableColor();
+                }
+            };
         }
 
         /// <summary>
@@ -204,7 +221,36 @@ namespace Sources.BlockLogic
         /// </summary>
         private void DODefaultColor()
         {
-            _meshRenderer.material.DOColor(_defaultColor, _instableAnimationTime).onComplete += DOInstableColor;
+            _meshRenderer.material.DOColor(_defaultColor, _instableAnimationTime).onComplete += () =>
+            {
+                if (_disableAnimation == false)
+                {
+                    DOInstableColor();
+                }
+                else
+                {
+                    _disableAnimation = false;
+
+                    DeactiveInstableColor();
+                }
+            };
+        }
+
+        private void DeactiveInstableColor()
+        {
+            _meshRenderer.material.DOColor(_defaultColor, _instableAnimationTime);
+        }
+
+        public void DeinvokeInstable()
+        {
+            if (_instable == false) return;
+
+            _instable = false;
+            _disableAnimation = true;
+
+            _meshRenderer.material.DOKill(true);
+
+            DeactiveInstableColor();
         }
     }
 }
