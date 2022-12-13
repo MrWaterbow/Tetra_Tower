@@ -13,24 +13,34 @@ namespace Sources.Factories
 
     public class BlockFactory : IFactory<BlockType, int, IBlock>
     {
+        private readonly BlockView[] _blocks;
+        private readonly Color[] _blockColors;
+
         private readonly BlockView _startTile;
-        private readonly BlockView[] _blocksList;
+        private readonly BuildingRoot _buildingRoot;
 
-        private readonly BuildingRoot _buildingInstaller;
+        private int _renderIndex = 3000;
 
-        public BlockFactory(BlockView startTile, BlockView[] blocksList, BuildingRoot buildingInstaller)
+        public BlockFactory(BlockView startTile, BlockView[] blocks, Color[] colors, BuildingRoot buildingRoot)
         {
-            _startTile = startTile;
-            _blocksList = blocksList;
+            _blocks = blocks;
+            _blockColors = colors;
 
-            _buildingInstaller = buildingInstaller;
+            _startTile = startTile;
+            _buildingRoot = buildingRoot;
         }
+
+        public int RenderIndex => _renderIndex;
 
         public IBlock Create(BlockType type, int height)
         {
-            BlockView instance = Object.Instantiate(GetBlock(type), _buildingInstaller.Grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
+            BlockView instance = Object.Instantiate(GetBlock(type), _buildingRoot.Grid.GetWorldPosition(Vector3.up * height), Quaternion.identity);
             
-            instance.Initialize(Vector3Int.up * height, _buildingInstaller);
+            instance.MeshRenderer.material.color = _blockColors[Random.Range(0, _blockColors.Length)]; 
+            //instance.MeshRenderer.material.renderQueue = _renderIndex;
+            instance.Initialize(Vector3Int.up * height, _buildingRoot);
+
+            _renderIndex++;
 
             return instance;
         }
@@ -40,7 +50,7 @@ namespace Sources.Factories
             return type switch
             {
                 BlockType.Start => _startTile,
-                BlockType.Random => _blocksList[Random.Range(0, _blocksList.Length)],
+                BlockType.Random => _blocks[Random.Range(0, _blocks.Length)],
                 _ => throw new System.Exception("Block type not found!")
             };
         }

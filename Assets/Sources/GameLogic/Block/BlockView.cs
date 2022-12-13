@@ -28,8 +28,6 @@ namespace Sources.BlockLogic
         [Space]
 
         [SerializeField] private float _instableAnimationTime;
-        [SerializeField] private Color _instableColor;
-        [SerializeField] private Color _defaultColor;
 
         [Space]
 
@@ -45,6 +43,8 @@ namespace Sources.BlockLogic
         private BuildingRoot _buildingRoot;
 
         private Vector3Int _position;
+        private Color _instableColor;
+        private Color _defaultColor;
 
         private bool _instable;
 
@@ -97,9 +97,12 @@ namespace Sources.BlockLogic
         public void Initialize(Vector3Int position, BuildingRoot buildingInstaller)
         {
             _stateMachine = new StateMachine<BlockState>(BlockState.Placing);
-            _buildingRoot = buildingInstaller;
 
+            _buildingRoot = buildingInstaller;
             _position = position;
+
+            _defaultColor = MeshRenderer.material.color;
+            _instableColor = MeshRenderer.material.color - new Color(0.3f, 0.3f, 0.3f, 0);
         }
 
         /// <summary>
