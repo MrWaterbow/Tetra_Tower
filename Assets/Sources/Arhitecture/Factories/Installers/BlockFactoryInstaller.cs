@@ -8,8 +8,8 @@ namespace Sources.Factories
 {
     public class BlockFactoryInstaller : MonoInstaller
     {
-        [SerializeField] private BlockView[] _blockList;
-        [SerializeField] private
+        [SerializeField] private BlockView[] _blocks;
+        [SerializeField] private Color[] _blockColors;
 
         [Space]
 
@@ -17,21 +17,21 @@ namespace Sources.Factories
 
         [Space]
 
-        [SerializeField] private BuildingRoot _buildingInstaller;
+        [SerializeField] private BuildingRoot _buildingRoot;
 
         private BlockFactory _factory;
 
         private void OnValidate()
         {
-            if(_buildingInstaller == null)
+            if(_buildingRoot == null)
             {
-                _buildingInstaller = FindObjectOfType<BuildingRoot>();
+                _buildingRoot = FindObjectOfType<BuildingRoot>();
             }
         }
 
         public override void InstallBindings()
         {
-            _factory = new BlockFactory(_startBlock, _blockList, _buildingInstaller);
+            _factory = new BlockFactory(_startBlock, _blocks, _blockColors, _buildingRoot);
 
             Container.Bind<BlockFactory>().FromInstance(_factory).AsSingle();
         }

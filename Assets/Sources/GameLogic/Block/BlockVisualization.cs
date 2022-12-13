@@ -67,5 +67,10 @@ namespace Sources.BlockLogic
                     break;
             }
         }
+
+        public void SetRenderQueue(int value)
+        {
+            _meshRenderer.material.renderQueue = value;
+        }
     }
 }

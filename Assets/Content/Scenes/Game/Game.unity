@@ -1238,7 +1238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: -6.06, y: 10, z: -5.706}
-  _moveOffset: 0.6
+  _moveOffset: 1
   _moveTime: 2
   _minDelta: 80
   _cameraRotation: {fileID: 895797594}
@@ -1739,12 +1739,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27ff8f2028ce2449bdfdc63559ee265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startBlock: {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
-  _blockList:
+  _blocks:
   - {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
-  - {fileID: 1622142305574284348, guid: cbf5c3e3bb1e8364c843a4924c9f9d87, type: 3}
   - {fileID: 7460254763801309008, guid: 944d41be46261104bb4495f26c28651f, type: 3}
-  _buildingInstaller: {fileID: 241433719}
+  - {fileID: 1622142305574284348, guid: cbf5c3e3bb1e8364c843a4924c9f9d87, type: 3}
+  _blockColors:
+  - {r: 0.23079923, g: 0.21226418, b: 1, a: 1}
+  - {r: 0.16509432, g: 0.977081, b: 1, a: 1}
+  - {r: 0.32661447, g: 1, b: 0.3160377, a: 1}
+  - {r: 0.8311506, g: 1, b: 0.23113209, a: 1}
+  - {r: 1, g: 0.6502405, b: 0.23113209, a: 1}
+  - {r: 1, g: 0.26141322, b: 0.24056602, a: 1}
+  - {r: 0.9090456, g: 0.2971698, b: 1, a: 1}
+  - {r: 0.7218831, g: 0.2688679, b: 1, a: 1}
+  - {r: 0.9845727, g: 1, b: 0.3443396, a: 1}
+  _startBlock: {fileID: 6558968419845953766, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
+  _buildingRoot: {fileID: 241433719}
 --- !u!114 &1610863012
 MonoBehaviour:
   m_ObjectHideFlags: 0
