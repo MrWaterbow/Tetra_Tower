@@ -10,11 +10,6 @@ using Zenject;
 
 namespace Sources.BuildingLogic
 {
-    public class BlockStability
-    {
-
-    }
-
     public class BuildingRoot : CompositeRoot
     {
         public event Action SpawnBlock;
@@ -390,6 +385,21 @@ namespace Sources.BuildingLogic
             destroyingBlocks.ForEach(_ => DestroyBlock(_));
 
             FixStability();
+        }
+
+        private Vector2 GetBlockMass(IBlock block)
+        {
+            Vector2 mass = Vector2.zero;
+
+            foreach (Vector3Int size in block.Size)
+            {
+                if(GetJoin(size + block.Position, Vector3Int.down))
+                {
+
+                }
+            }
+
+            return mass;
         }
 
         /// <summary>
