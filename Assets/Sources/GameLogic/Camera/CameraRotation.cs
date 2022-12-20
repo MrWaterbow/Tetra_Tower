@@ -35,7 +35,6 @@ namespace Sources.CameraLogic
             _cameraTransform.DOMoveX(_points[pointIndex].position.x, _moveTime);
             _cameraTransform.DOMoveZ(_points[pointIndex].position.z, _moveTime);
         }
-
         /// <summary>
         /// Getting next/previous value of needed end transform point. 
         /// </summary>
