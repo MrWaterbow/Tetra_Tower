@@ -35,6 +35,16 @@ namespace Sources.BuildingLogic
 
         private int _height;
 
+        private Vector3Int[] _currentDirection = new Vector3Int[4];
+
+        private Vector3Int[][] _moveDirections =
+        {
+            new Vector3Int[] {Vector3Int.forward, Vector3Int.forward * -1, Vector3Int.right, Vector3Int.left},
+            new Vector3Int[] {Vector3Int.left, Vector3Int.right, Vector3Int.forward, Vector3Int.forward *-1},
+            new Vector3Int[] {Vector3Int.forward *-1, Vector3Int.forward, Vector3Int.left, Vector3Int.right},
+            new Vector3Int[] {Vector3Int.right, Vector3Int.left, Vector3Int.forward * -1, Vector3Int.forward}
+        };
+
         [Inject]
         private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input)
         {
@@ -650,24 +660,35 @@ namespace Sources.BuildingLogic
             _height = GetHeighestFromMap() + _startHeight;
         }
 
+
+        public int _currentCameraPoint;
+        private void SetMoveDirection()
+        {
+            _currentDirection = _moveDirections[_currentCameraPoint];
+        }
+
         private void MovingUp()
         {
-            _currentBlock.Move(Vector3Int.forward);
+            SetMoveDirection();
+            _currentBlock.Move(_currentDirection[0]);
         }
 
         private void MovingDown()
         {
-            _currentBlock.Move(Vector3Int.forward * -1);
+            SetMoveDirection();
+            _currentBlock.Move(_currentDirection[1]);
         }
 
         private void MovingRight()
         {
-            _currentBlock.Move(Vector3Int.right);
+            SetMoveDirection();
+            _currentBlock.Move(_currentDirection[2]);
         }
 
         private void MovingLeft()
         {
-            _currentBlock.Move(Vector3Int.left);
+            SetMoveDirection();
+            _currentBlock.Move(_currentDirection[3]);
         }
     }
 }
