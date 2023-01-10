@@ -146,6 +146,9 @@ namespace Sources.BuildingLogic
                 CheckStability();
                 UpdateHeightMap();
                 UpdateBlockHeight();
+
+                GetTileDistance(_currentBlock, new Vector3Int(0, 1, 0));
+
                 SpawnNext();
                 SpawnBlock?.Invoke();
             }
@@ -298,7 +301,65 @@ namespace Sources.BuildingLogic
             {
                 if (GetJoin(size + block.Position, Vector3Int.down))
                 {
-                    count++;
+                    List<Vector3Int> positions = new();
+                    float distance = 0f;
+
+                    foreach (Vector3Int size2 in block.Size)
+                    {
+                        bool underBlock = GetJoin(size2 + block.Position, Vector3Int.down);
+
+                        if (underBlock == false)
+                        {
+                            positions.Add(size2);
+                        }
+                    }
+
+                    foreach (Vector3Int position in positions)
+                    {
+                        if (distance == 0f)
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                        else if (distance > Vector3.Distance(size, position))
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                    }
+
+                    if (distance == 0) distance = 1;
+
+                    count += 1 + (distance - 1);
+                }
+                else
+                {
+                    List<Vector3Int> positions = new();
+                    float distance = 0f;
+
+                    foreach (Vector3Int size1 in block.Size)
+                    {
+                        bool underBlock = GetJoin(size1 + block.Position, Vector3Int.down);
+
+                        if (underBlock)
+                        {
+                            positions.Add(size1);
+                        }
+                    }
+
+                    foreach (Vector3Int position in positions)
+                    {
+                        if (distance == 0f)
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                        else if (distance > Vector3.Distance(size, position))
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                    }
+
+                    if (distance == 0) distance = 1;
+
+                    count -= distance - 1;
                 }
             }
 
@@ -313,11 +374,81 @@ namespace Sources.BuildingLogic
             {
                 if (GetJoin(size + block.Position, Vector3Int.down, blocking))
                 {
-                    count++;
+                    List<Vector3Int> positions = new();
+                    float distance = 0f;
+
+                    foreach (Vector3Int size2 in block.Size)
+                    {
+                        bool underBlock = GetJoin(size2 + block.Position, Vector3Int.down, blocking);
+
+                        if (underBlock == false)
+                        {
+                            positions.Add(size2);
+                        }
+                    }
+
+                    foreach (Vector3Int position in positions)
+                    {
+                        if (distance == 0f)
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                        else if (distance > Vector3.Distance(size, position))
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                    }
+
+                    if (distance == 0) distance = 1;
+
+                    count += 1 + (distance - 1);
+                }
+                else
+                {
+                    List<Vector3Int> positions = new();
+                    float distance = 0f;
+
+                    foreach (Vector3Int size1 in block.Size)
+                    {
+                        bool underBlock = GetJoin(size1 + block.Position, Vector3Int.down, blocking);
+
+                        if (underBlock)
+                        {
+                            positions.Add(size1);
+                        }
+                    }
+
+                    foreach (Vector3Int position in positions)
+                    {
+                        if (distance == 0f)
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                        else if (distance > Vector3.Distance(size, position))
+                        {
+                            distance = Vector3.Distance(size, position);
+                        }
+                    }
+
+                    if (distance == 0) distance = 1;
+
+                    count -= distance - 1;
                 }
             }
 
             return count;
+
+            //float count = 0;
+
+            //foreach (Vector3Int size in block.Size)
+            //{
+            //    if (GetJoin(size + block.Position, Vector3Int.down, blocking))
+            //    {
+            //        count += 1 * GetTileDistance(block, size + block.Position);
+            //    }
+            //}
+
+            //return count;
         }
 
         /// <summary>
@@ -349,8 +480,8 @@ namespace Sources.BuildingLogic
 
             foreach (IBlock block in _spawnedBlocks.Reverse<IBlock>())
             {
-                float underJoins = GetUnderJoins(block);
-                float oppositeJoins = GetUpperJoins(block, underJoins / block.Size.Length);
+                float underJoins = GetUnderJoins(block); // Get under joins count
+                float oppositeJoins = GetUpperJoins(block, underJoins / block.Size.Length); // Get upper join
 
                 foreach (IBlock upper in GetUpperBlocks(block))
                 {
@@ -395,21 +526,6 @@ namespace Sources.BuildingLogic
             destroyingBlocks.ForEach(_ => DestroyBlock(_));
 
             FixStability();
-        }
-
-        private Vector2 GetBlockMass(IBlock block)
-        {
-            Vector2 mass = Vector2.zero;
-
-            foreach (Vector3Int size in block.Size)
-            {
-                if(GetJoin(size + block.Position, Vector3Int.down))
-                {
-
-                }
-            }
-
-            return mass;
         }
 
         /// <summary>
@@ -494,6 +610,16 @@ namespace Sources.BuildingLogic
             return false;
         }
 
+        //private int GetJoinDistanceMultiply(IBlock block, Vector3Int position)
+        //{
+        //    List<IBlock> blocks = GetUnderBlocks(block);
+
+        //    foreach (IBlock underBlock in blocks)
+        //    {
+
+        //    }
+        //}
+
         /// <summary>
         /// Get all upper blocks
         /// </summary>
@@ -539,6 +665,70 @@ namespace Sources.BuildingLogic
 
             return result;
         }
+
+        private float GetTileDistance(IBlock block, Vector3Int blockTile)
+        {
+            return 0f;
+
+            //float distance = 0f;
+
+            //List<Vector3Int> positions = new();
+            //float distance = 0f;
+
+            //foreach (Vector3Int size in block.Size)
+            //{
+            //    bool underBlock = GetJoin(size + block.Position, Vector3Int.down);
+
+            //    if (underBlock)
+            //    {
+            //        positions.Add(size + block.Position + Vector3Int.up);
+            //    }
+            //}
+
+            //foreach (Vector3Int position in positions)
+            //{
+            //    if (distance == 0f)
+            //    {
+            //        distance = Vector3.Distance(position, blockTile);
+            //    }
+            //    else if (distance > Vector3.Distance(position, blockTile))
+            //    {
+            //        distance = Vector3.Distance(position, blockTile);
+            //    }
+            //}
+
+            //return distance;
+        }
+
+        //private float GetTileDistance(IBlock block, Vector3Int blockTile)
+        //{
+        //    List<Vector3Int> positions = new();
+        //    float distance = 0f;
+
+        //    foreach (Vector3Int size in block.Size)
+        //    {
+        //        bool underBlock = GetJoin(size + block.Position, Vector3Int.down);
+
+        //        if (underBlock)
+        //        {
+        //            positions.Add(size + block.Position + Vector3Int.up);
+        //        }
+        //    }
+
+        //    foreach (Vector3Int position in positions)
+        //    {
+        //        if (distance == 0f)
+        //        {
+        //            distance = Vector3.Distance(position, blockTile);
+        //        }
+        //        else if (distance > Vector3.Distance(position, blockTile))
+        //        {
+        //            distance = Vector3.Distance(position, blockTile);
+        //        }
+        //    }
+
+        //    return distance;
+        //}
 
         private List<IBlock> SortingInstableBlocks(List<IBlock> blocks)
         {
@@ -633,15 +823,6 @@ namespace Sources.BuildingLogic
         private void MoveToPlatform()
         {
             _currentBlock.Move(Vector3Int.down * (_currentBlock.Position.y - GetMaxBlockHeight(_currentBlock)));
-        }
-
-        /// <summary>
-        /// Invoke the rigidbody component.
-        /// </summary>
-        /// <param name="block"></param>
-        private void InvokeRigidbody(IBlock block)
-        {
-            block.InvokeRigidbody();
         }
 
         /// <summary>
