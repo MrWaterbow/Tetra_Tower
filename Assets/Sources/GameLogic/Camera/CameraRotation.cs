@@ -2,6 +2,8 @@ using UnityEngine;
 using Sources.BuildingLogic;
 using DG.Tweening;
 using Zenject;
+using System.Collections;
+
 
 namespace Sources.CameraLogic
 {
@@ -15,9 +17,9 @@ namespace Sources.CameraLogic
         [SerializeField] private float _rotationTime;
 
         private BuildingRoot _buildingRoot;
-        private int _currentPoint = 0; // represents current point, change controll by this amount where 0 is start point, 1 - right, 2 - opposite and 3 - left
+        private int _currentPoint = 0; // represents current point, change controll by this amount where 0 is start point, 1 - right, 2 - opposite and 3 - left]
 
-
+        [SerializeField] private float _rotationSpeed;
 
         [Inject]
         private void Construct(BuildingRoot buildingInstaller)
@@ -31,9 +33,52 @@ namespace Sources.CameraLogic
         public void Move(int direction)
         {
             int pointIndex = GetPointIndex(direction);
-            _cameraTransform.DODynamicLookAt(_rotationPoint.position, _rotationTime);
-            _cameraTransform.DOMoveX(_points[pointIndex].position.x, _moveTime);
-            _cameraTransform.DOMoveZ(_points[pointIndex].position.z, _moveTime);
+            if(direction == -1)
+            {
+                StartCoroutine(RotateCameraLeft(direction));
+            }
+            else
+            {
+                StartCoroutine(RotateCameraRight(direction));
+            }
+        }
+
+        private IEnumerator RotateCameraLeft(int direction)
+        {
+            float currentAngle = (int)_rotationPoint.rotation.eulerAngles.y;
+            float targetAngle = currentAngle + (-direction * 90);
+            while (true)
+            {
+                float step = _rotationSpeed * Time.deltaTime;
+                if(currentAngle + step > targetAngle)
+                {
+                    step = targetAngle - currentAngle;
+                    _rotationPoint.Rotate(Vector3.up, step);
+                    break;
+                }
+                currentAngle += step;
+                _rotationPoint.Rotate(Vector3.up, step);
+                yield return null;
+            }
+        }
+
+        private IEnumerator RotateCameraRight(int direction)
+        {
+            float currentAngle = (int)_rotationPoint.rotation.eulerAngles.y;
+            float targetAngle = currentAngle - (direction * 90);
+            while (true)
+            {
+                float step = _rotationSpeed * Time.deltaTime;
+                if (currentAngle - step < targetAngle)
+                {
+                    step = targetAngle - currentAngle;
+                    _rotationPoint.Rotate(Vector3.up, step);
+                    break;
+                }
+                currentAngle -= step;
+                _rotationPoint.Rotate(Vector3.up, -step);
+                yield return null;
+            }
         }
 
         /// <summary>
