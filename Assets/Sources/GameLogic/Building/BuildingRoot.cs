@@ -8,6 +8,91 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
+//private float GetUnderJoins(IBlock block, IBlock blocking)
+//{
+//    float count = 0;
+
+//    foreach (Vector3Int size in block.Size)
+//    {
+//        if (GetJoin(size + block.Position, Vector3Int.down, blocking))
+//        {
+//            List<Vector3Int> positions = new();
+//            float distance = 0f;
+
+//            foreach (Vector3Int size2 in block.Size)
+//            {
+//                bool underBlock = GetJoin(size2 + block.Position, Vector3Int.down, blocking);
+
+//                if (underBlock == false)
+//                {
+//                    positions.Add(size2);
+//                }
+//            }
+
+//            foreach (Vector3Int position in positions)
+//            {
+//                if (distance == 0f)
+//                {
+//                    distance = Vector3.Distance(size, position);
+//                }
+//                else if (distance > Vector3.Distance(size, position))
+//                {
+//                    distance = Vector3.Distance(size, position);
+//                }
+//            }
+
+//            if (distance == 0) distance = 1;
+
+//            count += 1 + (distance - 1);
+//        }
+//        else
+//        {
+//            List<Vector3Int> positions = new();
+//            float distance = 0f;
+
+//            foreach (Vector3Int size1 in block.Size)
+//            {
+//                bool underBlock = GetJoin(size1 + block.Position, Vector3Int.down, blocking);
+
+//                if (underBlock)
+//                {
+//                    positions.Add(size1);
+//                }
+//            }
+
+//            foreach (Vector3Int position in positions)
+//            {
+//                if (distance == 0f)
+//                {
+//                    distance = Vector3.Distance(size, position);
+//                }
+//                else if (distance > Vector3.Distance(size, position))
+//                {
+//                    distance = Vector3.Distance(size, position);
+//                }
+//            }
+
+//            if (distance == 0) distance = 1;
+
+//            count -= distance - 1;
+//        }
+//    }
+
+//    return count;
+
+//    //float count = 0;
+
+//    //foreach (Vector3Int size in block.Size)
+//    //{
+//    //    if (GetJoin(size + block.Position, Vector3Int.down, blocking))
+//    //    {
+//    //        count += 1 * GetTileDistance(block, size + block.Position);
+//    //    }
+//    //}
+
+//    //return count;
+//}
+
 namespace Sources.BuildingLogic
 {
     public class BuildingRoot : CompositeRoot
@@ -288,83 +373,20 @@ namespace Sources.BuildingLogic
             return result;
         }
 
-        /// <summary>
-        /// Return joins count
-        /// </summary>
-        /// <param name="block"></param>
-        /// <returns></returns>
-        private float GetUnderJoins(IBlock block)
-        {
-            float count = 0;
+        //private float GetUnderJoins(IBlock block)
+        //{
+        //    float count = 0;
 
-            foreach (Vector3Int size in block.Size)
-            {
-                if (GetJoin(size + block.Position, Vector3Int.down))
-                {
-                    List<Vector3Int> positions = new();
-                    float distance = 0f;
+        //    foreach (Vector3Int size in block.Size)
+        //    {
+        //        if (GetJoin(size + block.Position, Vector3Int.down))
+        //        {
+        //            count++;
+        //        }
+        //    }
 
-                    foreach (Vector3Int size2 in block.Size)
-                    {
-                        bool underBlock = GetJoin(size2 + block.Position, Vector3Int.down);
-
-                        if (underBlock == false)
-                        {
-                            positions.Add(size2);
-                        }
-                    }
-
-                    foreach (Vector3Int position in positions)
-                    {
-                        if (distance == 0f)
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                        else if (distance > Vector3.Distance(size, position))
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                    }
-
-                    if (distance == 0) distance = 1;
-
-                    count += 1 + (distance - 1);
-                }
-                else
-                {
-                    List<Vector3Int> positions = new();
-                    float distance = 0f;
-
-                    foreach (Vector3Int size1 in block.Size)
-                    {
-                        bool underBlock = GetJoin(size1 + block.Position, Vector3Int.down);
-
-                        if (underBlock)
-                        {
-                            positions.Add(size1);
-                        }
-                    }
-
-                    foreach (Vector3Int position in positions)
-                    {
-                        if (distance == 0f)
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                        else if (distance > Vector3.Distance(size, position))
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                    }
-
-                    if (distance == 0) distance = 1;
-
-                    count -= distance - 1;
-                }
-            }
-
-            return count;
-        }
+        //    return count;
+        //}
 
         private float GetUnderJoins(IBlock block, IBlock blocking)
         {
@@ -374,81 +396,138 @@ namespace Sources.BuildingLogic
             {
                 if (GetJoin(size + block.Position, Vector3Int.down, blocking))
                 {
-                    List<Vector3Int> positions = new();
-                    float distance = 0f;
-
-                    foreach (Vector3Int size2 in block.Size)
-                    {
-                        bool underBlock = GetJoin(size2 + block.Position, Vector3Int.down, blocking);
-
-                        if (underBlock == false)
-                        {
-                            positions.Add(size2);
-                        }
-                    }
-
-                    foreach (Vector3Int position in positions)
-                    {
-                        if (distance == 0f)
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                        else if (distance > Vector3.Distance(size, position))
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                    }
-
-                    if (distance == 0) distance = 1;
-
-                    count += 1 + (distance - 1);
-                }
-                else
-                {
-                    List<Vector3Int> positions = new();
-                    float distance = 0f;
-
-                    foreach (Vector3Int size1 in block.Size)
-                    {
-                        bool underBlock = GetJoin(size1 + block.Position, Vector3Int.down, blocking);
-
-                        if (underBlock)
-                        {
-                            positions.Add(size1);
-                        }
-                    }
-
-                    foreach (Vector3Int position in positions)
-                    {
-                        if (distance == 0f)
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                        else if (distance > Vector3.Distance(size, position))
-                        {
-                            distance = Vector3.Distance(size, position);
-                        }
-                    }
-
-                    if (distance == 0) distance = 1;
-
-                    count -= distance - 1;
+                    count++;
                 }
             }
 
             return count;
+        }
 
-            //float count = 0;
+        /// <summary>
+        /// Return joins count
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
+        private float GetUnderJoins(IBlock block)
+        {
+            float count = block.Size.Length;
+
+            foreach (Vector3Int size in block.Size)
+            {
+                if(GetJoin(size + block.Position, Vector3Int.down))
+                {
+                    print("COUT!! " + GetDistance(block, block.Position + size, false));
+
+                    count += GetDistance(block, block.Position + size, false) - 1;
+                }
+                else
+                {
+                    //bool negativeJoin = GetJoin(block.Position + size * -1, Vector3Int.zero);
+
+                    //if (negativeJoin == false)
+                    //{
+                        count -= GetDistance(block, block.Position + size, true);
+                    //}
+                    //count -= GetDistance(block, block.Position + size, false);
+                }
+            }
+
+            print(count);
 
             //foreach (Vector3Int size in block.Size)
             //{
-            //    if (GetJoin(size + block.Position, Vector3Int.down, blocking))
+            //    if (GetJoin(size + block.Position, Vector3Int.down))
             //    {
-            //        count += 1 * GetTileDistance(block, size + block.Position);
+            //        List<Vector3Int> positions = new();
+            //        float distance = 0f;
+
+            //        foreach (Vector3Int size2 in block.Size)
+            //        {
+            //            bool underBlock = GetJoin(size2 + block.Position, Vector3Int.down);
+
+            //            if (underBlock == false)
+            //            {
+            //                positions.Add(size2);
+            //            }
+            //        }
+
+            //        foreach (Vector3Int position in positions)
+            //        {
+            //            if (distance == 0f)
+            //            {
+            //                distance = Vector3.Distance(size, position);
+            //            }
+            //            else if (distance > Vector3.Distance(size, position))
+            //            {
+            //                distance = Vector3.Distance(size, position);
+            //            }
+            //        }
+
+            //        if (distance == 0) distance = 1;
+
+            //        count += 1 + (distance - 1);
+            //    }
+            //    else
+            //    {
+            //        List<Vector3Int> positions = new();
+            //        float distance = 0f;
+
+            //        foreach (Vector3Int size1 in block.Size)
+            //        {
+            //            bool underBlock = GetJoin(size1 + block.Position, Vector3Int.down);
+
+            //            if (underBlock)
+            //            {
+            //                positions.Add(size1);
+            //            }
+            //        }
+
+            //        foreach (Vector3Int position in positions)
+            //        {
+            //            if (distance == 0f)
+            //            {
+            //                distance = Vector3.Distance(size, position);
+            //            }
+            //            else if (distance > Vector3.Distance(size, position))
+            //            {
+            //                distance = Vector3.Distance(size, position);
+            //            }
+            //        }
+
+            //        if (distance == 0) distance = 1;
+
+            //        count -= distance - 1;
             //    }
             //}
 
-            //return count;
+            return count;
+        }
+
+        private float GetDistance(IBlock block, Vector3Int point, bool haveBlock)
+        {
+            List<Vector3Int> positions = new();
+
+            foreach (Vector3Int size in block.Size)
+            {
+                if(GetJoin(size + block.Position, Vector3Int.down) == haveBlock)
+                {
+                    positions.Add(size + block.Position);
+                }
+            }
+
+            if (positions.Count == 0) return 1;
+
+            float distance = Vector3.Distance(point, positions[0]);
+
+            foreach (Vector3Int position in positions)
+            {
+                if(distance > Vector3.Distance(point, position))
+                {
+                    distance = Vector3.Distance(point, position);
+                }
+            }
+
+            return distance;
         }
 
         /// <summary>
@@ -595,7 +674,7 @@ namespace Sources.BuildingLogic
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        private bool GetJoin(Vector3Int position, Vector3Int offset, IBlock blocking = null)//, bool yOffset = false)
+        private bool GetJoin(Vector3Int position, Vector3Int offset, IBlock blocking = null)
         {
             if (position.y + offset.y <= -1 && OnPlatform(position.x, position.z))//((yOffset ? position.y + offset.y : position.y) <= 0 && OnPlatform(position.x, position.z))
             {
