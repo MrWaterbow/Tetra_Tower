@@ -255,5 +255,10 @@ namespace Sources.BlockLogic
 
             DeactiveInstableColor();
         }
+
+        public void SetCenterOfMass(Vector3 offset)
+        {
+            _rigidbody.centerOfMass = offset;
+        }
     }
 }

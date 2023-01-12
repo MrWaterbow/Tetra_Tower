@@ -420,7 +420,7 @@ namespace Sources.BuildingLogic
                 }
                 else
                 {
-                        count -= GetDistance(block, block.Position + size, true);
+                    count -= GetDistance(block, block.Position + size, true);
                 }
             }
 
@@ -491,6 +491,19 @@ namespace Sources.BuildingLogic
             //}
 
             return count;
+        }
+
+        private Vector3Int GetCenterOfMass(IBlock block)
+        {
+            foreach (Vector3Int size in block.Size)
+            {
+                if(GetJoin(block.Position + size, Vector3Int.down) == false)
+                {
+                    return size;
+                }
+            }
+
+            throw new Exception("WTF!!!111");
         }
 
         private float GetDistance(IBlock block, Vector3Int point, bool haveBlock)
@@ -884,6 +897,7 @@ namespace Sources.BuildingLogic
             _spawnedBlocks.Remove(block);
 
             block.Destroy();
+            block.SetCenterOfMass(GetCenterOfMass(block) * 3);
         }
 
         /// <summary>
