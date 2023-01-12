@@ -416,23 +416,13 @@ namespace Sources.BuildingLogic
             {
                 if(GetJoin(size + block.Position, Vector3Int.down))
                 {
-                    print("COUT!! " + GetDistance(block, block.Position + size, false));
-
                     count += GetDistance(block, block.Position + size, false) - 1;
                 }
                 else
                 {
-                    //bool negativeJoin = GetJoin(block.Position + size * -1, Vector3Int.zero);
-
-                    //if (negativeJoin == false)
-                    //{
                         count -= GetDistance(block, block.Position + size, true);
-                    //}
-                    //count -= GetDistance(block, block.Position + size, false);
                 }
             }
-
-            print(count);
 
             //foreach (Vector3Int size in block.Size)
             //{
