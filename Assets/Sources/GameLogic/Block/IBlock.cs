@@ -23,6 +23,7 @@ namespace Sources.BlockLogic
         MeshFilter MeshFilter { get; }
 
         void Move(Vector3Int direction);
+        void SetCenterOfMass(Vector3 offset);
 
         void Fall();
         void Destroy();
