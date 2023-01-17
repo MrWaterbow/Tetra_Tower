@@ -1133,7 +1133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791386187}
   m_LocalRotation: {x: -0, y: -0, z: 0.0000000074505797, w: 1}
-  m_LocalPosition: {x: 0.21000004, y: 0.8499985, z: -0.79999924}
+  m_LocalPosition: {x: 0.21000004, y: 0.407, z: -0.79999924}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1220,7 +1220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895797589}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -7.16, y: 9.557, z: -6.6100006}
+  m_LocalPosition: {x: -7.16, y: 9.999999, z: -6.6100006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1710,6 +1710,8 @@ GameObject:
   - component: {fileID: 1610863015}
   - component: {fileID: 1610863014}
   - component: {fileID: 1610863018}
+  - component: {fileID: 1610863020}
+  - component: {fileID: 1610863021}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1775,6 +1777,8 @@ MonoBehaviour:
   - {fileID: 1610863010}
   - {fileID: 1610863011}
   - {fileID: 1610863015}
+  - {fileID: 1610863020}
+  - {fileID: 1610863021}
   - {fileID: 1610863014}
   - {fileID: 1610863018}
   _installerPrefabs: []
@@ -1848,6 +1852,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingRoot: {fileID: 241433719}
+--- !u!114 &1610863020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610863008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e862b1bce3211458866cb821285d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationInput: {fileID: 125910962}
+--- !u!114 &1610863021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610863008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d8f5f88d1ad7c45b4876b52d1172dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1749288425
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,53 +2392,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875099189}
   m_CullTransparentMesh: 1
---- !u!1 &1945698665
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1945698667}
-  - component: {fileID: 1945698666}
-  m_Layer: 0
-  m_Name: AsteroidSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1945698666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945698665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb422364db32cd41b82fdaeeaff8941, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _asteroidPrefab: {fileID: 2831732977467638232, guid: 378efb5ff410c8541a71a131af693e0f, type: 3}
-  _spawnPoint: {fileID: 1945698667}
-  _force: 2000
---- !u!4 &1945698667
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945698665}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.57, y: 5.51, z: -1.01}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4754586980037677100
 PrefabInstance:
   m_ObjectHideFlags: 0

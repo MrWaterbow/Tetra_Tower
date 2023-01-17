@@ -2,6 +2,7 @@ using Sources.BlockLogic;
 using Sources.CompositeRootLogic;
 using Sources.Factories;
 using Sources.GridLogic;
+using Sources.RotationLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,8 @@ namespace Sources.BuildingLogic
         private IBlock _currentBlock;
         private IGrid _grid;
 
+        private RotationInstaller _rotationInstaller;
+
         private float _tick;
 
         private int _height;
@@ -46,13 +49,15 @@ namespace Sources.BuildingLogic
         };
 
         [Inject]
-        private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input)
+        private void Construct(IGrid grid, BlockFactory blockFactory, IBlockVisualization visualization, IBuildingInput input, RotationInstaller rotationInstaller)
         {
             _blockFactory = blockFactory;
 
             _visualization = visualization;
             _input = input;
             _grid = grid;
+
+            _rotationInstaller = rotationInstaller;
         }
 
         public IGrid Grid => _grid;
@@ -70,6 +75,31 @@ namespace Sources.BuildingLogic
                 _currentBlock.Fall();
 
                 _tick = 0;
+            }
+            ComputerControll();
+        }
+
+        private void ComputerControll()
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                MovingUp();
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                MovingLeft();
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                MovingDown();
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                MovingRight();
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                MoveToPlatform();
             }
         }
 
@@ -120,6 +150,7 @@ namespace Sources.BuildingLogic
 
             _currentBlock.StateMachine.StateChanged += UpdateBlockState;
             _currentBlock.Transforming += UpdateVisualizationPosition;
+            _rotationInstaller.CurrentBlock = _currentBlock;
         }
 
         public int GetHeighestFromMap()
