@@ -364,7 +364,7 @@ namespace Sources.BuildingLogic
             {
                 Vector3Int position = block.Position + direction + size;
 
-                if (OnPlatform(position.x, position.z))
+                if (OnPlatform(position.x, position.y, position.z, block))
                 {
                     result = true;
                 }
@@ -679,7 +679,7 @@ namespace Sources.BuildingLogic
         /// <returns></returns>
         private bool GetJoin(Vector3Int position, Vector3Int offset, IBlock blocking = null)
         {
-            if (position.y + offset.y <= -1 && OnPlatform(position.x, position.z))//((yOffset ? position.y + offset.y : position.y) <= 0 && OnPlatform(position.x, position.z))
+            if (position.y + offset.y <= -1 && OnPlatform(position.x, position.y, position.z, _currentBlock))//((yOffset ? position.y + offset.y : position.y) <= 0 && OnPlatform(position.x, position.z))
             {
                 return true;
             }
@@ -832,8 +832,23 @@ namespace Sources.BuildingLogic
         /// </summary>
         /// <param name="position"></param>
         /// <returns>true - enter | false - out of the platform.</returns>
-        private bool OnPlatform(int x, int z)
+        private bool OnPlatform(int x, int y, int z, IBlock block)
         {
+            //if(position.y > 0 && GetUnderBlocks(block).Count > 0)
+            //{
+
+            //}
+
+            //if(y > 0 && GetUnderBlocks(block).Count > 0)
+            //{
+            //    return true;
+            //}
+
+            if(_heightMap.Any(_ => _.x == x && _.z == z))
+            {
+                return true;
+            }
+
             if (x > -1 && x < 3 && z > -1 && z < 3)
             {
                 return true;
@@ -841,7 +856,6 @@ namespace Sources.BuildingLogic
 
             return false;
         }
-
 
         /// <summary>
         /// Refreshing the heights map.
@@ -871,6 +885,19 @@ namespace Sources.BuildingLogic
 
             _heightMap.Clear();
             refreshed.ForEach(_ => _heightMap.Add(_));
+        }
+
+        private bool HaveExtensionBlock(int x, int y, int z, IBlock block)
+        {
+            foreach (Vector3Int size in block.Size)
+            {
+                if(_heightMap.Any(_ => _.x == size.x + block.Position.x && _.z == size.z + block.Position.z))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
