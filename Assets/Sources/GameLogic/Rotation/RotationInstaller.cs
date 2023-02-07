@@ -36,13 +36,25 @@ namespace Sources.RotationLogic
             Container.Bind<RotationInstaller>().FromInstance(this).AsSingle();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                RotateUp();
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                RotateRight();
+            }
+        }
+
         private void RotateUp()
         {
             CurrentBlock.Rotate(Vector3.right, 90);
         }
         private void RotateDown()
         {
-            CurrentBlock.Rotate(Vector3.right, -90);
+           // CurrentBlock.Rotate(Vector3.right, -90);
         }
         private void RotateRight()
         {
@@ -50,7 +62,7 @@ namespace Sources.RotationLogic
         }
         private void RotateLeft()
         {
-            CurrentBlock.Rotate(Vector3.up, -90);
+           // CurrentBlock.Rotate(Vector3.up, -90);
         }
     }
 }

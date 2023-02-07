@@ -3,6 +3,7 @@ using Sources.BuildingLogic;
 using Sources.StateMachines;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Sources.BlockLogic
 {
@@ -41,6 +42,7 @@ namespace Sources.BlockLogic
         private StateMachine<BlockState> _stateMachine;
 
         private BuildingRoot _buildingRoot;
+        private BlockVisualization _blockVisualization;
 
         private Vector3Int _position;
         private Color _instableColor;
@@ -82,6 +84,11 @@ namespace Sources.BlockLogic
             {
                 _meshFilter = GetComponent<MeshFilter>();
             }
+        }
+        private void Start()
+        {
+            _blockVisualization = FindObjectOfType<BlockVisualization>();
+            _blockVisualization.Rotate(0);
         }
 
         private void OnDrawGizmos()
@@ -130,6 +137,7 @@ namespace Sources.BlockLogic
 
             OnMoving();
         }
+
         #region Block Rotation functions
         public void Rotate(Vector3 direction, int degree)
         {
@@ -181,6 +189,7 @@ namespace Sources.BlockLogic
                         _size[1] = _tposesX[1];
                         _size[2] = _tposesX[2];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
                     }
                     else
                     {
@@ -188,6 +197,7 @@ namespace Sources.BlockLogic
                         _size[1] = _tposesX[3];
                         _size[2] = _tposesX[0];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(-90);
                     }
                 }
                 else if (_size[1] == _tposesX[1])
@@ -198,6 +208,7 @@ namespace Sources.BlockLogic
                         _size[2] = _tposesX[3];
                         _size[3] = _tposesX[1];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
                     }
                     else
                     {
@@ -205,6 +216,7 @@ namespace Sources.BlockLogic
                         _size[2] = _tposesX[1];
                         _size[3] = _tposesX[3];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
 
                     }
                 }
@@ -216,6 +228,7 @@ namespace Sources.BlockLogic
                         _size[2] = _tposesX[0];
                         _size[3] = _tposesX[2];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(270);
                     }
                     else
                     {
@@ -223,6 +236,7 @@ namespace Sources.BlockLogic
                         _size[2] = _tposesX[2];
                         _size[3] = _tposesX[0];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
                     }
                 }
                 else if (_size[1] == _tposesX[3])
@@ -233,6 +247,7 @@ namespace Sources.BlockLogic
                         _size[2] = _tposesX[1];
                         _size[3] = _tposesX[3];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
                     }
                     else
                     {
@@ -240,6 +255,7 @@ namespace Sources.BlockLogic
                         _size[2] = _tposesX[3];
                         _size[3] = _tposesX[1];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
                     }
                 }
             }
@@ -273,6 +289,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[3];
                         _size[3] = _lposesX[5];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
                     }
                     else
                     {
@@ -280,6 +297,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[4];
                         _size[3] = _lposesX[2];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(-90);
                     }
                 }
                 else if (_size[1] == _lposesX[4])
@@ -290,6 +308,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[1];
                         _size[3] = _lposesX[0];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
                     }
                     else
                     {
@@ -297,6 +316,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[6];
                         _size[3] = _lposesX[7];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
                     }
                 }
                 else if (_size[1] == _lposesX[6])
@@ -307,6 +327,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[4];
                         _size[3] = _lposesX[2];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(270);
                     }
                     else
                     {
@@ -314,6 +335,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[3];
                         _size[3] = _lposesX[5];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
                     }
                 }
                 else if (_size[1] == _lposesX[3])
@@ -324,6 +346,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[6];
                         _size[3] = _lposesX[7];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
                     }
                     else
                     {
@@ -331,6 +354,7 @@ namespace Sources.BlockLogic
                         _size[2] = _lposesX[1];
                         _size[3] = _lposesX[0];
                         _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
                     }
                 }
             }
