@@ -37,6 +37,10 @@ namespace Sources.BlockLogic
 
             _gameObject.SetActive(true);
         }
+        public void Rotate(int degree)
+        {
+            _transform.rotation = Quaternion.Euler(0, degree, 0);
+        }
 
         public void Hide()
         {

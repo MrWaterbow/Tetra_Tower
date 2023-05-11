@@ -3,6 +3,7 @@ using Sources.BuildingLogic;
 using Sources.StateMachines;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Sources.BlockLogic
 {
@@ -41,6 +42,7 @@ namespace Sources.BlockLogic
         private StateMachine<BlockState> _stateMachine;
 
         private BuildingRoot _buildingRoot;
+        private BlockVisualization _blockVisualization;
 
         private Vector3Int _position;
         private Color _instableColor;
@@ -83,6 +85,11 @@ namespace Sources.BlockLogic
                 _meshFilter = GetComponent<MeshFilter>();
             }
         }
+        private void Start()
+        {
+            _blockVisualization = FindObjectOfType<BlockVisualization>();
+            _blockVisualization.Rotate(0);
+        }
 
         private void OnDrawGizmos()
         {
@@ -110,7 +117,7 @@ namespace Sources.BlockLogic
         /// </summary>
         public void Fall()
         {
-            if(_stateMachine.CurrentState == BlockState.Placing)
+            if (_stateMachine.CurrentState == BlockState.Placing)
             {
                 _position.y--;
 
@@ -131,13 +138,234 @@ namespace Sources.BlockLogic
             OnMoving();
         }
 
+        #region Block Rotation functions
         public void Rotate(Vector3 direction, int degree)
         {
+            if (_transform.gameObject.name == "O-Block(Clone)")
+            {
+                OBlockRotate(direction, degree);
+            }
+            else if (_transform.gameObject.name == "T-Block(Clone)")
+            {
+                TBlockRotate(direction, degree);
+            }
+            else if (_transform.gameObject.name == "L-Block(Clone)")
+            {
+                LBlockRotation(direction, degree);
+            }
             // OLD
-            //_transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
-            //Transforming?.Invoke(Position);
+            // OnMoving();
+            // Transforming?.Invoke(Position);
         }
 
+        private void OBlockRotate(Vector3 direction, int degree)
+        {
+            if (direction == Vector3.up)
+            {
+                return;
+            }
+            else
+            {
+                //_transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+            }
+        }
+
+        private Vector3Int[] _tposesX =
+        {
+            new Vector3Int(0,0,1),
+            new Vector3Int(1,0,0),
+            new Vector3Int(0,0,-1),
+            new Vector3Int(-1,0,0),
+        };
+        private void TBlockRotate(Vector3 direction, int degree)
+        {
+            if (direction == Vector3.up)
+            {
+                if (_size[1] == _tposesX[0])
+                {
+                    if (degree > 0)
+                    {
+                        _size[3] = _tposesX[0];
+                        _size[1] = _tposesX[1];
+                        _size[2] = _tposesX[2];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
+                    }
+                    else
+                    {
+                        _size[3] = _tposesX[2];
+                        _size[1] = _tposesX[3];
+                        _size[2] = _tposesX[0];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(-90);
+                    }
+                }
+                else if (_size[1] == _tposesX[1])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _tposesX[2];
+                        _size[2] = _tposesX[3];
+                        _size[3] = _tposesX[1];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
+                    }
+                    else
+                    {
+                        _size[1] = _tposesX[0];
+                        _size[2] = _tposesX[1];
+                        _size[3] = _tposesX[3];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
+
+                    }
+                }
+                else if (_size[1] == _tposesX[2])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _tposesX[3];
+                        _size[2] = _tposesX[0];
+                        _size[3] = _tposesX[2];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(270);
+                    }
+                    else
+                    {
+                        _size[1] = _tposesX[1];
+                        _size[2] = _tposesX[2];
+                        _size[3] = _tposesX[0];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
+                    }
+                }
+                else if (_size[1] == _tposesX[3])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _tposesX[0];
+                        _size[2] = _tposesX[1];
+                        _size[3] = _tposesX[3];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
+                    }
+                    else
+                    {
+                        _size[1] = _tposesX[2];
+                        _size[2] = _tposesX[3];
+                        _size[3] = _tposesX[1];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        private Vector3Int[] _lposesX =
+        {
+            new Vector3Int(-1,0,1),
+            new Vector3Int(0,0,1),
+            new Vector3Int(1,0,1),
+            new Vector3Int(-1,0,0),
+            new Vector3Int(1,0,0),
+            new Vector3Int(-1,0,-1),
+            new Vector3Int(0,0,-1),
+            new Vector3Int(1,0,-1),
+        };
+
+        private void LBlockRotation(Vector3 direction, int degree)
+        {
+            if (direction == Vector3.up)
+            { 
+                if(_size[1] == _lposesX[1])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _lposesX[4];
+                        _size[2] = _lposesX[3];
+                        _size[3] = _lposesX[5];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
+                    }
+                    else
+                    {
+                        _size[1] = _lposesX[3];
+                        _size[2] = _lposesX[4];
+                        _size[3] = _lposesX[2];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(-90);
+                    }
+                }
+                else if (_size[1] == _lposesX[4])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _lposesX[6];
+                        _size[2] = _lposesX[1];
+                        _size[3] = _lposesX[0];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
+                    }
+                    else
+                    {
+                        _size[1] = _lposesX[1];
+                        _size[2] = _lposesX[6];
+                        _size[3] = _lposesX[7];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
+                    }
+                }
+                else if (_size[1] == _lposesX[6])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _lposesX[3];
+                        _size[2] = _lposesX[4];
+                        _size[3] = _lposesX[2];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(270);
+                    }
+                    else
+                    {
+                        _size[1] = _lposesX[4];
+                        _size[2] = _lposesX[3];
+                        _size[3] = _lposesX[5];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(90);
+                    }
+                }
+                else if (_size[1] == _lposesX[3])
+                {
+                    if (degree > 0)
+                    {
+                        _size[1] = _lposesX[1];
+                        _size[2] = _lposesX[6];
+                        _size[3] = _lposesX[7];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(0);
+                    }
+                    else
+                    {
+                        _size[1] = _lposesX[6];
+                        _size[2] = _lposesX[1];
+                        _size[3] = _lposesX[0];
+                        _transform.RotateAround(transform.GetChild(0).gameObject.transform.position, direction, degree);
+                        _blockVisualization.Rotate(180);
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+
+        #endregion
         /// <summary>
         /// Update the transform position, Checking join and invoke events.
         /// </summary>

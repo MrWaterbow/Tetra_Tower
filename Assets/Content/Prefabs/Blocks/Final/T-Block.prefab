@@ -139,8 +139,6 @@ MonoBehaviour:
   _visualizationOffset: {x: 0, y: 0, z: 0}
   _hideTime: 2
   _instableAnimationTime: 1
-  _instableColor: {r: 0.16273585, g: 0.20950973, b: 0.5, a: 1}
-  _defaultColor: {r: 0.2627451, g: 0.3372549, b: 0.8, a: 1}
   _gameObject: {fileID: 7460254763801309012}
   _transform: {fileID: 7460254763801309009}
   _modelTransform: {fileID: 7460254763801309009}
