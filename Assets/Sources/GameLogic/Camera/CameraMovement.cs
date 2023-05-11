@@ -56,9 +56,9 @@ namespace Sources.CameraLogic
         {
             _maxHeight = _buildingRoot.GetHeighestFromMap();
 
-            _rotationPoint.position = new Vector3(_rotationPoint.position.x, _rotationPoint.position.y + _moveOffset, _rotationPoint.position.z);
-
-            _cameraTransform.DOMoveY(_root.position.y + _offset.y + (_maxHeight * _moveOffset), _moveTime);
+            _rotationPoint.DOMoveY(_root.position.y + (_maxHeight * _moveOffset), _moveTime);
+           // _rotationPoint.position = new Vector3(_rotationPoint.position.x, _rotationPoint.position.y + _moveOffset, _rotationPoint.position.z);
+           //_cameraTransform.DOMoveY(_root.position.y + _offset.y + (_maxHeight * _moveOffset), _moveTime);
         }
 
         private void Update()
