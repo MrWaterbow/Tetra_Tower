@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Sources.BricksLogic
 {
-    public readonly struct BricksSurface
+    public readonly struct PlacingSurface
     {
         public readonly Vector2Int SurfaceSize;
         public readonly Vector3 WorldPositionOffset;
 
-        public BricksSurface(Vector2Int surfaceSize, Vector3 worldPositionOffset)
+        public PlacingSurface(Vector2Int surfaceSize, Vector3 worldPositionOffset)
         {
             SurfaceSize = surfaceSize;
             WorldPositionOffset = worldPositionOffset;
