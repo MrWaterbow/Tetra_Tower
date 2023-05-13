@@ -21,13 +21,13 @@ namespace Sources.BricksLogic
         private readonly List<Brick> _bricks;
         private readonly Brick _controlledBrick;
 
-        private readonly BricksSurface _surface;
+        private readonly PlacingSurface _surface;
 
-        public BricksSpace(Vector2Int surfaceSize, Vector3 worldPositionOffset, List<Brick> bricks, Brick controlledBrick)
+        public BricksSpace(Vector2Int surfaceSize, Vector3 worldPositionOffset, Brick controlledBrick)
         {
-            _surface = new BricksSurface(surfaceSize, worldPositionOffset);
+            _surface = new(surfaceSize, worldPositionOffset);
 
-            _bricks = bricks;
+            _bricks = new List<Brick>() { controlledBrick };
             _controlledBrick = controlledBrick;
         }
 
@@ -36,23 +36,26 @@ namespace Sources.BricksLogic
         public Vector2Int SurfaceSize => _surface.SurfaceSize;
         public Vector3 WorldPositionOffset => _surface.WorldPositionOffset;
 
-        //private Vector2Int ControlledBlockPositionInto2D => new Vector2Int(ControlledBlockPosition.x, ControlledBlockPosition.z);
-
-        public void TryMoveControlledBrick(Vector3Int direction)
+        public void TryMoveBrick(Vector3Int direction)
         {
-            Vector2Int featurePosition = new(ControlledBlockPosition.x + direction.x, ControlledBlockPosition.z + direction.z);
+            Vector2Int featurePosition = ComputeFeaturePosition(direction);
 
-            if(_surface.PatternInSurfaceLimits(_controlledBrick.Pattern, featurePosition))
+            if (_surface.PatternInSurfaceLimits(_controlledBrick.Pattern, featurePosition))
             {
                 _controlledBrick.Move(direction);
             }
         }
 
-        public bool PossibleToMove(Vector3Int direction)
+        public bool PossibleMoveBrickTo(Vector3Int direction)
         {
-            Vector2Int featurePosition = new(ControlledBlockPosition.x + direction.x, ControlledBlockPosition.z + direction.z);
+            Vector2Int featurePosition = ComputeFeaturePosition(direction);
 
             return _surface.PatternInSurfaceLimits(_controlledBrick.Pattern, featurePosition);
+        }
+
+        private Vector2Int ComputeFeaturePosition(Vector3Int direction)
+        {
+            return new(ControlledBlockPosition.x + direction.x, ControlledBlockPosition.z + direction.z);
         }
 
         public void LowerControlledBrick()

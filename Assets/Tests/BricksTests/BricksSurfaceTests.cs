@@ -6,7 +6,7 @@ namespace Tests
 {
     public sealed class BricksSurfaceTests
     {
-        private BricksSurface _surface;
+        private PlacingSurface _surface;
 
         [SetUp]
         public void Setup()
@@ -15,7 +15,7 @@ namespace Tests
         }
 
         [Test]
-        public void PositionOnSurfaceTest()
+        public void PositionsInsideSurfaceLimitsTest()
         {
             Assert.IsTrue(_surface.PositionInSurfaceLimits(Vector2Int.one * 2));
             Assert.IsTrue(_surface.PositionInSurfaceLimits(Vector2Int.up * 2));
@@ -27,10 +27,13 @@ namespace Tests
             Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.left));
             Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.up * 3));
             Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.down));
+
+            // TODO 6.1 Блок может выйти за границы, только если они расширины с помощью других блоков
+            // ( у этого должны быть свои ограничения, которые задаются в пространстве для блоков
         }
 
         [Test]
-        public void PatternOnSurfaceTest()
+        public void PatternsInsideSurfaceLimitsTest()
         {
             Assert.IsTrue(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.one * 2));
 
@@ -46,6 +49,9 @@ namespace Tests
 
             Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.up * 3));
             Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.down));
+
+            // TODO 6.1 Блок может выйти за границы, только если они расширины с помощью других блоков
+            // ( у этого должны быть свои ограничения, которые задаются в пространстве для блоков
         }
     }
 }
