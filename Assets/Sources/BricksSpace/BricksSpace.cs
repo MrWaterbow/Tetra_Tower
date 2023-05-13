@@ -19,7 +19,7 @@ namespace Sources.BricksLogic
         //private event EventHandler<BrickMovedEventArgs> _onBlockMoved;
 
         private readonly List<Brick> _bricks;
-        private readonly Brick _controlledBrick;
+        private readonly Brick _controllableBrick;
 
         private readonly PlacingSurface _surface;
 
@@ -28,10 +28,10 @@ namespace Sources.BricksLogic
             _surface = new(surfaceSize, worldPositionOffset);
 
             _bricks = new List<Brick>() { controlledBrick };
-            _controlledBrick = controlledBrick;
+            _controllableBrick = controlledBrick;
         }
 
-        public Vector3Int ControlledBlockPosition => _controlledBrick.Position;
+        public Vector3Int ControllableBlockPosition => _controllableBrick.Position;
 
         public Vector2Int SurfaceSize => _surface.SurfaceSize;
         public Vector3 WorldPositionOffset => _surface.WorldPositionOffset;
@@ -40,9 +40,9 @@ namespace Sources.BricksLogic
         {
             Vector2Int featurePosition = ComputeFeaturePosition(direction);
 
-            if (_surface.PatternInSurfaceLimits(_controlledBrick.Pattern, featurePosition))
+            if (_surface.PatternInSurfaceLimits(_controllableBrick.Pattern, featurePosition))
             {
-                _controlledBrick.Move(direction);
+                _controllableBrick.Move(direction);
             }
         }
 
@@ -50,17 +50,17 @@ namespace Sources.BricksLogic
         {
             Vector2Int featurePosition = ComputeFeaturePosition(direction);
 
-            return _surface.PatternInSurfaceLimits(_controlledBrick.Pattern, featurePosition);
+            return _surface.PatternInSurfaceLimits(_controllableBrick.Pattern, featurePosition);
         }
 
         private Vector2Int ComputeFeaturePosition(Vector3Int direction)
         {
-            return new(ControlledBlockPosition.x + direction.x, ControlledBlockPosition.z + direction.z);
+            return new(ControllableBlockPosition.x + direction.x, ControllableBlockPosition.z + direction.z);
         }
 
-        public void LowerControlledBrick()
+        public void LowerControllableBrick()
         {
-            _controlledBrick.Move(Vector3Int.down);
+            _controllableBrick.Move(Vector3Int.down);
         }
     }
 }
