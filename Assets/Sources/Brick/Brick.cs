@@ -3,31 +3,19 @@ using UnityEngine;
 
 namespace Sources.BricksLogic
 {
-    public static class BrickPatterns
-    {
-        public static readonly Vector3Int[] LBlock = new Vector3Int[4] 
-        { 
-            Vector3Int.zero,
-            Vector3Int.right,
-            Vector3Int.left, 
-            Vector3Int.left + Vector3Int.forward,
-             
-        };
-    }
-
-    public class Brick
+    public class Brick : IBrick
     {
         private Vector3Int _position;
-        private Vector3Int[] _pattern;
+        private BrickPattern _pattern;
 
-        public Brick(Vector3Int position, Vector3Int[] pattern)
+        public Brick(Vector3Int position, BrickPattern pattern)
         {
             _position = position;
             _pattern = pattern;
         }
 
         public Vector3Int Position => _position;
-        public IReadOnlyCollection<Vector3Int> Pattern => _pattern;
+        public Vector3Int[] Pattern => _pattern;
 
         public void Move(Vector3Int direction)
         {
