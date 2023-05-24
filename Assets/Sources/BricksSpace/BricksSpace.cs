@@ -18,10 +18,35 @@ namespace Sources.BricksLogic
             _controllableBrick = controlledBrick;
         }
 
-        public Vector3Int ControllableBlockPosition => _controllableBrick.Position;
-        public Vector3Int ControllableBlockPattern => _controllableBrick.Position;
+        public IReadOnlyBrick ControllableBrick => _controllableBrick;
 
-        public Vector2Int SurfaceSize => _surface.SurfaceSize;
-        public Vector3 WorldPositionOffset => _surface.WorldPositionOffset;
+        public PlacingSurface Surface => _surface;
+
+        public void TryMoveBrick(Vector3Int direction)
+        {
+            Vector2Int featurePosition = ComputeFeaturePosition(direction);
+
+            if (_surface.PatternInSurfaceLimits(_controllableBrick.Pattern, featurePosition))
+            {
+                _controllableBrick.Move(direction);
+            }
+        }
+
+        public bool PossibleMoveBrickTo(Vector3Int direction)
+        {
+            Vector2Int featurePosition = ComputeFeaturePosition(direction);
+
+            return _surface.PatternInSurfaceLimits(_controllableBrick.Pattern, featurePosition);
+        }
+
+        private Vector2Int ComputeFeaturePosition(Vector3Int direction)
+        {
+            return new(_controllableBrick.Position.x + direction.x, _controllableBrick.Position.z + direction.z);
+        }
+
+        public void LowerControllableBrick()
+        {
+            _controllableBrick.Move(Vector3Int.down);
+        }
     }
 }
