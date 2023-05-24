@@ -1,7 +1,4 @@
-﻿using Sources.BricksLogic;
-using UnityEngine;
-
-namespace Sources.Factories
+﻿namespace Sources.Factories
 {
     public sealed class RandomPatternBrickFactory// : IBrickFactory
     {
