@@ -14,7 +14,7 @@ namespace Sources.BricksLogic
             WorldPositionOffset = worldPositionOffset;
         }
 
-        public bool PatternInSurfaceLimits(IReadOnlyCollection<Vector3Int> pattern, Vector2Int position)
+        public bool PatternInSurfaceLimits(Vector3Int[] pattern, Vector2Int position)
         {
             foreach (Vector3Int cell in pattern)
             {
