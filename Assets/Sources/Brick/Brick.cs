@@ -6,9 +6,9 @@ namespace Sources.BricksLogic
     public class Brick : IBrick
     {
         private Vector3Int _position;
-        private BrickPattern _pattern;
+        private Vector3Int[] _pattern;
 
-        public Brick(Vector3Int position, BrickPattern pattern)
+        public Brick(Vector3Int position, Vector3Int[] pattern)
         {
             _position = position;
             _pattern = pattern;
