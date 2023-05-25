@@ -6,25 +6,25 @@ namespace Server.BricksLogic
     public sealed class BricksSpace
     {
         /// <summary>
-        /// Все блоки, которые существуют в пространстве
+        /// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         /// </summary>
         private readonly List<IBrick> _bricks;
         /// <summary>
-        /// Контролируемый игроком блок
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         /// </summary>
         private readonly IBrick _controllableBrick;
 
         /// <summary>
-        /// Поверхность на которую ставятся блоки
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         /// </summary>
         private readonly PlacingSurface _surface;
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="surfaceSize">Размер поверхности</param>
-        /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
-        /// <param name="controllableBrick">Контролируемый блок</param>
+        /// <param name="surfaceSize">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
+        /// <param name="worldPositionOffset">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
+        /// <param name="controllableBrick">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</param>
         public BricksSpace(Vector2Int surfaceSize, Vector3 worldPositionOffset, IBrick controllableBrick)
         {
             _surface = new(surfaceSize, worldPositionOffset);
@@ -42,19 +42,19 @@ namespace Server.BricksLogic
         }
 
         /// <summary>
-        /// Это свойство позволяет прочесть данные блока
+        /// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         /// </summary>
         public IReadOnlyBrick ControllableBrick => _controllableBrick;
 
         /// <summary>
-        /// Поверхность, на которую устанавливаются блоки
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         /// </summary>
         public PlacingSurface Surface => _surface;
 
         /// <summary>
-        /// Метод содержит проверку - можноли двинуть блок и в случае истины двигает его в указанном направлении
+        /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         /// </summary>
-        /// <param name="direction">Направление</param>
+        /// <param name="direction">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
         public void TryMoveBrick(Vector3Int direction)
         {
             Vector2Int featurePosition = ComputeFeaturePosition(direction);
@@ -65,14 +65,14 @@ namespace Server.BricksLogic
             {
                 _controllableBrick.Move(direction);
 
-                Debug.Log("Move completed");
+                Debug.Log("Move completed " + _controllableBrick.Position);
             }
         }
 
         /// <summary>
-        /// Возвращает будущую позицию относительно напрвления
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         /// </summary>
-        /// <param name="direction">Направление</param>
+        /// <param name="direction">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
         /// <returns></returns>
         private Vector2Int ComputeFeaturePosition(Vector3Int direction)
         {
@@ -80,9 +80,9 @@ namespace Server.BricksLogic
         }
 
         /// <summary>
-        /// Метод возвращает возможно ли двинуть блок в указанном направлении
+        /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         /// </summary>
-        /// <param name="direction">Направление</param>
+        /// <param name="direction">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
         /// <returns></returns>
         public bool PossibleMoveBrickTo(Vector3Int direction)
         {
@@ -92,7 +92,7 @@ namespace Server.BricksLogic
         }
 
         /// <summary>
-        /// Опускает контролируемый блок
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         /// </summary>
         public void LowerBrick()
         {
