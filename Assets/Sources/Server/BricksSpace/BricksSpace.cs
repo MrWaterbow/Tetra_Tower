@@ -5,13 +5,18 @@ namespace Sources.BricksLogic
 {
     public sealed class BricksSpace
     {
-        //_bricks все блоки
-        // _controllableBrick контролируемый игроком блок
-        //_surface поверхность, на которую устанавливаютс€ блоки. „итает блоки встающие на неЄ, Ќапример, ѕровер€ет находитс€ ли блок на поверхности
-
+        /// <summary>
+        /// ¬се блоки, которые существуют в пространстве
+        /// </summary>
         private readonly List<IBrick> _bricks;
+        /// <summary>
+        ///  онтролируемый игроком блок
+        /// </summary>
         private readonly IBrick _controllableBrick;
 
+        /// <summary>
+        /// ѕоверхность на которую став€тс€ блоки
+        /// </summary>
         private readonly PlacingSurface _surface;
 
         /// <summary>
@@ -27,6 +32,7 @@ namespace Sources.BricksLogic
             _bricks = new List<IBrick>() { controlledBrick };
             _controllableBrick = controlledBrick;
         }
+
         /// <summary>
         /// Ёто свойство позвол€ет прочесть данные блока
         /// </summary>

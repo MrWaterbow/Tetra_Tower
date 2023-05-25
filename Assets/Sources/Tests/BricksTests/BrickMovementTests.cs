@@ -27,9 +27,7 @@ namespace Tests
         [Test]
         public void ComputeWorldPositionTest()
         {
-            Vector3 worldPosition = _brickSpace.Surface.WorldPositionOffset + _brickSpace.ControllableBrick.Position;
-
-            Assert.AreEqual(new Vector3(1, 6, 1), worldPosition);
+            Assert.AreEqual(new Vector3(1, 6, 1), _brickSpace.Surface.GetWorldPosition(_brickSpace.ControllableBrick.Position));
         }
 
         [Test]
