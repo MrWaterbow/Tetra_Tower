@@ -6,7 +6,13 @@ namespace Client.Bootstrapper
 {
     internal class BrickBootstrapper : Bootstrapper
     {
+        /// <summary>
+        /// Размер поверхности для размещения блоков
+        /// </summary>
         [SerializeField] private Vector2Int _surfaceSize;
+        /// <summary>
+        /// Начальная позиция блоков
+        /// </summary>
         [SerializeField] private Vector3Int _startBrickPosition;
 
         [Space]
@@ -14,9 +20,18 @@ namespace Client.Bootstrapper
         [SerializeField] private GameObject _brickInput;
         [SerializeField] private Transform _worldPositionAnchor;
 
+        /// <summary>
+        /// Реализация для получения ввода от игрока
+        /// </summary>
         private IBrickInputView _brickInputView;
+        /// <summary>
+        /// Смещение относительно мировых координат
+        /// </summary>
         private Vector3 _worldPositionOffset;
 
+        /// <summary>
+        /// При запуске инициализирует начальный блок, фабрики, пространство блоков и так далее
+        /// </summary>
         public override void Boot()
         {
             IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns);
