@@ -7,5 +7,8 @@ namespace Server.BricksLogic
     {
         event Action<Vector3Int> OnMove;
         event Action OnLower;
+
+        void SetCallbacks();
+        void DisposeCallbacks();
     }
 }

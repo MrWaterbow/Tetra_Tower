@@ -59,9 +59,13 @@ namespace Server.BricksLogic
         {
             Vector2Int featurePosition = ComputeFeaturePosition(direction);
 
+            Debug.Log("Try move to " + direction.ToString());
+
             if (_surface.PatternInSurfaceLimits(_controllableBrick.Pattern, featurePosition))
             {
                 _controllableBrick.Move(direction);
+
+                Debug.Log("Move completed");
             }
         }
 

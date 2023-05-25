@@ -25,10 +25,9 @@ namespace Client.Bootstrapper
             PlacingSurface placingSurface = new(_surfaceSize, _worldPositionOffset);
             BricksSpace bricksSpace = new(placingSurface, startBrick);
 
+            _brickInputView.SetCallbacks();
             BrickInput brickInput = new(bricksSpace, _brickInputView);
             brickInput.SetCallbacks();
-
-            Debug.Log(bricksSpace.ControllableBrick);
         }
 
         private void OnValidate()
