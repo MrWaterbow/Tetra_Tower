@@ -19,7 +19,7 @@ namespace Tests
         [Test]
         public void BrickLowerTest()
         {
-            _brickSpace.LowerBrick();
+            _brickSpace.LowerBrickAndCheckGrounding();
 
             Assert.AreEqual(new Vector3Int(0, 4, 0), _brickSpace.ControllableBrick.Position);
         }
