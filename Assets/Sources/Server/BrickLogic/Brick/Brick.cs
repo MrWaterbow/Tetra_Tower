@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Server.BricksLogic
 {
     /// <summary>
-    ///–еализует интерфейс IBrick, он позвол€ет реализовать логику манипул€ций с блоком
+    /// –еализует интерфейс IBrick, он позвол€ет реализовать логику манипул€ций с блоком
     /// </summary>
     public sealed class Brick : IBrick
     {
