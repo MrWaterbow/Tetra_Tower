@@ -37,9 +37,8 @@ namespace Sources.BricksLogic
         /// </summary>
         public Vector3Int[] Pattern => _pattern;
 
-
         /// <summary>
-        ///Низкоуровневая Бизнесс правило, это то правило которое работает с сущностью блока
+        /// Низкоуровневая Бизнесс правило, это то правило которое работает с сущностью блока
         /// </summary>
         /// <param name="direction">Направление</param>
         public void Move(Vector3Int direction)

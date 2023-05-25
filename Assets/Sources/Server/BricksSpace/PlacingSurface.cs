@@ -50,5 +50,15 @@ namespace Sources.BricksLogic
         {
             return position.x > -1 && position.x < SurfaceSize.x && position.y > -1 && position.y < SurfaceSize.y;
         }
+
+        /// <summary>
+        /// Расчитывает и возвращает позицию относительно мировых координат
+        /// </summary>
+        /// <param name="localPosition">Позиция в локальных координатах</param>
+        /// <returns></returns>
+        public Vector3 GetWorldPosition(Vector3Int localPosition)
+        {
+            return localPosition + WorldPositionOffset;
+        }
     }
 }
