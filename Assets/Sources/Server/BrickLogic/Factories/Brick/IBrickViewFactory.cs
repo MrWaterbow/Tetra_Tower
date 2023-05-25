@@ -1,15 +1,15 @@
-using Server.BricksLogic;
+п»їusing Server.BricksLogic;
 using UnityEngine;
 
 namespace Server.Factories
 {
-    public interface IBrickFactory
+    public interface IBrickViewFactory
     {
         /// <summary>
-        /// Абстракция для создания блока
+        /// РЎРѕР·РґР°РЅРёРµ Р±Р»РѕРєР° РЅР° СЃС†РµРЅРµ
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        IBrick Create(Vector3Int position);
+        BrickView Create(Vector3 position);
     }
 }

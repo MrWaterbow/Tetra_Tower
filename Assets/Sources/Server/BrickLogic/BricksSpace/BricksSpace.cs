@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ namespace Server.BricksLogic
 {
     public sealed class BricksSpace
     {
+        public event Action<Vector3Int> OnControllableBrickMoved;
+        public event Action OnControllableBrickFall;
+
         /// <summary>
         /// Список со всеми блоками
         /// </summary>
@@ -12,7 +16,7 @@ namespace Server.BricksLogic
         /// <summary>
         /// Текущий контролируемый игроком блок
         /// </summary>
-        private readonly IBrick _controllableBrick;
+        private IBrick _controllableBrick;
 
         /// <summary>
         /// Платформа на которую ставяться блоки
@@ -65,6 +69,8 @@ namespace Server.BricksLogic
             if(PossibleMoveBrickTo(direction))
             {
                 _controllableBrick.Move(direction);
+
+                OnControllableBrickMoved?.Invoke(_controllableBrick.Position);
             }
         }
 
@@ -91,11 +97,40 @@ namespace Server.BricksLogic
         }
 
         /// <summary>
-        /// Снижает высоту блока на одну единицу
+        /// Снижает высоту блока на одну единицу и проверяет находится ли он на земле
         /// </summary>
-        public void LowerBrick()
+        public void LowerBrickAndCheckGrounding()
         {
-            _controllableBrick.Move(Vector3Int.down);
+            if(ControllableBrickOnGround() == false)
+            {
+                _controllableBrick.Move(Vector3Int.down);
+
+                OnControllableBrickMoved?.Invoke(_controllableBrick.Position);
+            }
+
+            if (ControllableBrickOnGround())
+            {
+                OnControllableBrickFall?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Проверка блока находится ли он на земле
+        /// </summary>
+        /// <returns></returns>
+        private bool ControllableBrickOnGround()
+        {
+            return _controllableBrick.Position.y == 0;
+        }
+
+        /// <summary>
+        /// Меняет управляемый игроком блок и добавляет новый в список блоков
+        /// </summary>
+        /// <param name="brick"></param>
+        public void ChangeAndAddBlock(IBrick brick)
+        {
+            _controllableBrick = brick;
+            _bricks.Add(brick);
         }
     }
 }

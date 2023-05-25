@@ -27,7 +27,7 @@ namespace Server.Factories
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public Brick Create(Vector3Int position)
+        public IBrick Create(Vector3Int position)
         {
             return new Brick(position, _patterns[Random.Range(0, _patterns.Length)]);
         }
