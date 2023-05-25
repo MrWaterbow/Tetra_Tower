@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Sources.BricksLogic
+namespace Server.BricksLogic
 {
     public readonly struct PlacingSurface
     {

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace Sources.BricksLogic
+namespace Server.BricksLogic
 {
     /// <summary>
     ///Реализует интерфейс IBrick, он позволяет реализовать логику манипуляций с блоком
     /// </summary>
-    public class Brick : IBrick
+    public sealed class Brick : IBrick
     {
         /// <summary>
         /// Позиция блока

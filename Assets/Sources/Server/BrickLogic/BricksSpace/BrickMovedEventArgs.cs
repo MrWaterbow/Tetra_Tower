@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sources.BricksLogic
+namespace Server.BricksLogic
 {
     public sealed class BrickMovedEventArgs : EventArgs
     {
