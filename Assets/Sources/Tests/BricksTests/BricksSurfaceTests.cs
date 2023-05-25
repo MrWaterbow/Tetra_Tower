@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Sources.BricksLogic;
+using Server.BricksLogic;
 using UnityEngine;
 
 namespace Tests

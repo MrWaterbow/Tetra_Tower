@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Sources.BricksLogic
+namespace Server.BricksLogic
 {
     /// <summary>
     /// Паттерн Memento - требуется для того что бы доступ к данным блока был только для чтения, а не для изменения. Например, позволяет проверить данные блока при тесте.

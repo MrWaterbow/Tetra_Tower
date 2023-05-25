@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Sources.BricksLogic
+namespace Server.BricksLogic
 {
     public sealed class BricksSpace
     {
@@ -24,13 +24,21 @@ namespace Sources.BricksLogic
         /// </summary>
         /// <param name="surfaceSize">Размер поверхности</param>
         /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
-        /// <param name="controlledBrick">Контролируемый блок</param>
-        public BricksSpace(Vector2Int surfaceSize, Vector3 worldPositionOffset, IBrick controlledBrick)
+        /// <param name="controllableBrick">Контролируемый блок</param>
+        public BricksSpace(Vector2Int surfaceSize, Vector3 worldPositionOffset, IBrick controllableBrick)
         {
             _surface = new(surfaceSize, worldPositionOffset);
 
-            _bricks = new List<IBrick>() { controlledBrick };
-            _controllableBrick = controlledBrick;
+            _bricks = new List<IBrick>() { controllableBrick };
+            _controllableBrick = controllableBrick;
+        }
+
+        public BricksSpace(PlacingSurface surface, IBrick controllableBrick)
+        {
+            _surface = surface;
+
+            _bricks = new List<IBrick>() { controllableBrick };
+            _controllableBrick = controllableBrick;
         }
 
         /// <summary>
@@ -58,6 +66,16 @@ namespace Sources.BricksLogic
         }
 
         /// <summary>
+        /// Возвращает будущую позицию относительно напрвления
+        /// </summary>
+        /// <param name="direction">Направление</param>
+        /// <returns></returns>
+        private Vector2Int ComputeFeaturePosition(Vector3Int direction)
+        {
+            return new(_controllableBrick.Position.x + direction.x, _controllableBrick.Position.z + direction.z);
+        }
+
+        /// <summary>
         /// Метод возвращает возможно ли двинуть блок в указанном направлении
         /// </summary>
         /// <param name="direction">Направление</param>
@@ -69,21 +87,10 @@ namespace Sources.BricksLogic
             return _surface.PatternInSurfaceLimits(_controllableBrick.Pattern, featurePosition);
         }
 
-
-        /// <summary>
-        /// Возвращает будущую позицию относительно напрвления
-        /// </summary>
-        /// <param name="direction">Направление</param>
-        /// <returns></returns>
-        private Vector2Int ComputeFeaturePosition(Vector3Int direction)
-        {
-            return new(_controllableBrick.Position.x + direction.x, _controllableBrick.Position.z + direction.z);
-        }
-
         /// <summary>
         /// Опускает контролируемый блок
         /// </summary>
-        public void LowerControllableBrick()
+        public void LowerBrick()
         {
             _controllableBrick.Move(Vector3Int.down);
         }

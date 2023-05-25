@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Sources.BricksLogic;
+using Server.BricksLogic;
 using UnityEngine;
 
 namespace Tests
@@ -19,7 +19,7 @@ namespace Tests
         [Test]
         public void BrickLowerTest()
         {
-            _brickSpace.LowerControllableBrick();
+            _brickSpace.LowerBrick();
 
             Assert.AreEqual(new Vector3Int(0, 4, 0), _brickSpace.ControllableBrick.Position);
         }
