@@ -326,6 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b40f1a691d12448b55bbf514804c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rightButton: {fileID: 1749288427}
+  _leftButton: {fileID: 1751225347}
+  _forwardButton: {fileID: 551440962}
+  _backButton: {fileID: 1155601342}
 --- !u!224 &127704353
 RectTransform:
   m_ObjectHideFlags: 0
@@ -803,9 +807,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1749288426}
+  - {fileID: 1751225346}
   - {fileID: 551440961}
   - {fileID: 1155601341}
-  - {fileID: 1751225346}
   m_Father: {fileID: 57664742}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -846,7 +850,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541241258}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1500,7 +1504,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541241258}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 225}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1894,7 +1898,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 541241258}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
