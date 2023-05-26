@@ -6,16 +6,9 @@ using UnityEngine.UI;
 namespace Client.Input
 {
 
-    internal sealed class ButtonsBrickInput : MonoBehaviour, IBrickInputView
+    internal sealed class ButtonsBrickInput : MonoBehaviour
     {
-        /// <summary>
-        /// Ивент вызывается при получения ввода от игрока для движения
-        /// </summary>
-        public event Action<Vector3Int> OnMove;
-        /// <summary>
-        /// Ивент вызывается при приземлении блока
-        /// </summary>
-        public event Action OnLower;
+        public BrickInputPresenter Presenter;
 
         // Список кнопок для ввода игрока
         [SerializeField] private Button _rightButton;
@@ -26,7 +19,7 @@ namespace Client.Input
         /// <summary>
         /// Подписывается на нажатие кнопок
         /// </summary>
-        public void SetCallbacks()
+        public void OnEnable()
         {
             _rightButton.onClick.AddListener(InvokeMoveRight);
             _leftButton.onClick.AddListener(InvokeMoveLeft);
@@ -37,7 +30,7 @@ namespace Client.Input
         /// <summary>
         /// Отписывается от нажатия блоков
         /// </summary>
-        public void DisposeCallbacks()
+        public void OnDisable()
         {
             _rightButton.onClick.RemoveListener(InvokeMoveRight);
             _leftButton.onClick.RemoveListener(InvokeMoveLeft);
@@ -48,22 +41,22 @@ namespace Client.Input
         // Методы для вызова ивентов при движении
         private void InvokeMoveRight()
         {
-            OnMove?.Invoke(Vector3Int.right);
+            Presenter.MoveTo(Vector3Int.right);
         }
 
         private void InvokeMoveLeft()
         {
-            OnMove?.Invoke(Vector3Int.left);
+            Presenter.MoveTo(Vector3Int.left);
         }
 
         private void InvokeMoveForward()
         {
-            OnMove?.Invoke(Vector3Int.forward);
+            Presenter.MoveTo(Vector3Int.forward);
         }
 
         private void InvokeMoveBack()
         {
-            OnMove?.Invoke(Vector3Int.back);
+            Presenter.MoveTo(Vector3Int.back);
         }
     }
 }

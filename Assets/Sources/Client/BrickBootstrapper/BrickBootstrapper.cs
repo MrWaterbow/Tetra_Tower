@@ -1,3 +1,6 @@
+using Client.BricksLogic;
+using Client.Factories;
+using Client.Input;
 using Server.BricksLogic;
 using Server.Factories;
 using UnityEngine;
@@ -21,14 +24,10 @@ namespace Client.Bootstrapper
 
         [Space]
 
-        [SerializeField] private GameObject _brickInput;
+        [SerializeField] private ButtonsBrickInput _brickInput;
         [SerializeField] private BrickView _brickPrefab;
         [SerializeField] private Transform _worldPositionAnchor;
 
-        /// <summary>
-        /// Реализация для получения ввода от игрока
-        /// </summary>
-        private IBrickInputView _brickInputView;
         /// <summary>
         /// Смещение относительно мировых координат
         /// </summary>
@@ -39,10 +38,13 @@ namespace Client.Bootstrapper
         private BricksSpace _bricksSpace;
         private PlacingSurface _placingSurface;
 
+        private BrickView _currentBrickView;
+
         private IBrickFactory _brickFactory;
         private IBrickViewFactory _brickViewFactory;
 
         private BrickViewPresenter _brickPresenter;
+        private BrickInputPresenter _brickInputPresenter;
 
         /// <summary>
         /// При запуске инициализирует начальный блок, фабрики, пространство блоков и так далее
@@ -56,24 +58,48 @@ namespace Client.Bootstrapper
             _brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns);
             _brickViewFactory = new BrickViewFactory(_brickPrefab);
 
-            // Создание начального блока из фабрики
-            IBrick startBrick = _brickFactory.Create(_startBrickPosition);
-            BrickView brickView = _brickViewFactory.Create(GetWorldPosition());
-
             // Создание пространства блоков
-            _bricksSpace = new(_placingSurface, startBrick);
+            _bricksSpace = new(_placingSurface);
 
-            // Подписка на нажатие кнопок
-            _brickInputView.SetCallbacks();
-            // Создание посредника между нажатием кнопок и реакции на это
-            BrickInput brickInput = new(_bricksSpace, _brickInputView);
-            // Обеспечение контранкта между нажатием кнопки и действием, то есть реакцией на нажатие
-            brickInput.SetCallbacks();
+            // Создание презентера
+            _brickPresenter = new(_bricksSpace);
 
-            _brickPresenter = new(_bricksSpace, brickView);
-            _brickPresenter.SetCallbacks();
+            // Создание контролирумого блока
+            CreateAndSetControllableBrick();
 
-            _bricksSpace.OnControllableBrickFall += CreateNewBlock;
+            // Создание презентера для кнопок управления
+            _brickInputPresenter = new BrickInputPresenter(_bricksSpace);
+            _brickInput.Presenter = _brickInputPresenter;
+
+            // Вызов создание нового блока при его падении
+            _bricksSpace.OnControllableBrickFall += CreateAndSetControllableBrick;
+        }
+
+        /// <summary>
+        /// Создание нового блока и подключение его как управляемого 
+        /// </summary>
+        private void CreateAndSetControllableBrick()
+        {
+            Brick brick = _brickFactory.Create(_startBrickPosition);
+
+            _bricksSpace.ChangeAndAddRecentControllableBrick(brick);
+
+            CreateBlockView(brick);
+        }
+
+        /// <summary>
+        /// Создание нового отображения визуального блока
+        /// </summary>
+        /// <param name="brick"></param>
+        private void CreateBlockView(Brick brick)
+        {
+            _currentBrickView?.DisposeCallbacks();
+            _brickPresenter?.DisposeCallbacks();
+            
+            _brickPresenter.SetCallbacks(brick);
+
+            _currentBrickView = _brickViewFactory.Create(GetWorldPosition());
+            _currentBrickView.SetCallbacks(_brickPresenter);
         }
 
         /// <summary>
@@ -83,18 +109,6 @@ namespace Client.Bootstrapper
         private Vector3 GetWorldPosition()
         {
             return _placingSurface.GetWorldPosition(_startBrickPosition);
-        }
-
-        /// <summary>
-        /// Создание нового блока
-        /// </summary>
-        private void CreateNewBlock()
-        {
-            IBrick newBrick = _brickFactory.Create(_startBrickPosition);
-            BrickView newBrickView = _brickViewFactory.Create(GetWorldPosition());
-
-            _bricksSpace.ChangeAndAddBlock(newBrick);
-            _brickPresenter.Instance = newBrickView;
         }
 
         private void Update()
@@ -119,15 +133,6 @@ namespace Client.Bootstrapper
 
         private void OnValidate()
         {
-            if(_brickInput != null && _brickInput.TryGetComponent<IBrickInputView>(out var component))
-            {
-                _brickInputView = component;
-            }
-            else
-            {
-                _brickInput = null;
-            }
-
             if(_worldPositionAnchor != null)
             {
                 _worldPositionOffset = _worldPositionAnchor.position;

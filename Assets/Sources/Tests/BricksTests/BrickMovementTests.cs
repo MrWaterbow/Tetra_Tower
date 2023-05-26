@@ -6,40 +6,43 @@ namespace Tests
 {
     public sealed class BrickMovementTests
     {
-        private BricksSpace _brickSpace;
+        private BricksSpace _bricksSpace;
 
         [SetUp]
         public void Setup()
         {
             Brick controlledBrick = new(Vector3Int.up * 5, BrickPatterns.LBlock);
+            PlacingSurface surface = new(Vector2Int.one * 3, Vector3Int.one);
 
-            _brickSpace = new(Vector2Int.one * 3, Vector3.one, controlledBrick);
+            _bricksSpace = new(surface);
+
+            _bricksSpace.ChangeAndAddRecentControllableBrick(controlledBrick);
         }
 
         [Test]
         public void BrickLowerTest()
         {
-            _brickSpace.LowerBrickAndCheckGrounding();
+            _bricksSpace.LowerBrickAndCheckGrounding();
 
-            Assert.AreEqual(new Vector3Int(0, 4, 0), _brickSpace.ControllableBrick.Position);
+            Assert.AreEqual(new Vector3Int(0, 4, 0), _bricksSpace.ControllableBrick.Position);
         }
 
         [Test]
         public void ComputeWorldPositionTest()
         {
-            Assert.AreEqual(new Vector3(1, 6, 1), _brickSpace.Surface.GetWorldPosition(_brickSpace.ControllableBrick.Position));
+            Assert.AreEqual(new Vector3(1, 6, 1), _bricksSpace.Surface.GetWorldPosition(_bricksSpace.ControllableBrick.Position));
         }
 
         [Test]
         public void BrickMovingInsideSurfaceLimitsTest()
         {
-            _brickSpace.TryMoveBrick(Vector3Int.one);
+            _bricksSpace.TryMoveBrick(Vector3Int.one);
 
-            Assert.AreEqual(new Vector3Int(1, 6, 1), _brickSpace.ControllableBrick.Position);
+            Assert.AreEqual(new Vector3Int(1, 6, 1), _bricksSpace.ControllableBrick.Position);
 
-            _brickSpace.TryMoveBrick(Vector3Int.one * 2);
+            _bricksSpace.TryMoveBrick(Vector3Int.one * 2);
 
-            Assert.AreEqual(new Vector3Int(1, 6, 1), _brickSpace.ControllableBrick.Position);
+            Assert.AreEqual(new Vector3Int(1, 6, 1), _bricksSpace.ControllableBrick.Position);
 
             // TODO 6.1 Блок может выйти за границы, только если они расширины с помощью других блоков
             // ( у этого должны быть свои ограничения, которые задаются в пространстве для блоков

@@ -1,7 +1,8 @@
-﻿using Server.BricksLogic;
+﻿using Client.BricksLogic;
+using Server.BricksLogic;
 using UnityEngine;
 
-namespace Server.Factories
+namespace Client.Factories
 {
     public interface IBrickViewFactory
     {
