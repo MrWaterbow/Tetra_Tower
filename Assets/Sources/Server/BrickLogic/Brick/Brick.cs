@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 namespace Server.BricksLogic
 {
     /// <summary>
-    /// Реализует интерфейс IBrick, он позволяет реализовать логику манипуляций с блоком
+    /// Структура, которая представляет сущность блока
     /// </summary>
-    public sealed class Brick : IBrick
+    public class Brick
     {
+        public event Action<Vector3Int> OnPositionChanged;
+
         /// <summary>
         /// Позиция блока
         /// </summary>
@@ -25,6 +28,8 @@ namespace Server.BricksLogic
         {
             _position = position;
             _pattern = pattern;
+
+            OnPositionChanged = null;
         }
 
         // Свойства, здесь получаем значения для использования из вне, т.е. в других модулях/классах и пр.
@@ -44,6 +49,8 @@ namespace Server.BricksLogic
         public void Move(Vector3Int direction)
         {
             _position += direction;
+
+            OnPositionChanged?.Invoke(_position);
         }
     }
 }

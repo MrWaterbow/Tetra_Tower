@@ -1,8 +1,10 @@
 using DG.Tweening;
+using Server.BricksLogic;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Client.BricksLogic
 {
+
     public sealed class BrickView : MonoBehaviour
     {
         /// <summary>
@@ -13,6 +15,21 @@ namespace Server.BricksLogic
         /// Плавность сменения позиции
         /// </summary>
         [SerializeField] private float _changePositionSmoothTime;
+
+        private IBrickViewPresenter _presenter;
+
+        public void SetCallbacks(IBrickViewPresenter presenter)
+        {
+            presenter.OnPositionChanged += ChangePosition;
+
+            _presenter = presenter;
+        }
+
+        // TODO ПОПРОБОВАТЬ IDISPOSABLE ИЛИ ONDESTROY/ONDISABLE
+        public void DisposeCallbacks()
+        {
+            _presenter.OnPositionChanged -= ChangePosition;
+        }
 
         /// <summary>
         /// Изменяет позицию блока ( использует DOTween )

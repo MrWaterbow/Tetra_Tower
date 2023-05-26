@@ -1,7 +1,9 @@
-﻿using Server.BricksLogic;
+﻿using Client.BricksLogic;
+using Server.BricksLogic;
+using Server.Factories;
 using UnityEngine;
 
-namespace Server.Factories
+namespace Client.Factories
 {
     public sealed class BrickViewFactory : IBrickViewFactory
     {
