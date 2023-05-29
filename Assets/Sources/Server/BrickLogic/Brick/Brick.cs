@@ -4,11 +4,11 @@ using UnityEngine;
 namespace Server.BricksLogic
 {
     /// <summary>
-    /// Структура, которая представляет сущность блока
+    /// Класс, которая представляет сущность блока
     /// </summary>
-    public class Brick
+    public struct Brick
     {
-        public event Action<Vector3Int> OnPositionChanged;
+        private Action<Vector3Int> _onPositionChanged;
 
         /// <summary>
         /// Позиция блока
@@ -29,7 +29,13 @@ namespace Server.BricksLogic
             _position = position;
             _pattern = pattern;
 
-            OnPositionChanged = null;
+            _onPositionChanged = null;
+        }
+
+        public event Action<Vector3Int> OnPositionChanged
+        {
+            add { _onPositionChanged += value; }
+            remove { _onPositionChanged -= value; }
         }
 
         // Свойства, здесь получаем значения для использования из вне, т.е. в других модулях/классах и пр.
@@ -50,7 +56,7 @@ namespace Server.BricksLogic
         {
             _position += direction;
 
-            OnPositionChanged?.Invoke(_position);
+            _onPositionChanged?.Invoke(_position);
         }
     }
 }

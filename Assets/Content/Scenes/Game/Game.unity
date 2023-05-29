@@ -330,6 +330,7 @@ MonoBehaviour:
   _leftButton: {fileID: 1155601342}
   _forwardButton: {fileID: 1749288427}
   _backButton: {fileID: 1751225347}
+  _toGroundButton: {fileID: 700494293}
 --- !u!224 &127704353
 RectTransform:
   m_ObjectHideFlags: 0
@@ -661,7 +662,7 @@ MonoBehaviour:
   _surfaceSize: {x: 3, y: 3}
   _lowerTick: 1.5
   _startBrickPosition: {x: 0, y: 5, z: 0}
-  _brickInput: {fileID: 127704352}
+  _brickInputObject: {fileID: 127704351}
   _brickPrefab: {fileID: 1556693245787531414, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
   _worldPositionAnchor: {fileID: 2125726324}
 --- !u!1 &427632497
@@ -1095,7 +1096,7 @@ GameObject:
   - component: {fileID: 700494291}
   - component: {fileID: 700494293}
   m_Layer: 5
-  m_Name: GroundButton
+  m_Name: ToGroundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

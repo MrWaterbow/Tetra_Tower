@@ -1,20 +1,25 @@
 using Server.BricksLogic;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Client.Input
 {
-
-    internal sealed class ButtonsBrickInput : MonoBehaviour
+    internal interface IBrickInputView
     {
-        public BrickInputPresenter Presenter;
+        IBrickInputPresenter Presenter { get; set; }
+    }
 
+    internal sealed class ButtonsBrickInput : MonoBehaviour, IBrickInputView
+    {
         // Список кнопок для ввода игрока
         [SerializeField] private Button _rightButton;
         [SerializeField] private Button _leftButton;
         [SerializeField] private Button _forwardButton;
         [SerializeField] private Button _backButton;
+
+        [SerializeField] private Button _toGroundButton;
+
+        public IBrickInputPresenter Presenter { get; set; }
 
         /// <summary>
         /// Подписывается на нажатие кнопок
@@ -25,6 +30,8 @@ namespace Client.Input
             _leftButton.onClick.AddListener(InvokeMoveLeft);
             _forwardButton.onClick.AddListener(InvokeMoveForward);
             _backButton.onClick.AddListener(InvokeMoveBack);
+
+            _toGroundButton.onClick.AddListener(InvokeToGround);
         }
 
         /// <summary>
@@ -36,6 +43,8 @@ namespace Client.Input
             _leftButton.onClick.RemoveListener(InvokeMoveLeft);
             _forwardButton.onClick.RemoveListener(InvokeMoveForward);
             _backButton.onClick.RemoveListener(InvokeMoveBack);
+
+            _toGroundButton.onClick.RemoveListener(InvokeToGround);
         }
 
         // Методы для вызова ивентов при движении
@@ -57,6 +66,11 @@ namespace Client.Input
         private void InvokeMoveBack()
         {
             Presenter.MoveTo(Vector3Int.back);
+        }
+
+        private void InvokeToGround()
+        {
+            Presenter.ToGround();
         }
     }
 }

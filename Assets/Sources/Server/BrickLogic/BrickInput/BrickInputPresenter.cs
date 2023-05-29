@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 namespace Server.BricksLogic
 {
-    public class BrickInputPresenter
+    public class BrickInputPresenter : IBrickInputPresenter
     {
         /// <summary>
         /// Пространство блоков
@@ -27,6 +26,11 @@ namespace Server.BricksLogic
         public void MoveTo(Vector3Int direction)
         {
             _brickSpace.TryMoveBrick(direction);
+        }
+
+        public void ToGround()
+        {
+            _brickSpace.LowerBrickToGround();
         }
     }
 }

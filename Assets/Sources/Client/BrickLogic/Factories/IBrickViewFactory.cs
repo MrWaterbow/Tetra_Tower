@@ -1,5 +1,4 @@
 ﻿using Client.BricksLogic;
-using Server.BricksLogic;
 using UnityEngine;
 
 namespace Client.Factories
