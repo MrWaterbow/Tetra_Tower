@@ -1,3 +1,4 @@
+using Database.BricksLogic;
 using NUnit.Framework;
 using Server.BricksLogic;
 using UnityEngine;

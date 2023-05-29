@@ -1,9 +1,7 @@
 {
-    "name": "Server",
+    "name": "Database",
     "rootNamespace": "",
-    "references": [
-        "GUID:597203124d5cbe9468269e0c1dc539d6"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

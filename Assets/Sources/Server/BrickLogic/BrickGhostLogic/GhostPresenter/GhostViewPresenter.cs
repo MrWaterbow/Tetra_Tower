@@ -18,12 +18,12 @@ namespace Server.BricksLogic.GhostLogic
 
         public void SetCallbacks()
         {
-            _bricksSpace.Database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+            _bricksSpace.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
         }
 
         public void DisposeCallbacks()
         {
-            _bricksSpace.Database.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
+            _bricksSpace.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Server.BricksLogic.GhostLogic
         /// <param name="position"></param>
         private void InvokeOnPositionChanged(Vector3Int position)
         {
-            OnPositionChanged?.Invoke(_bricksSpace.Database.Surface.GetWorldPosition(position));
+            OnPositionChanged?.Invoke(_bricksSpace.Surface.GetWorldPosition(position));
         }
     }
 }

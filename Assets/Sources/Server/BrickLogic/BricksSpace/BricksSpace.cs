@@ -1,3 +1,4 @@
+using Database.BricksLogic;
 using System;
 using UnityEngine;
 
@@ -13,22 +14,27 @@ namespace Server.BricksLogic
         /// <summary>
         /// База данных блоков
         /// </summary>
-        public BricksSpaceDatabase Database;
+        private BricksSpaceDatabase _database;
 
         /// <param name="surfaceSize">Размер платформы</param>
         /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
         /// <param name="controllableBrick">Контролирумый блок</param>
         public BricksSpace(Vector2Int surfaceSize, Vector3 worldPositionOffset)
         {
-            Database = new(surfaceSize, worldPositionOffset);
+            _database = new(surfaceSize, worldPositionOffset);
         }
 
         /// <param name="placingSurface">Платформа на которую ставяться блоки</param>
         /// <param name="controllableBrick">Контролирумый блок</param>
         public BricksSpace(PlacingSurface placingSurface)
         {
-            Database = new(placingSurface);
+            _database = new(placingSurface);
         }
+
+        public IReadOnlyBrick ControllableBrick => _database.ControllableBrick;
+
+        public BricksSpaceDatabase Database => _database;
+        public PlacingSurface Surface => _database.Surface;
 
         /// <summary>
         /// Проверяет возможность движения блока и в случае истины - двигает его в указаном направлении
@@ -36,9 +42,9 @@ namespace Server.BricksLogic
         /// <param name="direction">Направление движения</param>
         public void TryMoveBrick(Vector3Int direction)
         {
-            if (Database.PossibleMoveBrickTo(direction))
+            if (_database.PossibleMoveBrickTo(direction))
             {
-                Database.ControllableBrick.Move(direction);
+                _database.ControllableBrick.Move(direction);
             }
         }
 
@@ -48,16 +54,16 @@ namespace Server.BricksLogic
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerBrickAndCheckGrounding()
         {
-            if (Database.ControllableBrickOnGround() == false)
+            if (_database.ControllableBrickOnGround() == false)
             {
-                Database.ControllableBrick.Move(Vector3Int.down);
+                _database.ControllableBrick.Move(Vector3Int.down);
             }
             else
             {
                 throw new BrickOnGroundException();
             }
 
-            if (Database.ControllableBrickOnGround())
+            if (_database.ControllableBrickOnGround())
             {
                 OnControllableBrickFall?.Invoke();
             }
@@ -69,14 +75,14 @@ namespace Server.BricksLogic
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerBrickToGround()
         {
-            if(Database.ControllableBrickOnGround())
+            if(_database.ControllableBrickOnGround())
             {
                 throw new BrickOnGroundException();
             }
 
-            Vector3Int direction = Vector3Int.down * Database.ControllableBrick.Position.y;
+            Vector3Int direction = Vector3Int.down * _database.ControllableBrick.Position.y;
 
-            Database.ControllableBrick.Move(direction);
+            _database.ControllableBrick.Move(direction);
 
             OnControllableBrickFall?.Invoke();
         }
@@ -87,8 +93,8 @@ namespace Server.BricksLogic
         /// <param name="brick"></param>
         public void ChangeAndAddRecentControllableBrick(Brick brick)
         {
-            Database.ControllableBrick = brick;
-            Database.Bricks.Add(brick);
+            _database.ControllableBrick = brick;
+            _database.Bricks.Add(brick);
         }
     }
 }
