@@ -1,14 +1,15 @@
+using Server.BricksLogic;
 using System;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Database.BricksLogic
 {
     /// <summary>
     /// Класс, которая представляет сущность блока
     /// </summary>
-    public struct Brick
+    public class Brick : IReadOnlyBrick
     {
-        private Action<Vector3Int> _onPositionChanged;
+        public event Action<Vector3Int> OnPositionChanged;
 
         /// <summary>
         /// Позиция блока
@@ -28,14 +29,6 @@ namespace Server.BricksLogic
         {
             _position = position;
             _pattern = pattern;
-
-            _onPositionChanged = null;
-        }
-
-        public event Action<Vector3Int> OnPositionChanged
-        {
-            add { _onPositionChanged += value; }
-            remove { _onPositionChanged -= value; }
         }
 
         // Свойства, здесь получаем значения для использования из вне, т.е. в других модулях/классах и пр.
@@ -56,7 +49,7 @@ namespace Server.BricksLogic
         {
             _position += direction;
 
-            _onPositionChanged?.Invoke(_position);
+            OnPositionChanged?.Invoke(_position);
         }
     }
 }

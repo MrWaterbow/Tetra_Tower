@@ -1,19 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using Server.BricksLogic;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Database.BricksLogic
 {
-    public struct BricksSpaceDatabase
+    public interface IBrickSpaceDatabase : IReadOnlyBricksSpaceDatabase
+    {
+    }
+
+    public class BricksSpaceDatabase : IBrickSpaceDatabase
     {
         /// <summary>
         /// Список со всеми блоками
         /// </summary>
-        public readonly List<Brick> Bricks;
+        private readonly List<Brick> _bricks;
 
         /// <summary>
         /// Текущий контролируемый игроком блок
         /// </summary>
-        public Brick ControllableBrick;
+        private Brick _controllableBricks;
 
         /// <summary>
         /// Платформа на которую ставяться блоки
@@ -22,19 +27,23 @@ namespace Server.BricksLogic
 
         public BricksSpaceDatabase(Vector2Int surfaceSize, Vector3 worldPositionOffset)
         {
-            Bricks = new List<Brick>();
-            ControllableBrick = new();
+            _bricks = new List<Brick>();
+            _controllableBricks = null;
 
             Surface = new(surfaceSize, worldPositionOffset);
         }
 
         public BricksSpaceDatabase(PlacingSurface placingSurface)
         {
-            Bricks = new List<Brick>();
-            ControllableBrick = new();
+            _bricks = new List<Brick>();
+            _controllableBricks = null;
 
             Surface = placingSurface;
         }
+
+        public IReadOnlyList<IReadOnlyBrick> Bricks => _bricks;
+
+        public IReadOnlyBrick ControllableBrick => _controllableBricks;
 
         /// <summary>
         /// Проверяет возможность движения блока в указаном направлении

@@ -42,7 +42,6 @@ namespace Client.Bootstrapper
         private float _lowerTimer;
 
         private BricksSpace _bricksSpace;
-        private PlacingSurface _placingSurface;
 
         private BrickView _currentBrickView;
 
@@ -57,15 +56,12 @@ namespace Client.Bootstrapper
         /// </summary>
         public override void Boot()
         {
-            // Создание платформы для блоков
-            _placingSurface = new(_surfaceSize, _worldPositionOffset);
-
             // Создание фабрики
             _brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns);
             _brickViewFactory = new BrickViewFactory(_brickPrefab);
 
             // Создание пространства блоков
-            _bricksSpace = new(_placingSurface);
+            _bricksSpace = new(_surfaceSize, _worldPositionOffset);
 
             // Создание презентера
             _brickPresenter = new BrickViewPresenter(_bricksSpace);

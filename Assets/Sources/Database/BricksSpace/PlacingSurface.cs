@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Database.BricksLogic
 {
-    public readonly struct PlacingSurface
+    public class PlacingSurface
     {
         /// <summary>
         /// Размер площадки
@@ -21,6 +21,7 @@ namespace Server.BricksLogic
         public PlacingSurface(Vector2Int surfaceSize, Vector3 worldPositionOffset)
         {
             SurfaceSize = surfaceSize;
+
             WorldPositionOffset = worldPositionOffset;
         }
 
