@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Server.BricksLogic.GhostLogic
 {
-    public interface IBrickViewPresenter
+    public interface IGhostViewPresenter
     {
         /// <summary>
         /// Вызывается когда позиция меняется

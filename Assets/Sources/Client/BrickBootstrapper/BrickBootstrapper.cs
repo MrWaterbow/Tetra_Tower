@@ -24,15 +24,21 @@ namespace Client.Bootstrapper
 
         [Space]
 
-        [SerializeField] private ButtonsBrickInput _brickInput;
+        [SerializeField] private GameObject _brickInputObject;
         [SerializeField] private BrickView _brickPrefab;
         [SerializeField] private Transform _worldPositionAnchor;
 
         /// <summary>
+        /// Реализация получения ввода от игрока
+        /// </summary>
+        private IBrickInputView _brickInput;
+        /// <summary>
         /// Смещение относительно мировых координат
         /// </summary>
         private Vector3 _worldPositionOffset;
-
+        /// <summary>
+        /// Таймер до падения блока
+        /// </summary>
         private float _lowerTimer;
 
         private BricksSpace _bricksSpace;
@@ -43,8 +49,8 @@ namespace Client.Bootstrapper
         private IBrickFactory _brickFactory;
         private IBrickViewFactory _brickViewFactory;
 
-        private BrickViewPresenter _brickPresenter;
-        private BrickInputPresenter _brickInputPresenter;
+        private IBrickViewPresenter _brickPresenter;
+        private IBrickInputPresenter _brickInputPresenter;
 
         /// <summary>
         /// При запуске инициализирует начальный блок, фабрики, пространство блоков и так далее
@@ -62,7 +68,7 @@ namespace Client.Bootstrapper
             _bricksSpace = new(_placingSurface);
 
             // Создание презентера
-            _brickPresenter = new(_bricksSpace);
+            _brickPresenter = new BrickViewPresenter(_bricksSpace);
 
             // Создание контролирумого блока
             CreateAndSetControllableBrick();
@@ -84,19 +90,19 @@ namespace Client.Bootstrapper
 
             _bricksSpace.ChangeAndAddRecentControllableBrick(brick);
 
-            CreateBlockView(brick);
+            CreateBlockView();
         }
 
         /// <summary>
         /// Создание нового отображения визуального блока
         /// </summary>
         /// <param name="brick"></param>
-        private void CreateBlockView(Brick brick)
+        private void CreateBlockView()
         {
             _currentBrickView?.DisposeCallbacks();
             _brickPresenter?.DisposeCallbacks();
-            
-            _brickPresenter.SetCallbacks(brick);
+
+            _brickPresenter.SetCallbacks();
 
             _currentBrickView = _brickViewFactory.Create(GetWorldPosition());
             _currentBrickView.SetCallbacks(_brickPresenter);
@@ -133,7 +139,16 @@ namespace Client.Bootstrapper
 
         private void OnValidate()
         {
-            if(_worldPositionAnchor != null)
+            if(_brickInputObject != null && _brickInputObject.TryGetComponent(out IBrickInputView component))
+            {
+                _brickInput = component;
+            }
+            else
+            {
+                _brickInputObject = null;
+            }
+
+            if (_worldPositionAnchor != null)
             {
                 _worldPositionOffset = _worldPositionAnchor.position;
             }
