@@ -1,9 +1,16 @@
-using Server.BricksLogic;
 using System;
 using UnityEngine;
 
-namespace Database.BricksLogic
+namespace Server.BricksLogic
 {
+    public interface IReadOnlyBrick
+    {
+        event Action<Vector3Int> OnPositionChanged;
+
+        Vector3Int Position { get; }
+        Vector3Int[] Pattern { get; }
+    }
+
     /// <summary>
     ///  ласс, котора€ представл€ет сущность блока
     /// </summary>
@@ -31,14 +38,7 @@ namespace Database.BricksLogic
             _pattern = pattern;
         }
 
-        // —войства, здесь получаем значени€ дл€ использовани€ из вне, т.е. в других модул€х/классах и пр.
-        /// <summary>
-        /// ƒоступ к чтению позиции блока
-        /// </summary>
         public Vector3Int Position => _position;
-        /// <summary>
-        /// ƒоступ к чтению массива кубиков, из которых состоит блок
-        /// </summary>
         public Vector3Int[] Pattern => _pattern;
 
         /// <summary>

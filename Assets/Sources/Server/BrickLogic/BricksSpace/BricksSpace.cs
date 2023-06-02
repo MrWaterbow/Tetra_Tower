@@ -1,4 +1,4 @@
-using Database.BricksLogic;
+using Server.Database;
 using System;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace Server.BricksLogic
         /// <summary>
         /// База данных блоков
         /// </summary>
-        private BricksSpaceDatabase _database;
+        private IBricksDatabase _database;
 
         /// <param name="surfaceSize">Размер платформы</param>
         /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
@@ -28,7 +28,7 @@ namespace Server.BricksLogic
         /// <param name="controllableBrick">Контролирумый блок</param>
         public BricksSpace(PlacingSurface placingSurface)
         {
-            _database = new(placingSurface);
+            _database = new (placingSurface);
         }
 
         public IReadOnlyBrick ControllableBrick => _database.ControllableBrick;
