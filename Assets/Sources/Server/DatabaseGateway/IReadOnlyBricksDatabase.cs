@@ -1,10 +1,9 @@
-﻿using Server.BricksLogic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Database.BricksLogic
+namespace Server.Database
 {
-    public interface IReadOnlyBricksSpaceDatabase
+    public interface IReadOnlyBricksDatabase
     {
         IReadOnlyList<IReadOnlyBrick> Bricks { get; }
 
