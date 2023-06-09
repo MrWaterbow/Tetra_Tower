@@ -1,4 +1,4 @@
-﻿using Database.BricksLogic;
+﻿using Server.BricksLogic;
 using UnityEngine;
 
 namespace Server.Factories

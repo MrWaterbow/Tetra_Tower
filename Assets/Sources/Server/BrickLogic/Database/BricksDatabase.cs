@@ -7,19 +7,21 @@ namespace Server.BricksLogic
     {
         IReadOnlyList<IReadOnlyBrick> Bricks { get; }
         IReadOnlyBrick ControllableBrick { get; }
+
+        IReadOnlyPlacingSurface Surface { get; }
     }
 
-    public class BricksDatabase
+    public class BricksDatabase : IReadOnlyBricksDatabase
     {
         /// <summary>
         /// Список со всеми блоками
         /// </summary>
-        private readonly List<Brick> _bricks;
+        public readonly List<Brick> Bricks;
 
         /// <summary>
         /// Текущий контролируемый игроком блок
         /// </summary>
-        private Brick _controllableBrick;
+        public Brick ControllableBrick;
 
         /// <summary>
         /// Платформа на которую ставяться блоки
@@ -28,19 +30,25 @@ namespace Server.BricksLogic
 
         public BricksDatabase(Vector2Int surfaceSize, Vector3 worldPositionOffset)
         {
-            _bricks = new List<Brick>();
-            _controllableBricks = null;
+            Bricks = new List<Brick>();
+            ControllableBrick = null;
 
             Surface = new(surfaceSize, worldPositionOffset);
         }
 
         public BricksDatabase(PlacingSurface placingSurface)
         {
-            _bricks = new List<Brick>();
-            _controllableBricks = null;
+            Bricks = new List<Brick>();
+            ControllableBrick = null;
 
             Surface = placingSurface;
         }
+
+        IReadOnlyList<IReadOnlyBrick> IReadOnlyBricksDatabase.Bricks => Bricks;
+
+        IReadOnlyBrick IReadOnlyBricksDatabase.ControllableBrick => ControllableBrick;
+
+        IReadOnlyPlacingSurface IReadOnlyBricksDatabase.Surface => Surface;
 
         /// <summary>
         /// Проверяет возможность движения блока в указаном направлении
@@ -51,7 +59,7 @@ namespace Server.BricksLogic
         {
             Vector2Int featurePosition = ComputeFeaturePosition(direction);
 
-            return Surface.PatternInSurfaceLimits(_controllableBricks.Pattern, featurePosition);
+            return Surface.PatternInSurfaceLimits(ControllableBrick.Pattern, featurePosition);
         }
 
         public Vector3Int ComputeFeatureGroundPosition(Vector3Int direction)
@@ -66,7 +74,7 @@ namespace Server.BricksLogic
         /// <returns></returns>
         private Vector2Int ComputeFeaturePosition(Vector3Int direction)
         {
-            return new(_controllableBricks.Position.x + direction.x, _controllableBricks.Position.z + direction.z);
+            return new(ControllableBrick.Position.x + direction.x, ControllableBrick.Position.z + direction.z);
         }
 
         /// <summary>
@@ -75,7 +83,7 @@ namespace Server.BricksLogic
         /// <returns></returns>
         public bool ControllableBrickOnGround()
         {
-            return _controllableBricks.Position.y == 0;
+            return ControllableBrick.Position.y == 0;
         }
     }
 }

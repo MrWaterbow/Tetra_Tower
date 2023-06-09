@@ -1,4 +1,3 @@
-using Server.Database;
 using System;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace Server.BricksLogic
         /// <summary>
         /// База данных блоков
         /// </summary>
-        private IBricksDatabase _database;
+        private BricksDatabase _database;
 
         /// <param name="surfaceSize">Размер платформы</param>
         /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
@@ -28,13 +27,13 @@ namespace Server.BricksLogic
         /// <param name="controllableBrick">Контролирумый блок</param>
         public BricksSpace(PlacingSurface placingSurface)
         {
-            _database = new (placingSurface);
+            _database = new(placingSurface);
         }
 
         public IReadOnlyBrick ControllableBrick => _database.ControllableBrick;
 
-        public BricksSpaceDatabase Database => _database;
-        public PlacingSurface Surface => _database.Surface;
+        public IReadOnlyBricksDatabase Database => _database;
+        public IReadOnlyPlacingSurface Surface => _database.Surface;
 
         /// <summary>
         /// Проверяет возможность движения блока и в случае истины - двигает его в указаном направлении
@@ -75,7 +74,7 @@ namespace Server.BricksLogic
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerBrickToGround()
         {
-            if(_database.ControllableBrickOnGround())
+            if (_database.ControllableBrickOnGround())
             {
                 throw new BrickOnGroundException();
             }
@@ -95,6 +94,11 @@ namespace Server.BricksLogic
         {
             _database.ControllableBrick = brick;
             _database.Bricks.Add(brick);
+        }
+
+        public Vector3Int ComputeFeatureGroundPosition(Vector3Int position)
+        {
+            return position * new Vector3Int(1, 0, 1);
         }
     }
 }
