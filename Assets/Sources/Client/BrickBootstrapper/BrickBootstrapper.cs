@@ -110,7 +110,7 @@ namespace Client.Bootstrapper
         /// <returns></returns>
         private Vector3 GetWorldPosition()
         {
-            return _placingSurface.GetWorldPosition(_startBrickPosition);
+            return _bricksSpace.Database.Surface.GetWorldPosition(_startBrickPosition);
         }
 
         private void Update()
@@ -135,7 +135,7 @@ namespace Client.Bootstrapper
 
         private void OnValidate()
         {
-            if(_brickInputObject != null && _brickInputObject.TryGetComponent(out IBrickInputView component))
+            if (_brickInputObject != null && _brickInputObject.TryGetComponent(out IBrickInputView component))
             {
                 _brickInput = component;
             }
