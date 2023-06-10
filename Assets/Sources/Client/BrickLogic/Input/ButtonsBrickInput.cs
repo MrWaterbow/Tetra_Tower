@@ -1,10 +1,11 @@
-using Server.BricksLogic;
+using Server.BrickLogic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-namespace Client.Input
+namespace Client.BrickLogic
 {
-    internal sealed class ButtonsBrickInput : MonoBehaviour, IBrickInputView
+    internal sealed class ButtonsBrickInput : MonoBehaviour
     {
         // Список кнопок для ввода игрока
         [SerializeField] private Button _rightButton;
@@ -14,7 +15,13 @@ namespace Client.Input
 
         [SerializeField] private Button _toGroundButton;
 
-        public IBrickInputPresenter Presenter { get; set; }
+        private IBrickInputPresenter _presenter;
+
+        [Inject]
+        private void Constructor(IBrickInputPresenter presenter)
+        {
+            _presenter = presenter;
+        }
 
         /// <summary>
         /// Подписывается на нажатие кнопок
@@ -45,27 +52,27 @@ namespace Client.Input
         // Методы для вызова ивентов при движении
         private void InvokeMoveRight()
         {
-            Presenter.MoveTo(Vector3Int.right);
+            _presenter.MoveTo(Vector3Int.right);
         }
 
         private void InvokeMoveLeft()
         {
-            Presenter.MoveTo(Vector3Int.left);
+            _presenter.MoveTo(Vector3Int.left);
         }
 
         private void InvokeMoveForward()
         {
-            Presenter.MoveTo(Vector3Int.forward);
+            _presenter.MoveTo(Vector3Int.forward);
         }
 
         private void InvokeMoveBack()
         {
-            Presenter.MoveTo(Vector3Int.back);
+            _presenter.MoveTo(Vector3Int.back);
         }
 
         private void InvokeToGround()
         {
-            Presenter.ToGround();
+            _presenter.ToGround();
         }
     }
 }

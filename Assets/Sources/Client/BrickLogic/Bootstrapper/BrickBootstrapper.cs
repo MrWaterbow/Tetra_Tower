@@ -1,18 +1,13 @@
-using Client.BricksLogic;
-using Client.Factories;
-using Client.Input;
-using Server.BricksLogic;
+using Client.BootstrapperLogic;
+using Server.BrickLogic;
 using Server.Factories;
 using UnityEngine;
+using Zenject;
 
-namespace Client.Bootstrapper
+namespace Client.BrickLogic
 {
-    internal sealed class BrickBootstrapper : Bootstrapper
+    internal sealed class BrickBootstrapper : Bootstrapper, IBricksRuntimeData
     {
-        /// <summary>
-        /// Размер поверхности для размещения блоков
-        /// </summary>
-        [SerializeField] private Vector2Int _surfaceSize;
         /// <summary>
         /// Время за которое блок опускается
         /// </summary>
@@ -22,56 +17,39 @@ namespace Client.Bootstrapper
         /// </summary>
         [SerializeField] private Vector3Int _startBrickPosition;
 
-        [Space]
-
-        [SerializeField] private GameObject _brickInputObject;
-        [SerializeField] private BrickView _brickPrefab;
-        [SerializeField] private Transform _worldPositionAnchor;
-
-        /// <summary>
-        /// Реализация получения ввода от игрока
-        /// </summary>
-        private IBrickInputView _brickInput;
-        /// <summary>
-        /// Смещение относительно мировых координат
-        /// </summary>
-        private Vector3 _worldPositionOffset;
         /// <summary>
         /// Таймер до падения блока
         /// </summary>
+        private BrickView _currentBrickView;
         private float _lowerTimer;
 
+        private IBrickViewFactory _brickViewFactory;
+        private IBrickViewPresenter _brickViewPresenter;
+        private IBrickFactory _brickFactory;
         private BricksSpace _bricksSpace;
 
-        private BrickView _currentBrickView;
+        [Inject]
+        private void Constructor(
+            IBrickViewFactory brickViewFactory,
+            IBrickViewPresenter brickPresenter,
+            IBrickFactory brickFactory,
+            BricksSpace bricksSpace)
+        {
+            _brickViewFactory = brickViewFactory;
+            _brickViewPresenter = brickPresenter;
+            _brickFactory = brickFactory;
+            _bricksSpace = bricksSpace;
+        }
 
-        private IBrickFactory _brickFactory;
-        private IBrickViewFactory _brickViewFactory;
-
-        private IBrickViewPresenter _brickPresenter;
-        private IBrickInputPresenter _brickInputPresenter;
+        public IReadOnlyBrickView CurrentBrickView => _currentBrickView;
 
         /// <summary>
         /// При запуске инициализирует начальный блок, фабрики, пространство блоков и так далее
         /// </summary>
         public override void Boot()
         {
-            // Создание фабрики
-            _brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns);
-            _brickViewFactory = new BrickViewFactory(_brickPrefab);
-
-            // Создание пространства блоков
-            _bricksSpace = new(_surfaceSize, _worldPositionOffset);
-
-            // Создание презентера
-            _brickPresenter = new BrickViewPresenter(_bricksSpace);
-
             // Создание контролирумого блока
             CreateAndSetControllableBrick();
-
-            // Создание презентера для кнопок управления
-            _brickInputPresenter = new BrickInputPresenter(_bricksSpace);
-            _brickInput.Presenter = _brickInputPresenter;
 
             // Вызов создание нового блока при его падении
             _bricksSpace.OnControllableBrickFall += CreateAndSetControllableBrick;
@@ -96,12 +74,12 @@ namespace Client.Bootstrapper
         private void CreateBlockView()
         {
             _currentBrickView?.DisposeCallbacks();
-            _brickPresenter?.DisposeCallbacks();
+            _brickViewPresenter?.DisposeCallbacks();
 
-            _brickPresenter.SetCallbacks();
+            _brickViewPresenter.SetCallbacks();
 
             _currentBrickView = _brickViewFactory.Create(GetWorldPosition());
-            _currentBrickView.SetCallbacks(_brickPresenter);
+            _currentBrickView.SetCallbacks(_brickViewPresenter);
         }
 
         /// <summary>
@@ -130,27 +108,6 @@ namespace Client.Bootstrapper
                 _bricksSpace.LowerBrickAndCheckGrounding();
 
                 _lowerTimer = 0;
-            }
-        }
-
-        private void OnValidate()
-        {
-            if (_brickInputObject != null && _brickInputObject.TryGetComponent(out IBrickInputView component))
-            {
-                _brickInput = component;
-            }
-            else
-            {
-                _brickInputObject = null;
-            }
-
-            if (_worldPositionAnchor != null)
-            {
-                _worldPositionOffset = _worldPositionAnchor.position;
-            }
-            else
-            {
-                _worldPositionOffset = Vector3.zero;
             }
         }
     }

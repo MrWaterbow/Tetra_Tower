@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Client.Bootstrapper
+namespace Client.BootstrapperLogic
 {
     internal sealed class BootstrapOrder : MonoBehaviour
     {

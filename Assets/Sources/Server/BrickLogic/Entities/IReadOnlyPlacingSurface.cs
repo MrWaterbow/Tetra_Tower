@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Server.BrickLogic
 {
     public interface IReadOnlyPlacingSurface
     {

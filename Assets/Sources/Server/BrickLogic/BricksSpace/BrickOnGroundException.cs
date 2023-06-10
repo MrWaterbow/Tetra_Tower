@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Server.BricksLogic
+namespace Server.BrickLogic
 {
     public sealed class BrickOnGroundException : Exception
     {

@@ -1,9 +1,8 @@
-﻿using Client.BricksLogic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Client.Factories
+namespace Client.BrickLogic
 {
-    public sealed class BrickViewFactory : IBrickViewFactory
+    internal sealed class BrickViewFactory : IBrickViewFactory
     {
         /// <summary>
         /// префаб блока
