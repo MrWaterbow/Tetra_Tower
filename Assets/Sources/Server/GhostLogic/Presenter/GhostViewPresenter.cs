@@ -1,13 +1,12 @@
+using Server.BricksLogic;
 using System;
 using UnityEngine;
 
-namespace Server.BricksLogic.GhostLogic
+namespace Server.GhostLogic
 {
-
     public class GhostViewPresenter : IGhostViewPresenter
     {
         public event Action<Vector3> OnPositionChanged;
-
 
         private readonly BricksSpace _bricksSpace;
 

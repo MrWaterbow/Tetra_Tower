@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Server.BricksLogic.GhostLogic
+namespace Server.GhostLogic
 {
     public interface IGhostViewPresenter
     {

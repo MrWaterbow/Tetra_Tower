@@ -4,11 +4,6 @@ using UnityEngine.UI;
 
 namespace Client.Input
 {
-    internal interface IBrickInputView
-    {
-        IBrickInputPresenter Presenter { get; set; }
-    }
-
     internal sealed class ButtonsBrickInput : MonoBehaviour, IBrickInputView
     {
         // Список кнопок для ввода игрока
