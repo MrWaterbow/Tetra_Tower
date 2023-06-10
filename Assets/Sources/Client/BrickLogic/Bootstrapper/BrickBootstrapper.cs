@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Client.Bootstrapper
 {
-    internal class BrickBootstrapper : Bootstrapper
+    internal sealed class BrickBootstrapper : Bootstrapper
     {
         /// <summary>
         /// –азмер поверхности дл€ размещени€ блоков

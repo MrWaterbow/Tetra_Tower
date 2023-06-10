@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Client.BricksLogic
 {
-
     public sealed class BrickView : MonoBehaviour
     {
         /// <summary>
@@ -25,7 +24,6 @@ namespace Client.BricksLogic
             _presenter = presenter;
         }
 
-        // TODO онопнанбюрэ IDISPOSABLE хкх ONDESTROY/ONDISABLE
         public void DisposeCallbacks()
         {
             _presenter.OnPositionChanged -= ChangePosition;
