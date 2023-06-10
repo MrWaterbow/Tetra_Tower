@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Server.BrickLogic
 {
     public sealed class BrickViewPresenter : IBrickViewPresenter
     {
@@ -37,7 +37,9 @@ namespace Server.BricksLogic
         /// <param name="position"></param>
         private void InvokeOnPositionChanged(Vector3Int position)
         {
-            OnPositionChanged?.Invoke(_bricksSpace.Surface.GetWorldPosition(position));
+            Vector3 worldPosition = _bricksSpace.Surface.GetWorldPosition(position);
+            
+            OnPositionChanged?.Invoke(worldPosition);
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Client.Bootstrapper
+namespace Client.BootstrapperLogic
 {
     internal abstract class Bootstrapper : MonoBehaviour
     {

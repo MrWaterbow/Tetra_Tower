@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Server.BrickLogic
 {
     public interface IReadOnlyBrick
     {

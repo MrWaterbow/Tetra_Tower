@@ -1,4 +1,4 @@
-using Server.BricksLogic;
+using Server.BrickLogic;
 using System;
 using UnityEngine;
 
@@ -31,7 +31,9 @@ namespace Server.GhostLogic
         /// <param name="position"></param>
         private void InvokeOnPositionChanged(Vector3Int position)
         {
-            OnPositionChanged?.Invoke(_bricksSpace.Surface.GetWorldPosition(position));
+            Vector3 worldPosition = _bricksSpace.Surface.GetWorldPosition(position * new Vector3Int(1, 0, 1));
+
+            OnPositionChanged?.Invoke(worldPosition);
         }
     }
 }

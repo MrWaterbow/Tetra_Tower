@@ -1,15 +1,19 @@
 using DG.Tweening;
-using Server.BricksLogic;
+using Server.BrickLogic;
 using UnityEngine;
 
-namespace Client.BricksLogic
+namespace Client.BrickLogic
 {
-    public sealed class BrickView : MonoBehaviour
+    internal sealed class BrickView : MonoBehaviour, IReadOnlyBrickView
     {
         /// <summary>
         /// Transform ( компонент Unity )
         /// </summary>
         [SerializeField] private Transform _transform;
+        [SerializeField] private MeshFilter _meshFilter;
+
+        [Space]
+
         /// <summary>
         /// Плавность сменения позиции
         /// </summary>
@@ -17,11 +21,18 @@ namespace Client.BricksLogic
 
         private IBrickViewPresenter _presenter;
 
+        public MeshFilter MeshFilter => _meshFilter;
+
         public void SetCallbacks(IBrickViewPresenter presenter)
         {
             presenter.OnPositionChanged += ChangePosition;
 
             _presenter = presenter;
+        }
+
+        public void SetCallbacks()
+        {
+            _presenter.OnPositionChanged += ChangePosition;
         }
 
         public void DisposeCallbacks()
@@ -33,7 +44,7 @@ namespace Client.BricksLogic
         /// Изменяет позицию блока ( использует DOTween )
         /// </summary>
         /// <param name="newPosition"></param>
-        public void ChangePosition(Vector3 newPosition)
+        private void ChangePosition(Vector3 newPosition)
         {
             _transform.DOMove(newPosition, _changePositionSmoothTime);
         }

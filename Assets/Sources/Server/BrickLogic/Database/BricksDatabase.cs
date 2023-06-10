@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Server.BricksLogic
+namespace Server.BrickLogic
 {
     public interface IReadOnlyBricksDatabase
     {

@@ -1,9 +1,8 @@
-﻿using Client.BricksLogic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Client.Factories
+namespace Client.BrickLogic
 {
-    public interface IBrickViewFactory
+    internal interface IBrickViewFactory
     {
         /// <summary>
         /// Создание блока на сцене
