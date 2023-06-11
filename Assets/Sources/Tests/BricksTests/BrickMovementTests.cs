@@ -26,7 +26,7 @@ namespace Tests
 
             Assert.AreEqual(new Vector3Int(0, 4, 0), _bricksSpace.ControllableBrick.Position);
 
-            _bricksSpace.LowerBrickToGround();
+            _bricksSpace.LowerControllableBrickToGround();
 
             Assert.AreEqual(Vector3Int.zero, _bricksSpace.ControllableBrick.Position);
         }

@@ -44,5 +44,12 @@ namespace Server.BrickLogic
 
             OnPositionChanged?.Invoke(_position);
         }
+
+        public void ChangePosition(Vector3Int position)
+        {
+            _position = position;
+
+            OnPositionChanged?.Invoke(_position);
+        }
     }
 }

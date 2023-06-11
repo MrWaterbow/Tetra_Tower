@@ -5,10 +5,12 @@ namespace Server.BrickLogic
 {
     public class BricksDatabase
     {
+        private readonly Dictionary<Vector2Int, int> _heightMap;
+
         /// <summary>
         /// Список со всеми блоками
         /// </summary>
-        public readonly List<Brick> Bricks;
+        private readonly List<Brick> _bricks;
 
         /// <summary>
         /// Текущий контролируемый игроком блок
@@ -20,21 +22,39 @@ namespace Server.BrickLogic
         /// </summary>
         public readonly PlacingSurface Surface;
 
-        public BricksDatabase(Vector2Int surfaceSize, Vector3 worldPositionOffset)
+        private BricksDatabase(Vector2Int surfaceSize)
         {
-            Bricks = new List<Brick>();
-            ControllableBrick = null;
+            _heightMap = new Dictionary<Vector2Int, int>();
 
+            GenerateHeightMap(surfaceSize);
+
+            _bricks = new List<Brick>();
+            ControllableBrick = null;
+        }
+
+        private void GenerateHeightMap(Vector2Int surfaceSize)
+        {
+            for (int x = 0; x < surfaceSize.x; x++)
+            {
+                for (int y = 0; y < surfaceSize.y; y++)
+                {
+                    _heightMap.Add(new Vector2Int(x, y), 0);
+                }
+            }
+        }
+
+        public BricksDatabase(Vector2Int surfaceSize, Vector3 worldPositionOffset) : this(surfaceSize)
+        {
             Surface = new(surfaceSize, worldPositionOffset);
         }
 
-        public BricksDatabase(PlacingSurface placingSurface)
+        public BricksDatabase(PlacingSurface placingSurface) : this(placingSurface.SurfaceSize)
         {
-            Bricks = new List<Brick>();
-            ControllableBrick = null;
-
             Surface = placingSurface;
         }
+
+        public IReadOnlyDictionary<Vector2Int, int> HeightMap => _heightMap;
+        public IReadOnlyList<IReadOnlyBrick> Bricks => _bricks;
 
         /// <summary>
         /// Проверяет возможность движения блока в указаном направлении
@@ -48,11 +68,6 @@ namespace Server.BrickLogic
             return Surface.PatternInSurfaceLimits(ControllableBrick.Pattern, featurePosition);
         }
 
-        public Vector3Int ComputeFeatureGroundPosition(Vector3Int direction)
-        {
-            return new(direction.x, 0, direction.z);
-        }
-
         /// <summary>
         /// Расчитывает будущую позицию блока
         /// </summary>
@@ -63,13 +78,69 @@ namespace Server.BrickLogic
             return new(ControllableBrick.Position.x + direction.x, ControllableBrick.Position.z + direction.z);
         }
 
+        public Vector3Int ComputeFeatureGroundPosition(Vector3Int direction)
+        {
+            Vector2Int heightMapKey = new(direction.x, direction.z);
+
+            return new(direction.x, _heightMap[heightMapKey], direction.z);
+        }
+
         /// <summary>
         /// Проверка блока находится ли он на земле
         /// </summary>
         /// <returns></returns>
         public bool ControllableBrickOnGround()
         {
-            return ControllableBrick.Position.y == 0;
+            bool onGround = false;
+
+            foreach (Vector3Int patternTile in ControllableBrick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + ControllableBrick.Position;
+                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                if (_heightMap[heightMapKey] == tilePosition.y - 1)
+                {
+                    onGround = true;
+                }
+            }
+
+            return onGround;
+        }
+
+        public void AddBrickAndUpdateHeightMap(Brick brick)
+        {
+            _bricks.Add(brick);
+
+            foreach (Vector3Int patternTile in brick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + brick.Position;
+                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                _heightMap[heightMapKey] = brick.Position.y + 1;
+            }
+        }
+
+        public int GetHeightByPattern(Brick brick)
+        {
+            int height = 0;
+
+            foreach (Vector3Int patternTile in brick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + brick.Position;
+                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                if (_heightMap[heightMapKey] > height)
+                {
+                    height = _heightMap[heightMapKey] + 1;
+                }
+            }
+
+            return height;
+        }
+
+        public int GetHeightByKey(Vector2Int heightMapKey)
+        {
+            return _heightMap[heightMapKey];
         }
     }
 }
