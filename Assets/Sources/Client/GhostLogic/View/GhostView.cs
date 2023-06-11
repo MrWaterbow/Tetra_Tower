@@ -7,6 +7,7 @@ namespace Client.GhostLogic
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private MeshFilter _meshFilter;
+        [SerializeField] private MeshRenderer _meshRenderer;
 
         private IGhostViewPresenter _presenter;
 
@@ -39,6 +40,11 @@ namespace Client.GhostLogic
         public void SetMesh(Mesh mesh)
         {
             _meshFilter.mesh = mesh;
+        }
+
+        public void SetColor(Color color)
+        {
+            _meshRenderer.material.color = color;
         }
     }
 }

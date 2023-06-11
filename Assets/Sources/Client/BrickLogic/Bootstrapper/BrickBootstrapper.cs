@@ -76,10 +76,10 @@ namespace Client.BrickLogic
             _currentBrickView?.DisposeCallbacks();
             _brickViewPresenter?.DisposeCallbacks();
 
-            _brickViewPresenter.SetCallbacks();
-
             _currentBrickView = _brickViewFactory.Create(GetWorldPosition());
             _currentBrickView.SetCallbacks(_brickViewPresenter);
+
+            _brickViewPresenter.SetAndInvokeCallbacks();
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Client.BrickLogic
         /// <returns></returns>
         private Vector3 GetWorldPosition()
         {
-            return _bricksSpace.Database.Surface.GetWorldPosition(_startBrickPosition);
+            return _bricksSpace.Database.Surface.GetWorldPosition(_bricksSpace.ControllableBrick.Position);
         }
 
         private void Update()

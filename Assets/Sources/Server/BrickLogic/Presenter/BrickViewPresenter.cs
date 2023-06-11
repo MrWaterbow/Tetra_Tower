@@ -18,9 +18,11 @@ namespace Server.BrickLogic
         /// Подписывается на ивенты
         /// </summary>
         /// <param name="brick"></param>
-        public void SetCallbacks()
+        public void SetAndInvokeCallbacks()
         {
             _bricksSpace.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+
+            OnPositionChanged?.Invoke(GetWorldPosition(_bricksSpace.ControllableBrick.Position));
         }
 
         /// <summary>
@@ -37,9 +39,12 @@ namespace Server.BrickLogic
         /// <param name="position"></param>
         private void InvokeOnPositionChanged(Vector3Int position)
         {
-            Vector3 worldPosition = _bricksSpace.Surface.GetWorldPosition(position);
-            
-            OnPositionChanged?.Invoke(worldPosition);
+            OnPositionChanged?.Invoke(GetWorldPosition(position));
+        }
+
+        private Vector3 GetWorldPosition(Vector3Int position)
+        {
+            return _bricksSpace.Surface.GetWorldPosition(position);
         }
     }
 }

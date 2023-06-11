@@ -15,9 +15,11 @@ namespace Server.GhostLogic
             _bricksSpace = bricksSpace;
         }
 
-        public void SetCallbacks()
+        public void SetAndInvokeCallbacks()
         {
             _bricksSpace.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+
+            OnPositionChanged?.Invoke(GetWorldPosition(_bricksSpace.ControllableBrick.Position));
         }
 
         public void DisposeCallbacks()
@@ -31,9 +33,17 @@ namespace Server.GhostLogic
         /// <param name="position"></param>
         private void InvokeOnPositionChanged(Vector3Int position)
         {
-            Vector3 worldPosition = _bricksSpace.Surface.GetWorldPosition(position * new Vector3Int(1, 0, 1));
+            OnPositionChanged?.Invoke(GetWorldPosition(position));
+        }
 
-            OnPositionChanged?.Invoke(worldPosition);
+        private Vector3 GetWorldPosition(Vector3Int position)
+        {
+            position *= new Vector3Int(1, 0, 1);
+            Vector3 worldPosition = _bricksSpace.Surface.GetWorldPosition(position);
+
+            worldPosition += new Vector3(0.5f, 0, 0.5f);
+
+            return worldPosition;
         }
     }
 }
