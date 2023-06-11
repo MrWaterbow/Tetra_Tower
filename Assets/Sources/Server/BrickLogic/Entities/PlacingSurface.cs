@@ -3,7 +3,7 @@
 namespace Server.BrickLogic
 {
 
-    public class PlacingSurface : IReadOnlyPlacingSurface
+    public class PlacingSurface
     {
         /// <summary>
         /// Размер площадки
@@ -25,9 +25,6 @@ namespace Server.BrickLogic
 
             WorldPositionOffset = worldPositionOffset;
         }
-
-        Vector2Int IReadOnlyPlacingSurface.SurfaceSize => SurfaceSize;
-        Vector3 IReadOnlyPlacingSurface.WorldPositionOffset => WorldPositionOffset;
 
         /// <summary>
         /// Метод проверяет находится ли хотя бы одна клетка блока в рамках поверхности

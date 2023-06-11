@@ -88,7 +88,7 @@ namespace Client.BrickLogic
         /// <returns></returns>
         private Vector3 GetWorldPosition()
         {
-            return _bricksSpace.Database.Surface.GetWorldPosition(_bricksSpace.ControllableBrick.Position);
+            return _bricksSpace.Surface.GetWorldPosition(_bricksSpace.ControllableBrick.Position);
         }
 
         private void Update()
