@@ -41,27 +41,34 @@ namespace Client.GhostLogic
 
         private void CreateGhostCallbacks()
         {
-            _instance?.DisposeCallbacks();
-            _ghostViewPresenter?.DisposeCallbacks();
+            DisposeCallbacks();
 
             _instance = _ghostViewFactory.Create();
             _instance.SetCallbacks(_ghostViewPresenter);
 
+            SetPresenterCallbacksAndInvoke();
+        }
+
+        private void ChangeGhostCallbacks()
+        {
+            DisposeCallbacks();
+
+            _instance.SetCallbacks();
+
+            SetPresenterCallbacksAndInvoke();
+        }
+
+        private void SetPresenterCallbacksAndInvoke()
+        {
             _ghostViewPresenter.SetAndInvokeCallbacks();
 
             ChangeGhostView();
         }
 
-        private void ChangeGhostCallbacks()
+        private void DisposeCallbacks()
         {
             _instance?.DisposeCallbacks();
             _ghostViewPresenter?.DisposeCallbacks();
-
-            _instance.SetCallbacks();
-
-            _ghostViewPresenter.SetAndInvokeCallbacks();
-
-            ChangeGhostView();
         }
 
         private void ChangeGhostView()

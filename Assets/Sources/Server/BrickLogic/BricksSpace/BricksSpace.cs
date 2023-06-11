@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Server.BrickLogic
@@ -30,10 +31,10 @@ namespace Server.BrickLogic
             _database = new(placingSurface);
         }
 
+        public IReadOnlyList<IReadOnlyBrick> Bricks => _database.Bricks;
         public IReadOnlyBrick ControllableBrick => _database.ControllableBrick;
 
-        public IReadOnlyBricksDatabase Database => _database;
-        public IReadOnlyPlacingSurface Surface => _database.Surface;
+        public PlacingSurface Surface => _database.Surface;
 
         /// <summary>
         /// Проверяет возможность движения блока и в случае истины - двигает его в указаном направлении

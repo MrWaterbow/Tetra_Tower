@@ -3,15 +3,7 @@ using UnityEngine;
 
 namespace Server.BrickLogic
 {
-    public interface IReadOnlyBricksDatabase
-    {
-        IReadOnlyList<IReadOnlyBrick> Bricks { get; }
-        IReadOnlyBrick ControllableBrick { get; }
-
-        IReadOnlyPlacingSurface Surface { get; }
-    }
-
-    public class BricksDatabase : IReadOnlyBricksDatabase
+    public class BricksDatabase
     {
         /// <summary>
         /// Список со всеми блоками
@@ -43,12 +35,6 @@ namespace Server.BrickLogic
 
             Surface = placingSurface;
         }
-
-        IReadOnlyList<IReadOnlyBrick> IReadOnlyBricksDatabase.Bricks => Bricks;
-
-        IReadOnlyBrick IReadOnlyBricksDatabase.ControllableBrick => ControllableBrick;
-
-        IReadOnlyPlacingSurface IReadOnlyBricksDatabase.Surface => Surface;
 
         /// <summary>
         /// Проверяет возможность движения блока в указаном направлении
