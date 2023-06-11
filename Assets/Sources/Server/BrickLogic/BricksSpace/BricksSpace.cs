@@ -31,6 +31,7 @@ namespace Server.BrickLogic
             _database = new(placingSurface);
         }
 
+        public IReadOnlyDictionary<Vector2Int, int> HeightMap => _database.HeightMap;
         public IReadOnlyList<IReadOnlyBrick> Bricks => _database.Bricks;
         public IReadOnlyBrick ControllableBrick => _database.ControllableBrick;
 
@@ -73,16 +74,18 @@ namespace Server.BrickLogic
         /// Опускает блок сразу на землю в одно действие
         /// </summary>
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
-        public void LowerBrickToGround()
+        public void LowerControllableBrickToGround()
         {
             if (_database.ControllableBrickOnGround())
             {
                 throw new BrickOnGroundException();
             }
 
-            Vector3Int direction = Vector3Int.down * _database.ControllableBrick.Position.y;
+            int height = _database.GetHeightByPattern(_database.ControllableBrick);
+            Vector3Int brickPosition = _database.ControllableBrick.Position;
+            Vector3Int newPosition = new(brickPosition.x, height, brickPosition.z);
 
-            _database.ControllableBrick.Move(direction);
+            _database.ControllableBrick.ChangePosition(newPosition);
 
             OnControllableBrickFall?.Invoke();
         }
@@ -93,8 +96,19 @@ namespace Server.BrickLogic
         /// <param name="brick"></param>
         public void ChangeAndAddRecentControllableBrick(Brick brick)
         {
+            if(ControllableBrick != null)
+            {
+                _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);
+            }
+
             _database.ControllableBrick = brick;
-            _database.Bricks.Add(brick);
+        }
+
+        public void PlaceControllableBrick()
+        {
+            _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);
+
+            _database.ControllableBrick = null;
         }
 
         public Vector3Int ComputeFeatureGroundPosition(Vector3Int position)

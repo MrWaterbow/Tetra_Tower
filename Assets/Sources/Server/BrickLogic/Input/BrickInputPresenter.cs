@@ -30,7 +30,7 @@ namespace Server.BrickLogic
 
         public void ToGround()
         {
-            _brickSpace.LowerBrickToGround();
+            _brickSpace.LowerControllableBrickToGround();
         }
     }
 }

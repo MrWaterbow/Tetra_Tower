@@ -3,7 +3,7 @@
 namespace Server.BrickLogic
 {
 
-    public class PlacingSurface
+    public readonly struct PlacingSurface
     {
         /// <summary>
         /// Размер площадки
