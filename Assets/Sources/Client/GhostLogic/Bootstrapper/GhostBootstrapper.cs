@@ -3,12 +3,15 @@ using Client.BrickLogic;
 using Server.BrickLogic;
 using Server.Factories;
 using Server.GhostLogic;
+using UnityEngine;
 using Zenject;
 
 namespace Client.GhostLogic
 {
     internal sealed class GhostBootstrapper : Bootstrapper
     {
+        [SerializeField] private float _ghostAlpha;
+
         private GhostView _instance;
 
         private IGhostViewPresenter _ghostViewPresenter;
@@ -34,7 +37,6 @@ namespace Client.GhostLogic
             CreateGhostCallbacks();
 
             _bricksSpace.OnControllableBrickFall += ChangeGhostCallbacks;
-            _bricksSpace.OnControllableBrickFall += ChangeGhostMesh;
         }
 
         private void CreateGhostCallbacks()
@@ -42,10 +44,12 @@ namespace Client.GhostLogic
             _instance?.DisposeCallbacks();
             _ghostViewPresenter?.DisposeCallbacks();
 
-            _ghostViewPresenter.SetCallbacks();
-
             _instance = _ghostViewFactory.Create();
             _instance.SetCallbacks(_ghostViewPresenter);
+
+            _ghostViewPresenter.SetAndInvokeCallbacks();
+
+            ChangeGhostView();
         }
 
         private void ChangeGhostCallbacks()
@@ -53,13 +57,30 @@ namespace Client.GhostLogic
             _instance?.DisposeCallbacks();
             _ghostViewPresenter?.DisposeCallbacks();
 
-            _ghostViewPresenter.SetCallbacks();
             _instance.SetCallbacks();
+
+            _ghostViewPresenter.SetAndInvokeCallbacks();
+
+            ChangeGhostView();
+        }
+
+        private void ChangeGhostView()
+        {
+            ChangeGhostMesh();
+            ChangeGhostColor();
         }
 
         private void ChangeGhostMesh()
         {
-            _instance.SetMesh(_runtimeData.CurrentBrickView.MeshFilter.mesh);
+            _instance.SetMesh(_runtimeData.CurrentBrickView.GetMesh());
+        }
+
+        private void ChangeGhostColor()
+        {
+            Color color = _runtimeData.CurrentBrickView.GetColor();
+            color.a = _ghostAlpha;
+
+            _instance.SetColor(color);
         }
     }
 }

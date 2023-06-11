@@ -11,17 +11,17 @@ namespace Client.BrickLogic
         /// </summary>
         [SerializeField] private Transform _transform;
         [SerializeField] private MeshFilter _meshFilter;
+        [SerializeField] private MeshRenderer _meshRenderer;
 
         [Space]
 
+        [SerializeField] private Color[] _colors;
         /// <summary>
         /// Плавность сменения позиции
         /// </summary>
         [SerializeField] private float _changePositionSmoothTime;
 
         private IBrickViewPresenter _presenter;
-
-        public MeshFilter MeshFilter => _meshFilter;
 
         public void SetCallbacks(IBrickViewPresenter presenter)
         {
@@ -47,6 +47,26 @@ namespace Client.BrickLogic
         private void ChangePosition(Vector3 newPosition)
         {
             _transform.DOMove(newPosition, _changePositionSmoothTime);
+        }
+
+        private void Awake()
+        {
+            _meshRenderer.material.color = GetRandomColor();
+        }
+
+        private Color GetRandomColor()
+        {
+            return _colors[Random.Range(0, _colors.Length)];
+        }
+
+        public Mesh GetMesh()
+        {
+            return _meshFilter.mesh;
+        }
+
+        public Color GetColor()
+        {
+            return _meshRenderer.material.color;
         }
     }
 }

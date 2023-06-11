@@ -10,7 +10,7 @@ namespace Server.BrickLogic
         /// </summary>
         event Action<Vector3> OnPositionChanged;
 
-        void SetCallbacks();
+        void SetAndInvokeCallbacks();
         void DisposeCallbacks();
     }
 }

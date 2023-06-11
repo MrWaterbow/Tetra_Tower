@@ -4,6 +4,7 @@ namespace Client.BrickLogic
 {
     internal interface IReadOnlyBrickView
     {
-        MeshFilter MeshFilter { get; }
+        Mesh GetMesh();
+        Color GetColor();
     }
 }

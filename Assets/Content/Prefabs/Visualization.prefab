@@ -98,3 +98,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 7905780385627707323}
   _meshFilter: {fileID: 8207226136259405812}
+  _meshRenderer: {fileID: 2052243977587520243}
