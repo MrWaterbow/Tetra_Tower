@@ -34,9 +34,9 @@ namespace Server.BrickLogic
 
         private void GenerateHeightMap(Vector2Int surfaceSize)
         {
-            for (int x = 0; x < surfaceSize.x; x++)
+            for (int x = -2; x < surfaceSize.x + 2; x++)
             {
-                for (int y = 0; y < surfaceSize.y; y++)
+                for (int y = -2; y < surfaceSize.y + 2; y++)
                 {
                     _heightMap.Add(new Vector2Int(x, y), 0);
                 }
@@ -74,11 +74,54 @@ namespace Server.BrickLogic
             }
         }
 
-        public Vector3Int ComputeFeatureGroundPosition(Vector3Int direction)
+        public int GetHeightByPattern(IReadOnlyBrick brick)
         {
-            Vector2Int heightMapKey = new(direction.x, direction.z);
+            int height = 0;
 
-            return new(direction.x, _heightMap[heightMapKey], direction.z);
+            foreach (Vector3Int patternTile in brick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + brick.Position;
+                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                if (GetHeightByKey(heightMapKey) > height)
+                {
+                    height = HeightMap[heightMapKey];
+                }
+            }
+
+            return height;
+        }
+
+        public int GetHeightByKey(Vector2Int key)
+        {
+            return _heightMap[key];
+        }
+
+        public Vector3 GetControllableBrickWorldPosition()
+        {
+            return Surface.GetWorldPosition(ControllableBrick.Position);
+        }
+
+        /// <summary>
+        /// Проверка блока находится ли он на земле
+        /// </summary>
+        /// <returns></returns>
+        public bool ControllableBrickOnGround()
+        {
+            bool onGround = false;
+
+            foreach (Vector3Int patternTile in ControllableBrick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + ControllableBrick.Position;
+                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                if (HeightMap[heightMapKey] == tilePosition.y)
+                {
+                    onGround = true;
+                }
+            }
+
+            return onGround;
         }
     }
 }

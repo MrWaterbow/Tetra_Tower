@@ -3,36 +3,6 @@ using UnityEngine;
 
 namespace Server.BrickLogic
 {
-    public sealed class BricksDatabaseAccess
-    {
-        private readonly BricksDatabase _database;
-
-        public BricksDatabaseAccess(BricksDatabase database)
-        {
-            _database = database;
-        }
-
-        /// <summary>
-        /// Меняет управляемый игроком блок и добавляет новый в список блоков
-        /// </summary>
-        /// <param name="brick"></param>
-        public void ChangeAndAddRecentControllableBrick(Brick brick)
-        {
-            if (_database.ControllableBrick != null)
-            {
-                _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);
-            }
-
-            _database.ControllableBrick = brick;
-        }
-
-        public void PlaceControllableBrick()
-        {
-            _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);
-
-            _database.ControllableBrick = null;
-        }
-    }
 
     public sealed class BrickMovementWrapper
     {
@@ -93,16 +63,14 @@ namespace Server.BrickLogic
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerBrickAndCheckGrounding()
         {
-            if (ControllableBrickOnGround() == false)
-            {
-                _database.ControllableBrick.Move(Vector3Int.down);
-            }
-            else
+            if (_database.ControllableBrickOnGround())
             {
                 throw new BrickOnGroundException();
             }
 
-            if (ControllableBrickOnGround())
+            _database.ControllableBrick.Move(Vector3Int.down);
+
+            if (_database.ControllableBrickOnGround())
             {
                 OnControllableBrickFall?.Invoke();
             }
@@ -114,12 +82,12 @@ namespace Server.BrickLogic
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerControllableBrickToGround()
         {
-            if (ControllableBrickOnGround())
+            if (_database.ControllableBrickOnGround())
             {
                 throw new BrickOnGroundException();
             }
 
-            int height = GetHeightByPattern(_database.ControllableBrick);
+            int height = _database.GetHeightByPattern(_database.ControllableBrick);
             Vector3Int brickPosition = _database.ControllableBrick.Position;
             Vector3Int newPosition = new(brickPosition.x, height, brickPosition.z);
 
@@ -128,49 +96,8 @@ namespace Server.BrickLogic
             OnControllableBrickFall?.Invoke();
         }
 
-        /// <summary>
-        /// Проверка блока находится ли он на земле
-        /// </summary>
-        /// <returns></returns>
-        private bool ControllableBrickOnGround()
-        {
-            bool onGround = false;
 
-            foreach (Vector3Int patternTile in _database.ControllableBrick.Pattern)
-            {
-                Vector3Int tilePosition = patternTile + _database.ControllableBrick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
-                if (_database.HeightMap[heightMapKey] == tilePosition.y - 1)
-                {
-                    onGround = true;
-                }
-            }
 
-            return onGround;
-        }
-
-        private int GetHeightByPattern(Brick brick)
-        {
-            int height = 0;
-
-            foreach (Vector3Int patternTile in brick.Pattern)
-            {
-                Vector3Int tilePosition = patternTile + brick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
-
-                if (_database.HeightMap[heightMapKey] > height)
-                {
-                    height = _database.HeightMap[heightMapKey] + 1;
-                }
-            }
-
-            return height;
-        }
-
-        public Vector3 GetControllableBrickWorldPosition()
-        {
-            return _database.Surface.GetWorldPosition(_database.ControllableBrick.Position);
-        }
     }
 }
