@@ -26,15 +26,40 @@ namespace Tests
         }
 
         [Test]
-        public void BrickLowerTest()
+        public void BrickLowerTestOnMin()
         {
+            _brickMovementWrapper.TryMoveBrick(Vector3Int.left);
+
             _brickMovementWrapper.LowerBrickAndCheckGrounding();
 
-            Assert.AreEqual(new Vector3Int(0, 4, 0), _database.ControllableBrick.Position);
+            Assert.AreEqual(new Vector3Int(-1, 4, 0), _database.ControllableBrick.Position);
 
             _brickMovementWrapper.LowerControllableBrickToGround();
 
-            Assert.AreEqual(Vector3Int.zero, _database.ControllableBrick.Position);
+            Assert.AreEqual(Vector3Int.left, _database.ControllableBrick.Position);
+        }
+
+        [Test]
+        public void BrickLowerTestOnMax()
+        {
+            _brickMovementWrapper.TryMoveBrick(new Vector3Int(3, 0, 2));
+
+            _brickMovementWrapper.LowerBrickAndCheckGrounding();
+
+            Assert.AreEqual(new Vector3Int(3, 4, 2), _database.ControllableBrick.Position);
+
+            _brickMovementWrapper.LowerControllableBrickToGround();
+
+            Assert.AreEqual(new Vector3Int(3, 0, 2), _database.ControllableBrick.Position);
+        }
+
+        [Test]
+        public void BrickOnGroundExceptionTest()
+        {
+            _brickMovementWrapper.LowerControllableBrickToGround();
+
+            Assert.Throws(typeof(BrickOnGroundException), () => _brickMovementWrapper.LowerBrickAndCheckGrounding());
+            Assert.Throws(typeof(BrickOnGroundException), () => _brickMovementWrapper.LowerControllableBrickToGround());
         }
 
         [Test]
@@ -44,9 +69,10 @@ namespace Tests
         }
 
         [Test]
-        public void ComputeFeatureGroundPositionTest()
+        public void ComputeFeatureGroundPositionWithoutBlocksTest()
         {
-            Assert.AreEqual(new Vector3Int(2, 0, 1), _database.ComputeFeatureGroundPosition(new Vector3Int(2, 4, 1)));
+            Assert.AreEqual(0, _database.GetHeightByKey(new Vector2Int(2, 1)));
+            Assert.AreEqual(0, _database.GetHeightByPattern(new Brick(Vector3Int.zero, BrickPatterns.OBlock)));
         }
 
         [Test]

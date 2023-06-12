@@ -111,7 +111,7 @@ namespace Server.BrickLogic
     //        _database.ControllableBrick = null;
     //    }
 
-    //    public Vector3Int ComputeFeatureGroundPosition(Vector3Int position)
+    //    public Vector3Int GetHeightByKey(Vector3Int position)
     //    {
     //        return position * new Vector3Int(1, 0, 1);
     //    }

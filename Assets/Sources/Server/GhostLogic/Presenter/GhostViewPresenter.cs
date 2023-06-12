@@ -19,7 +19,7 @@ namespace Server.GhostLogic
         {
             _database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
 
-            OnPositionChanged?.Invoke(GetWorldPosition(_database.ControllableBrick.Position));
+            OnPositionChanged?.Invoke(GetWorldPosition());
         }
 
         public void DisposeCallbacks()
@@ -33,13 +33,14 @@ namespace Server.GhostLogic
         /// <param name="position"></param>
         private void InvokeOnPositionChanged(Vector3Int position)
         {
-            OnPositionChanged?.Invoke(GetWorldPosition(position));
+            OnPositionChanged?.Invoke(GetWorldPosition());
         }
 
-        private Vector3 GetWorldPosition(Vector3Int position)
+        private Vector3 GetWorldPosition()
         {
-            position *= new Vector3Int(1, 0, 1);
-            Vector3 worldPosition = _database.Surface.GetWorldPosition(position);
+            Vector3Int localPosition = _database.ControllableBrick.Position;
+            localPosition.y = _database.GetHeightByPattern(_database.ControllableBrick);
+            Vector3 worldPosition = _database.Surface.GetWorldPosition(localPosition);
 
             worldPosition += new Vector3(0.5f, 0, 0.5f);
 

@@ -35,29 +35,45 @@ namespace Tests
         }
 
         [Test]
-        public void FirstHeightMapTest()
+        public void CalculateFutureGroundPositionWithBlocksTest()
         {
-            Assert.AreEqual(1, _brickMovementWrapper.Database.HeightMap[Vector2Int.zero]);
-            Assert.AreEqual(1, _brickMovementWrapper.Database.HeightMap[Vector2Int.right]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[Vector2Int.up]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[Vector2Int.one]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[new Vector2Int(2, 1)]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[Vector2Int.up * 2]);
+            _bricksDatabaseAccess.PlaceControllableBrick();
+
+            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.zero));
+            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.right * 2));
+            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.one * 2));
+
+            Brick testInstance = new(Vector3Int.zero, BrickPatterns.OBlock);
+            Assert.AreEqual(3, _database.GetHeightByPattern(testInstance));
+
+            testInstance.ChangePosition(Vector3Int.right * 2);
+            Assert.AreEqual(3, _database.GetHeightByPattern(testInstance));
         }
 
         [Test]
-        public void SecondHeightMapTest()
+        public void HeightMapTestOnTwoBlocks()
+        {
+            Assert.AreEqual(1, _database.HeightMap[Vector2Int.zero]);
+            Assert.AreEqual(1, _database.HeightMap[Vector2Int.right]);
+            Assert.AreEqual(2, _database.HeightMap[Vector2Int.up]);
+            Assert.AreEqual(2, _database.HeightMap[Vector2Int.one]);
+            Assert.AreEqual(2, _database.HeightMap[new Vector2Int(2, 1)]);
+            Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
+        }
+
+        [Test]
+        public void HeightMapTestOnThreeBlocks()
         {
             // Ставит третий блок
             _bricksDatabaseAccess.PlaceControllableBrick();
 
-            Assert.AreEqual(3, _brickMovementWrapper.Database.HeightMap[Vector2Int.zero]);
-            Assert.AreEqual(3, _brickMovementWrapper.Database.HeightMap[Vector2Int.right]);
-            Assert.AreEqual(3, _brickMovementWrapper.Database.HeightMap[Vector2Int.right * 2]);
-            Assert.AreEqual(3, _brickMovementWrapper.Database.HeightMap[Vector2Int.up]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[Vector2Int.one]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[new Vector2Int(2, 1)]);
-            Assert.AreEqual(2, _brickMovementWrapper.Database.HeightMap[Vector2Int.up * 2]);
+            Assert.AreEqual(3, _database.HeightMap[Vector2Int.zero]);
+            Assert.AreEqual(3, _database.HeightMap[Vector2Int.right]);
+            Assert.AreEqual(3, _database.HeightMap[Vector2Int.right * 2]);
+            Assert.AreEqual(3, _database.HeightMap[Vector2Int.up]);
+            Assert.AreEqual(2, _database.HeightMap[Vector2Int.one]);
+            Assert.AreEqual(2, _database.HeightMap[new Vector2Int(2, 1)]);
+            Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
         }
     }
 }
