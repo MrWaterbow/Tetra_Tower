@@ -8,23 +8,23 @@ namespace Server.GhostLogic
     {
         public event Action<Vector3> OnPositionChanged;
 
-        private readonly BricksSpace _bricksSpace;
+        private readonly IReadOnlyBricksDatabase _database;
 
-        public GhostViewPresenter(BricksSpace bricksSpace)
+        public GhostViewPresenter(IReadOnlyBricksDatabase database)
         {
-            _bricksSpace = bricksSpace;
+            _database = database;
         }
 
         public void SetAndInvokeCallbacks()
         {
-            _bricksSpace.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+            _database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
 
-            OnPositionChanged?.Invoke(GetWorldPosition(_bricksSpace.ControllableBrick.Position));
+            OnPositionChanged?.Invoke(GetWorldPosition(_database.ControllableBrick.Position));
         }
 
         public void DisposeCallbacks()
         {
-            _bricksSpace.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
+            _database.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Server.GhostLogic
         private Vector3 GetWorldPosition(Vector3Int position)
         {
             position *= new Vector3Int(1, 0, 1);
-            Vector3 worldPosition = _bricksSpace.Surface.GetWorldPosition(position);
+            Vector3 worldPosition = _database.Surface.GetWorldPosition(position);
 
             worldPosition += new Vector3(0.5f, 0, 0.5f);
 

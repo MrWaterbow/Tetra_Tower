@@ -34,22 +34,28 @@ namespace Cliend.DI
             // Создание фабрики для призрака
             IGhostViewFactory ghostViewFactory = new GhostViewFactory(_ghostPrefab);
 
-            // Создание пространства блоков
-            BricksSpace bricksSpace = new(_surfaceSize, _worldPositionOffset);
+            // Создание платформы и базы данных
+            PlacingSurface placingSurface = new(_surfaceSize, _worldPositionOffset);
+            BricksDatabase bricksDatabase = new(placingSurface);
+
+            // Создание модулей для работы с базой данных
+            BrickMovementWrapper brickMovementWrapper = new(bricksDatabase);
+            BricksDatabaseAccess bricksDatabaseAccess = new(bricksDatabase);
 
             // Создание презентера для блока
-            IBrickViewPresenter brickPresenter = new BrickViewPresenter(bricksSpace);
+            IBrickViewPresenter brickPresenter = new BrickViewPresenter(bricksDatabase);
 
             // Создание презентера для призрака
-            IGhostViewPresenter ghostPresenter = new GhostViewPresenter(bricksSpace);
+            IGhostViewPresenter ghostPresenter = new GhostViewPresenter(bricksDatabase);
 
             // Создание презентера для кнопок управления
-            IBrickInputPresenter brickInputPresenter = new BrickInputPresenter(bricksSpace);
+            IBrickInputPresenter brickInputPresenter = new BrickInputPresenter(brickMovementWrapper);
 
             Container.Bind<IBrickFactory>().FromInstance(brickFactory).AsSingle();
             Container.Bind<IBrickViewFactory>().FromInstance(brickViewFactory).AsSingle();
             Container.Bind<IGhostViewFactory>().FromInstance(ghostViewFactory).AsSingle();
-            Container.Bind<BricksSpace>().FromInstance(bricksSpace).AsSingle();
+            Container.Bind<BrickMovementWrapper>().FromInstance(brickMovementWrapper).AsSingle();
+            Container.Bind<BricksDatabaseAccess>().FromInstance(bricksDatabaseAccess).AsSingle();
             Container.Bind<IBrickViewPresenter>().FromInstance(brickPresenter).AsSingle();
             Container.Bind<IGhostViewPresenter>().FromInstance(ghostPresenter).AsSingle();
             Container.Bind<IBrickInputPresenter>().FromInstance(brickInputPresenter).AsSingle();

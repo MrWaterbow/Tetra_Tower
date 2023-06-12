@@ -26,19 +26,22 @@ namespace Client.BrickLogic
         private IBrickViewFactory _brickViewFactory;
         private IBrickViewPresenter _brickViewPresenter;
         private IBrickFactory _brickFactory;
-        private BricksSpace _bricksSpace;
+        private BrickMovementWrapper _brickMovementWrapper;
+        private BricksDatabaseAccess _brickDatabaseAccess;
 
         [Inject]
         private void Constructor(
             IBrickViewFactory brickViewFactory,
             IBrickViewPresenter brickPresenter,
             IBrickFactory brickFactory,
-            BricksSpace bricksSpace)
+            BrickMovementWrapper brickMovementWrapper,
+            BricksDatabaseAccess bricksDatabaseAccess)
         {
             _brickViewFactory = brickViewFactory;
             _brickViewPresenter = brickPresenter;
             _brickFactory = brickFactory;
-            _bricksSpace = bricksSpace;
+            _brickMovementWrapper = brickMovementWrapper;
+            _brickDatabaseAccess = bricksDatabaseAccess;
         }
 
         public IReadOnlyBrickView CurrentBrickView => _currentBrickView;
@@ -52,7 +55,7 @@ namespace Client.BrickLogic
             CreateAndSetControllableBrick();
 
             // Вызов создание нового блока при его падении
-            _bricksSpace.OnControllableBrickFall += CreateAndSetControllableBrick;
+            _brickMovementWrapper.OnControllableBrickFall += CreateAndSetControllableBrick;
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Client.BrickLogic
         {
             Brick brick = _brickFactory.Create(_startBrickPosition);
 
-            _bricksSpace.ChangeAndAddRecentControllableBrick(brick);
+            _brickDatabaseAccess.ChangeAndAddRecentControllableBrick(brick);
 
             CreateBlockView();
         }
@@ -76,19 +79,10 @@ namespace Client.BrickLogic
             _currentBrickView?.DisposeCallbacks();
             _brickViewPresenter?.DisposeCallbacks();
 
-            _currentBrickView = _brickViewFactory.Create(GetWorldPosition());
+            _currentBrickView = _brickViewFactory.Create(_brickMovementWrapper.GetControllableBrickWorldPosition());
             _currentBrickView.SetCallbacks(_brickViewPresenter);
 
             _brickViewPresenter.SetAndInvokeCallbacks();
-        }
-
-        /// <summary>
-        /// Получить мировую позицию
-        /// </summary>
-        /// <returns></returns>
-        private Vector3 GetWorldPosition()
-        {
-            return _bricksSpace.Surface.GetWorldPosition(_bricksSpace.ControllableBrick.Position);
         }
 
         private void Update()
@@ -105,7 +99,7 @@ namespace Client.BrickLogic
 
             if (_lowerTimer >= _lowerTick)
             {
-                _bricksSpace.LowerBrickAndCheckGrounding();
+                _brickMovementWrapper.LowerBrickAndCheckGrounding();
 
                 _lowerTimer = 0;
             }

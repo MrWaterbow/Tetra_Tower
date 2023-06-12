@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Server.BrickLogic
 {
-    public class BricksDatabase
+    public sealed class BricksDatabase : IReadOnlyBricksDatabase
     {
         private readonly Dictionary<Vector2Int, int> _heightMap;
 
@@ -54,58 +54,12 @@ namespace Server.BrickLogic
         }
 
         public IReadOnlyDictionary<Vector2Int, int> HeightMap => _heightMap;
+
         public IReadOnlyList<IReadOnlyBrick> Bricks => _bricks;
 
-        /// <summary>
-        /// Проверяет возможность движения блока в указаном направлении
-        /// </summary>
-        /// <param name="direction">Направление движения</param>
-        /// <returns></returns>
-        public bool PossibleMoveBrickTo(Vector3Int direction)
-        {
-            Vector2Int featurePosition = ComputeFeaturePosition(direction);
+        IReadOnlyBrick IReadOnlyBricksDatabase.ControllableBrick => ControllableBrick;
 
-            return Surface.PatternInSurfaceLimits(ControllableBrick.Pattern, featurePosition);
-        }
-
-        /// <summary>
-        /// Расчитывает будущую позицию блока
-        /// </summary>
-        /// <param name="direction">Направление движения</param>
-        /// <returns></returns>
-        private Vector2Int ComputeFeaturePosition(Vector3Int direction)
-        {
-            return new(ControllableBrick.Position.x + direction.x, ControllableBrick.Position.z + direction.z);
-        }
-
-        public Vector3Int ComputeFeatureGroundPosition(Vector3Int direction)
-        {
-            Vector2Int heightMapKey = new(direction.x, direction.z);
-
-            return new(direction.x, _heightMap[heightMapKey], direction.z);
-        }
-
-        /// <summary>
-        /// Проверка блока находится ли он на земле
-        /// </summary>
-        /// <returns></returns>
-        public bool ControllableBrickOnGround()
-        {
-            bool onGround = false;
-
-            foreach (Vector3Int patternTile in ControllableBrick.Pattern)
-            {
-                Vector3Int tilePosition = patternTile + ControllableBrick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
-
-                if (_heightMap[heightMapKey] == tilePosition.y - 1)
-                {
-                    onGround = true;
-                }
-            }
-
-            return onGround;
-        }
+        PlacingSurface IReadOnlyBricksDatabase.Surface => Surface;
 
         public void AddBrickAndUpdateHeightMap(Brick brick)
         {
@@ -120,27 +74,11 @@ namespace Server.BrickLogic
             }
         }
 
-        public int GetHeightByPattern(Brick brick)
+        public Vector3Int ComputeFeatureGroundPosition(Vector3Int direction)
         {
-            int height = 0;
+            Vector2Int heightMapKey = new(direction.x, direction.z);
 
-            foreach (Vector3Int patternTile in brick.Pattern)
-            {
-                Vector3Int tilePosition = patternTile + brick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
-
-                if (_heightMap[heightMapKey] > height)
-                {
-                    height = _heightMap[heightMapKey] + 1;
-                }
-            }
-
-            return height;
-        }
-
-        public int GetHeightByKey(Vector2Int heightMapKey)
-        {
-            return _heightMap[heightMapKey];
+            return new(direction.x, _heightMap[heightMapKey], direction.z);
         }
     }
 }
