@@ -17,26 +17,26 @@ namespace Client.GhostLogic
         private IGhostViewPresenter _ghostViewPresenter;
         private IGhostViewFactory _ghostViewFactory;
         private IBricksRuntimeData _runtimeData;
-        private BricksSpace _bricksSpace;
+        private BrickMovementWrapper _brickMovementWrapper;
 
         [Inject]
         private void Constructor(
             IGhostViewPresenter ghostViewPresenter,
             IGhostViewFactory ghostViewFactory,
             IBricksRuntimeData runtimeData,
-            BricksSpace bricksSpace)
+            BrickMovementWrapper brickMovementWrapper)
         {
             _ghostViewPresenter = ghostViewPresenter;
             _ghostViewFactory = ghostViewFactory;
             _runtimeData = runtimeData;
-            _bricksSpace = bricksSpace;
+            _brickMovementWrapper = brickMovementWrapper;
         }
 
         public override void Boot()
         {
             CreateGhostCallbacks();
 
-            _bricksSpace.OnControllableBrickFall += ChangeGhostCallbacks;
+            _brickMovementWrapper.OnControllableBrickFall += ChangeGhostCallbacks;
         }
 
         private void CreateGhostCallbacks()

@@ -7,11 +7,11 @@ namespace Server.BrickLogic
     {
         public event Action<Vector3> OnPositionChanged;
 
-        private readonly BricksSpace _bricksSpace;
+        private readonly IReadOnlyBricksDatabase _database;
 
-        public BrickViewPresenter(BricksSpace bricksSpace)
+        public BrickViewPresenter(IReadOnlyBricksDatabase database)
         {
-            _bricksSpace = bricksSpace;
+            _database = database;
         }
 
         /// <summary>
@@ -20,9 +20,9 @@ namespace Server.BrickLogic
         /// <param name="brick"></param>
         public void SetAndInvokeCallbacks()
         {
-            _bricksSpace.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+            _database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
 
-            OnPositionChanged?.Invoke(GetWorldPosition(_bricksSpace.ControllableBrick.Position));
+            OnPositionChanged?.Invoke(GetWorldPosition(_database.ControllableBrick.Position));
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Server.BrickLogic
         /// </summary>
         public void DisposeCallbacks()
         {
-            _bricksSpace.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
+            _database.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Server.BrickLogic
 
         private Vector3 GetWorldPosition(Vector3Int position)
         {
-            return _bricksSpace.Surface.GetWorldPosition(position);
+            return _database.Surface.GetWorldPosition(position);
         }
     }
 }
