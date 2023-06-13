@@ -14,5 +14,6 @@ namespace Server.BrickLogic
         int GetHeightByPattern(IReadOnlyBrick brick);
         Vector3 GetControllableBrickWorldPosition();
         bool ControllableBrickOnGround();
+        int GetHeighestPoint();
     }
 }

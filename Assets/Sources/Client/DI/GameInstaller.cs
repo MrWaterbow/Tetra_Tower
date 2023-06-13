@@ -6,7 +6,7 @@ using Server.GhostLogic;
 using UnityEngine;
 using Zenject;
 
-namespace Cliend.DI
+namespace Client.DI
 {
     internal sealed class GameInstaller : MonoInstaller
     {
