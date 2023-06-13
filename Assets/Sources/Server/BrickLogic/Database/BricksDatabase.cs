@@ -123,5 +123,20 @@ namespace Server.BrickLogic
 
             return onGround;
         }
+
+        public int GetHeighestPoint()
+        {
+            int heighestPoint = 0;
+
+            foreach (KeyValuePair<Vector2Int, int> pair in _heightMap)
+            {
+                if (pair.Value > heighestPoint)
+                {
+                    heighestPoint = pair.Value;
+                }
+            }
+
+            return heighestPoint;
+        }
     }
 }

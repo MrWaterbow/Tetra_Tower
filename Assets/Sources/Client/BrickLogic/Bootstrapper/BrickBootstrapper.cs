@@ -63,7 +63,12 @@ namespace Client.BrickLogic
         /// </summary>
         private void CreateAndSetControllableBrick()
         {
-            Brick brick = _brickFactory.Create(_startBrickPosition);
+            Vector3Int position = _startBrickPosition;
+
+            position.y = _brickMovementWrapper.Database.GetHeighestPoint();
+            position.y += _startBrickPosition.y;
+
+            Brick brick = _brickFactory.Create(position);
 
             _brickDatabaseAccess.ChangeAndAddRecentControllableBrick(brick);
 
