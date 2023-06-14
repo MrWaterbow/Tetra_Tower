@@ -2,7 +2,6 @@
 
 namespace Server.BrickLogic
 {
-
     public readonly struct PlacingSurface
     {
         /// <summary>
