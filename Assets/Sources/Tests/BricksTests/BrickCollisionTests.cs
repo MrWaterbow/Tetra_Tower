@@ -75,5 +75,15 @@ namespace Tests
             Assert.AreEqual(2, _database.HeightMap[new Vector2Int(2, 1)]);
             Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
         }
+
+        [Test]
+        public void HeighestPointTest()
+        {
+            Assert.AreEqual(2, _database.GetHeighestPoint());
+
+            _bricksDatabaseAccess.PlaceControllableBrick();
+
+            Assert.AreEqual(3, _database.GetHeighestPoint());
+        }
     }
 }
