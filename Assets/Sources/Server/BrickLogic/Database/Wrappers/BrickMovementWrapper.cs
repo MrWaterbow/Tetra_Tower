@@ -95,9 +95,5 @@ namespace Server.BrickLogic
 
             OnControllableBrickFall?.Invoke();
         }
-
-
-
-
     }
 }
