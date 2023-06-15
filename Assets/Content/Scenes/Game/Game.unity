@@ -386,6 +386,7 @@ MonoBehaviour:
   _brickPrefab: {fileID: 1556693245787531414, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
   _ghostPrefab: {fileID: 7475920292617304674, guid: 9eba08440d2d86d41ae8948ea9774d67, type: 3}
   _brickBootstrapper: {fileID: 371654050}
+  _startPosition: {x: 0, y: 5, z: 0}
   _surfaceSize: {x: 3, y: 3}
   _worldPositionAnchor: {fileID: 2125726324}
   _brickInput: {fileID: 127704352}
