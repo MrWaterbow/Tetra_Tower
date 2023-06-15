@@ -227,7 +227,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 3cf6ffff28fbffff
+      m_ExpandedIDs: 1afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -524,9 +524,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.7988021, y: 0.58106667, z: 0.00878503}
+    m_Target: {x: -0.26569915, y: 1.8415318, z: -1.092762}
     speed: 2
-    m_Value: {x: 1.7988021, y: 0.58106667, z: 0.008785029}
+    m_Value: {x: -0.26569915, y: 1.8415318, z: -1.092762}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -573,13 +573,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.25856474, y: 0.31789777, z: -0.09055141, w: 0.90768445}
+    m_Target: {x: 0.3046688, y: 0.36100745, z: -0.1260775, w: 0.8723366}
     speed: 2
-    m_Value: {x: 0.25842795, y: 0.3192581, z: -0.09093892, w: 0.9072042}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
     m_Target: 3.278722
     speed: 2
-    m_Value: 3.2787216
+    m_Value: 3.278722
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -711,9 +711,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 137}
-    m_SelectedIDs: b4760000
-    m_LastClickedID: 30388
-    m_ExpandedIDs: 0000000076760000787600007a7600007c7600007e76000080760000827600008476000086760000887600008a7600008c76000000ca9a3b
+    m_SelectedIDs: 92760000
+    m_LastClickedID: 30354
+    m_ExpandedIDs: 00000000e4740000e6740000e8740000ea740000ec740000ee740000f0740000f2740000f4740000f6740000f8740000fa74000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -741,7 +741,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000076760000787600007a7600007c7600007e76000080760000827600008476000086760000887600008a7600008c760000
+    m_ExpandedIDs: 00000000e4740000e6740000e8740000ea740000ec740000ee740000f0740000f2740000f4740000f6740000f8740000fa740000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

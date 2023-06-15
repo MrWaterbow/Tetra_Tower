@@ -22,6 +22,7 @@ namespace Client.DI
 
         [Space]
 
+        [SerializeField] private Vector3Int _startPosition;
         [SerializeField] private Vector2Int _surfaceSize;
         [SerializeField] private Transform _worldPositionAnchor;
         [SerializeField] private ButtonsBrickInput _brickInput;
@@ -30,16 +31,16 @@ namespace Client.DI
 
         public override void InstallBindings()
         {
+            // Создание платформы и базы данных
+            PlacingSurface placingSurface = new(_surfaceSize, _worldPositionOffset);
+            BricksDatabase bricksDatabase = new(placingSurface);
+
             // Создание фабрики для блока
-            IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns);
+            IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns, _startPosition, bricksDatabase);
             IBrickViewFactory brickViewFactory = new BrickViewFactory(_brickPrefab);
 
             // Создание фабрики для призрака
             IGhostViewFactory ghostViewFactory = new GhostViewFactory(_ghostPrefab);
-
-            // Создание платформы и базы данных
-            PlacingSurface placingSurface = new(_surfaceSize, _worldPositionOffset);
-            BricksDatabase bricksDatabase = new(placingSurface);
 
             // Создание модулей для работы с базой данных
             BrickMovementWrapper brickMovementWrapper = new(bricksDatabase);

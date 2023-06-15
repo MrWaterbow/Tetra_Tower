@@ -13,6 +13,6 @@ namespace Server.Factories
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        Brick Create(Vector3Int position);
+        Brick Create();
     }
 }
