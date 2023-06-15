@@ -550,6 +550,7 @@ GameObject:
   - component: {fileID: 295352887}
   - component: {fileID: 295352886}
   - component: {fileID: 295352885}
+  - component: {fileID: 295352888}
   m_Layer: 5
   m_Name: Retry
   m_TagString: Untagged
@@ -620,7 +621,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 295352886}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 295352888}
+        m_TargetAssemblyTypeName: ResetScene, Client
+        m_MethodName: SceneReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &295352886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,6 +672,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295352883}
   m_CullTransparentMesh: 1
+--- !u!114 &295352888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295352883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a813115c596ee0f418145fe677f6d1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &309047911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,7 +1370,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821505603}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.24674532, z: 0, w: 0.9690804}
   m_LocalPosition: {x: 0.113342285, y: 0.40000105, z: -0.7022133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1353,7 +1378,7 @@ Transform:
   - {fileID: 895797592}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -48.679, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 28.57, z: 0}
 --- !u!1 &895797589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,12 +1487,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895797589}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8ceca6d9e1688a4fb017a4c25ae0fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseDeltaLimit: 0
+  _mouseDeltaLimit: 0.5
   _rotateDuration: 2
   _camera: {fileID: 821505604}
 --- !u!1 &1047275362
