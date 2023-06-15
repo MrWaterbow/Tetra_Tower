@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Client.CameraLogic
 {
-    internal sealed class CameraRotation : Bootstrapper
+    internal sealed class CameraRotation : MonoBehaviour
     {
         [SerializeField] private float _mouseDeltaLimit;
         [SerializeField] private float _rotateDuration;
@@ -13,11 +13,6 @@ namespace Client.CameraLogic
 
         [SerializeField] private Transform _camera;
 
-        public override void Boot()
-        {
-            
-        }
-
         private void Update()
         {
             TryRotate();
@@ -25,19 +20,24 @@ namespace Client.CameraLogic
 
         private void TryRotate()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
-                float mouseDelta = Input.GetAxis("Mouse X");
-                int rotateAngle = mouseDelta > 0 ? 90 : -90;
-
-                if(mouseDelta >= _mouseDeltaLimit)
-                {
-                    _camera.DORotate((_camera.eulerAngles.y + rotateAngle) * Vector3.up, _rotateDuration);
-                }
+                RotateCamera();
             }
         }
 
+        private void RotateCamera()
+        {
+            float mouseDelta = Input.GetAxis("Mouse X");
 
+            if (Mathf.Abs(mouseDelta) >= _mouseDeltaLimit)
+            {
+                Debug.Log(mouseDelta);
 
+                int rotateAngle = mouseDelta > 0 ? 90 : -90;
+
+                _camera.DORotate((_camera.eulerAngles.y + rotateAngle) * Vector3.up, _rotateDuration);
+            }
+        }
     }
 }
