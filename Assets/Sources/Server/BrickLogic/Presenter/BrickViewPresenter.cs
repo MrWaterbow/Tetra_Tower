@@ -5,8 +5,14 @@ namespace Server.BrickLogic
 {
     public sealed class BrickViewPresenter : IBrickViewPresenter
     {
+        /// <summary>
+        /// Вызывается, если позиция блока сменилась.
+        /// </summary>
         public event Action<Vector3> OnPositionChanged;
 
+        /// <summary>
+        /// Чтение данных из базы данных.
+        /// </summary>
         private readonly IReadOnlyBricksDatabase _database;
 
         public BrickViewPresenter(IReadOnlyBricksDatabase database)
@@ -42,6 +48,11 @@ namespace Server.BrickLogic
             OnPositionChanged?.Invoke(GetWorldPosition(position));
         }
 
+        /// <summary>
+        /// Получить мировую позицию
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         private Vector3 GetWorldPosition(Vector3Int position)
         {
             return _database.Surface.GetWorldPosition(position);

@@ -6,19 +6,22 @@ using Zenject;
 
 namespace Client.BrickLogic
 {
+    /// <summary>
+    /// Запускает создание блоков и их визуальной составляющей.
+    /// </summary>
     internal sealed class BrickBootstrapper : Bootstrapper, IBricksRuntimeData
     {
         /// <summary>
-        /// Время за которое блок опускается
+        /// Время за которое блок опускается.
         /// </summary>
         [SerializeField] private float _lowerTick;
         /// <summary>
-        /// Начальная позиция блоков
+        /// Начальная позиция блоков.
         /// </summary>
         [SerializeField] private Vector3Int _startBrickPosition;
 
         /// <summary>
-        /// Таймер до падения блока
+        /// Таймер до падения блока.
         /// </summary>
         private BrickView _currentBrickView;
         private float _lowerTimer;
@@ -59,7 +62,7 @@ namespace Client.BrickLogic
         }
 
         /// <summary>
-        /// Создание нового блока и подключение его как управляемого 
+        /// Создание нового блока и подключение его как управляем+ого 
         /// </summary>
         private void CreateAndSetControllableBrick()
         {

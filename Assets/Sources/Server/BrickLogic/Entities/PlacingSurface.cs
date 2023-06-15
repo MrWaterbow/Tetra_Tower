@@ -2,10 +2,13 @@
 
 namespace Server.BrickLogic
 {
+    /// <summary>
+    /// Поверхность на которую ставятся блоки.
+    /// </summary>
     public readonly struct PlacingSurface
     {
         /// <summary>
-        /// Размер площадки
+        /// Размер площадки.
         /// </summary>
         public readonly Vector2Int SurfaceSize;
         /// <summary>
@@ -14,7 +17,7 @@ namespace Server.BrickLogic
         public readonly Vector3 WorldPositionOffset;
 
         /// <summary>
-        /// Конструктор позволяет назначить размер площадки и смещение относительно мировых координат
+        /// Конструктор позволяет назначить размер площадки и смещение относительно мировых координат.
         /// </summary>
         /// <param name="surfaceSize">Размер площадки</param>
         /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
@@ -26,7 +29,7 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Метод проверяет находится ли хотя бы одна клетка блока в рамках поверхности
+        /// Метод проверяет находится ли хотя бы одна клетка блока в рамках поверхности.
         /// </summary>
         /// <param name="pattern"></param>
         /// <param name="position"></param>
@@ -42,8 +45,9 @@ namespace Server.BrickLogic
 
             return false;
         }
+
         /// <summary>
-        /// Проверяет находится ли позиция в рамках поверхности
+        /// Проверяет находится ли позиция в рамках поверхности.
         /// </summary>
         /// <param name="position">Позиция, которую проверяет</param>
         /// <returns></returns>
@@ -51,9 +55,9 @@ namespace Server.BrickLogic
         {
             return position.x > -1 && position.x < SurfaceSize.x && position.y > -1 && position.y < SurfaceSize.y;
         }
-
+        
         /// <summary>
-        /// Расчитывает и возвращает позицию относительно мировых координат
+        /// Расчитывает и возвращает позицию относительно мировых координат.
         /// </summary>
         /// <param name="localPosition">Позиция в локальных координатах</param>
         /// <returns></returns>

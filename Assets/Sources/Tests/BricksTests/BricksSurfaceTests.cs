@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Tests
 {
+    /// <summary>
+    /// Тест поверхности на которую ставяться блоки
+    /// </summary>
     public sealed class BricksSurfaceTests
     {
         private PlacingSurface _surface;
@@ -14,6 +17,9 @@ namespace Tests
             _surface = new(Vector2Int.one * 3, Vector3.zero);
         }
 
+        /// <summary>
+        /// Тест метода, который проверяет находится ли позиция в лимитах поверхности.
+        /// </summary>
         [Test]
         public void PositionsInsideSurfaceLimitsTest()
         {
@@ -32,6 +38,9 @@ namespace Tests
             // ( у этого должны быть свои ограничения, которые задаются в пространстве для блоков
         }
 
+        /// <summary>
+        /// Тест метода, который проверяет находится ли паттерн в лимитах поверхности.
+        /// </summary>
         [Test]
         public void PatternsInsideSurfaceLimitsTest()
         {
@@ -49,9 +58,6 @@ namespace Tests
 
             Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.up * 3));
             Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.down));
-
-            // TODO 6.1 Блок может выйти за границы, только если они расширины с помощью других блоков
-            // ( у этого должны быть свои ограничения, которые задаются в пространстве для блоков
         }
     }
 }

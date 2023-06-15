@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
 using Server.BrickLogic;
-using Server.Factories;
 using UnityEngine;
 
 namespace Tests
 {
+    /// <summary>
+    /// Тесты коллизий блока. Под коллизиями подразумевается карта высот.
+    /// </summary>
     public sealed class BrickCollisionTests
     {
         private BrickMovementWrapper _brickMovementWrapper;
@@ -34,6 +36,9 @@ namespace Tests
             _bricksDatabaseAccess.ChangeAndAddRecentControllableBrick(_SecondLBrick);
         }
 
+        /// <summary>
+        /// Тест будущей позицию блока, если бы он находился на земле.
+        /// </summary>
         [Test]
         public void CalculateFutureGroundPositionWithBlocksTest()
         {
@@ -50,6 +55,9 @@ namespace Tests
             Assert.AreEqual(3, _database.GetHeightByPattern(testInstance));
         }
 
+        /// <summary>
+        /// Тест карты высот при двух поставленных блоков.
+        /// </summary>
         [Test]
         public void HeightMapTestOnTwoBlocks()
         {
@@ -61,6 +69,9 @@ namespace Tests
             Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
         }
 
+        /// <summary>
+        /// Тест карты высот при трех поставленных блоках.
+        /// </summary>
         [Test]
         public void HeightMapTestOnThreeBlocks()
         {
@@ -76,6 +87,9 @@ namespace Tests
             Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
         }
 
+        /// <summary>
+        /// Тест метода, который расчитывает наивысшую точку на карте высот.
+        /// </summary>
         [Test]
         public void HeighestPointTest()
         {

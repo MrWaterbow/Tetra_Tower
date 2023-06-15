@@ -1,7 +1,13 @@
 ﻿namespace Server.BrickLogic
 {
+    /// <summary>
+    /// Модуль для безопасного изменения значений в базе данных.
+    /// </summary>
     public sealed class BricksDatabaseAccess
     {
+        /// <summary>
+        /// База данных
+        /// </summary>
         private readonly BricksDatabase _database;
 
         public BricksDatabaseAccess(BricksDatabase database)
@@ -23,6 +29,9 @@
             _database.ControllableBrick = brick;
         }
 
+        /// <summary>
+        /// Добавляет контролируемый блок в список поставленных блоков и обнуляет его
+        /// </summary>
         public void PlaceControllableBrick()
         {
             _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);

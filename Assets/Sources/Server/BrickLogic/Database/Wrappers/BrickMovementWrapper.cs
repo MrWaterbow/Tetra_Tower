@@ -3,16 +3,18 @@ using UnityEngine;
 
 namespace Server.BrickLogic
 {
-
+    /// <summary>
+    /// Модуль для движения контролирумого блока.
+    /// </summary>
     public sealed class BrickMovementWrapper
     {
         /// <summary>
-        /// Метод вызывается, если блок коснулся земли
+        /// Метод вызывается, если блок коснулся земли.
         /// </summary>
         public event Action OnControllableBrickFall;
 
         /// <summary>
-        /// База данных блоков
+        /// База данных блоков.
         /// </summary>
         private readonly BricksDatabase _database;
 
@@ -21,10 +23,13 @@ namespace Server.BrickLogic
             _database = database;
         }
 
+        /// <summary>
+        /// Доступ к чтению данных из базы данных.
+        /// </summary>
         public IReadOnlyBricksDatabase Database => _database;
 
         /// <summary>
-        /// Проверяет возможность движения блока и в случае истины - двигает его в указаном направлении
+        /// Проверяет возможность движения блока и в случае истины - двигает его в указаном направлении.
         /// </summary>
         /// <param name="direction">Направление движения</param>
         public void TryMoveBrick(Vector3Int direction)
@@ -36,7 +41,7 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Проверяет возможность движения блока в указаном направлении
+        /// Проверяет возможность движения блока в указаном направлении.
         /// </summary>
         /// <param name="direction">Направление движения</param>
         /// <returns></returns>
@@ -48,7 +53,7 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Расчитывает будущую позицию блока
+        /// Расчитывает будущую позицию блока.
         /// </summary>
         /// <param name="direction">Направление движения</param>
         /// <returns></returns>
@@ -58,7 +63,7 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Снижает высоту блока на одну единицу и проверяет находится ли он на земле
+        /// Снижает высоту блока на одну единицу и проверяет находится ли он на земле.
         /// </summary>
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerBrickAndCheckGrounding()
@@ -77,7 +82,7 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Опускает блок сразу на землю в одно действие
+        /// Опускает блок сразу на землю в одно действие.
         /// </summary>
         /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerControllableBrickToGround()

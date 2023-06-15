@@ -8,6 +8,9 @@ using Zenject;
 
 namespace Client.DI
 {
+    /// <summary>
+    /// Создает зависимости для игры
+    /// </summary>
     internal sealed class GameInstaller : MonoInstaller
     {
         [SerializeField] private BrickView _brickPrefab;
