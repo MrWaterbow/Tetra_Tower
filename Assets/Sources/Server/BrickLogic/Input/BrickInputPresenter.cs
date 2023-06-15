@@ -5,7 +5,7 @@ namespace Server.BrickLogic
     public class BrickInputPresenter : IBrickInputPresenter
     {
         /// <summary>
-        /// Пространство блоков
+        /// Пространство блоков.
         /// </summary>
         private readonly BrickMovementWrapper _brickMovementWrapper;
 
@@ -20,7 +20,7 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Двигает управляемый блок в указаном направлении
+        /// Двигает управляемый блок в указаном направлении.
         /// </summary>
         /// <param name="direction"></param>
         public void MoveTo(Vector3Int direction)
@@ -28,6 +28,9 @@ namespace Server.BrickLogic
             _brickMovementWrapper.TryMoveBrick(direction);
         }
 
+        /// <summary>
+        /// Моментально опускает блок на землю.
+        /// </summary>
         public void ToGround()
         {
             _brickMovementWrapper.LowerControllableBrickToGround();

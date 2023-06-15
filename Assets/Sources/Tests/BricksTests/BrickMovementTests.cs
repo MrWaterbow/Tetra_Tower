@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Tests
 {
+    /// <summary>
+    /// “ест движени€ блоков.
+    /// </summary>
     public sealed class BrickMovementTests
     {
         private BrickMovementWrapper _brickMovementWrapper;
@@ -25,6 +28,9 @@ namespace Tests
             _brickDatabaseAccess.ChangeAndAddRecentControllableBrick(controlledBrick);
         }
 
+        /// <summary>
+        /// “ест падени€ блока при наименьшей вертикальной и горизонтальной позиции на поверхности.
+        /// </summary>
         [Test]
         public void BrickLowerTestOnMin()
         {
@@ -39,6 +45,9 @@ namespace Tests
             Assert.AreEqual(Vector3Int.left, _database.ControllableBrick.Position);
         }
 
+        /// <summary>
+        /// “ест падени€ блока при наивысшей вертикальной и горизонтальной позиции на поверхности.
+        /// </summary>
         [Test]
         public void BrickLowerTestOnMax()
         {
@@ -53,6 +62,9 @@ namespace Tests
             Assert.AreEqual(new Vector3Int(3, 0, 2), _database.ControllableBrick.Position);
         }
 
+        /// <summary>
+        /// “ест который провер€ют выбрасываютс€ ли исключени€ о том, что блок уже находитс€ на земле, когда его пытаютс€ опустить.
+        /// </summary>
         [Test]
         public void BrickOnGroundExceptionTest()
         {
@@ -62,12 +74,18 @@ namespace Tests
             Assert.Throws(typeof(BrickOnGroundException), () => _brickMovementWrapper.LowerControllableBrickToGround());
         }
 
+        /// <summary>
+        /// “ест дл€ вычислени€ мировой позиции.
+        /// </summary>
         [Test]
         public void ComputeWorldPositionTest()
         {
             Assert.AreEqual(new Vector3(1, 6, 1), _database.Surface.GetWorldPosition(new Vector3Int(0, 5, 0)));
         }
-
+        
+        /// <summary>
+        /// “ест дл€ вычислени€ позиции на земле при отсутствии блоков.
+        /// </summary>
         [Test]
         public void ComputeFeatureGroundPositionWithoutBlocksTest()
         {
@@ -75,6 +93,9 @@ namespace Tests
             Assert.AreEqual(0, _database.GetHeightByPattern(new Brick(Vector3Int.zero, BrickPatterns.OBlock)));
         }
 
+        /// <summary>
+        /// “ест движени€ блока по поверхности.
+        /// </summary>
         [Test]
         public void BrickMovingInsideSurfaceLimitsTest()
         {

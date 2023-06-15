@@ -2,10 +2,13 @@
 
 namespace Server.BrickLogic
 {
+    /// <summary>
+    /// Паттерны блоков.
+    /// </summary>
     public static class BrickPatterns
     {
         /// <summary>
-        /// Заготовка L блока
+        /// Заготовка L блока.
         /// </summary>
         public static readonly Vector3Int[] LBlock = new Vector3Int[]
         {
@@ -15,6 +18,9 @@ namespace Server.BrickLogic
             Vector3Int.left + Vector3Int.forward,
         };
 
+        /// <summary>
+        /// Заготовка O блока.
+        /// </summary>
         public static readonly Vector3Int[] OBlock = new Vector3Int[]
         {
             Vector3Int.zero,
@@ -24,7 +30,7 @@ namespace Server.BrickLogic
         };
 
         /// <summary>
-        /// Список всех возможных паттернов блока
+        /// Список всех возможных паттернов блока.
         /// </summary>
         public static readonly Vector3Int[][] AllPatterns = new Vector3Int[][]
         {

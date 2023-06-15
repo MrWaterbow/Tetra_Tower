@@ -5,20 +5,23 @@ namespace Server.BrickLogic
 {
     public sealed class BricksDatabase : IReadOnlyBricksDatabase
     {
+        /// <summary>
+        /// Карта высот - это словарь, который хранит высоту по позиции на поверхности.
+        /// </summary>
         private readonly Dictionary<Vector2Int, int> _heightMap;
 
         /// <summary>
-        /// Список со всеми блоками
+        /// Список со всеми блоками.
         /// </summary>
         private readonly List<Brick> _bricks;
 
         /// <summary>
-        /// Текущий контролируемый игроком блок
+        /// Текущий контролируемый игроком блок.
         /// </summary>
         public Brick ControllableBrick;
 
         /// <summary>
-        /// Платформа на которую ставяться блоки
+        /// Платформа на которую ставяться блоки.
         /// </summary>
         public readonly PlacingSurface Surface;
 
@@ -32,6 +35,10 @@ namespace Server.BrickLogic
             ControllableBrick = null;
         }
 
+        /// <summary>
+        /// Генерирует ключи для поверхности с требуемым смещением.
+        /// </summary>
+        /// <param name="surfaceSize"></param>
         private void GenerateHeightMap(Vector2Int surfaceSize)
         {
             for (int x = -2; x < surfaceSize.x + 2; x++)
@@ -53,14 +60,27 @@ namespace Server.BrickLogic
             Surface = placingSurface;
         }
 
+        /// <summary>
+        /// Доступ к чтению карты высот.
+        /// </summary>
         public IReadOnlyDictionary<Vector2Int, int> HeightMap => _heightMap;
-
+        /// <summary>
+        /// Доступ к чтению поставленных блоков.
+        /// </summary>
         public IReadOnlyList<IReadOnlyBrick> Bricks => _bricks;
-
+        /// <summary>
+        /// Доступ к чтению данных из текущего контролируемого блока.
+        /// </summary>
         IReadOnlyBrick IReadOnlyBricksDatabase.ControllableBrick => ControllableBrick;
-
+        /// <summary>
+        /// Возвращает копию поверхности на которую ставят блоки.
+        /// </summary>
         PlacingSurface IReadOnlyBricksDatabase.Surface => Surface;
 
+        /// <summary>
+        /// Добавляет блок в список поставленных и обновляет карту высот.
+        /// </summary>
+        /// <param name="brick"></param>
         public void AddBrickAndUpdateHeightMap(Brick brick)
         {
             _bricks.Add(brick);
@@ -74,6 +94,11 @@ namespace Server.BrickLogic
             }
         }
 
+        /// <summary>
+        /// Возвращает высоту по паттерну блока.
+        /// </summary>
+        /// <param name="brick"></param>
+        /// <returns></returns>
         public int GetHeightByPattern(IReadOnlyBrick brick)
         {
             int height = 0;
@@ -92,18 +117,27 @@ namespace Server.BrickLogic
             return height;
         }
 
+        /// <summary>
+        /// Возвращает высоту по ключу (позиции).
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public int GetHeightByKey(Vector2Int key)
         {
             return _heightMap[key];
         }
 
+        /// <summary>
+        /// Возвращает мировую позицию контролирумого блока.
+        /// </summary>
+        /// <returns></returns>
         public Vector3 GetControllableBrickWorldPosition()
         {
             return Surface.GetWorldPosition(ControllableBrick.Position);
         }
 
         /// <summary>
-        /// Проверка блока находится ли он на земле
+        /// Проверка блока находится ли он на земле.
         /// </summary>
         /// <returns></returns>
         public bool ControllableBrickOnGround()
@@ -124,6 +158,10 @@ namespace Server.BrickLogic
             return onGround;
         }
 
+        /// <summary>
+        /// Возвращает наивысшую высоту.
+        /// </summary>
+        /// <returns></returns>
         public int GetHeighestPoint()
         {
             int heighestPoint = 0;

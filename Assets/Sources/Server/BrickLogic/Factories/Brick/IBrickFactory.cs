@@ -3,10 +3,13 @@ using UnityEngine;
 
 namespace Server.Factories
 {
+    /// <summary>
+    /// Интерфейс фабрики для создания блоков.
+    /// </summary>
     public interface IBrickFactory
     {
         /// <summary>
-        /// Абстракция для создания блока
+        /// Метод создания блока.
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>

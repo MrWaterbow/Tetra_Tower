@@ -1,13 +1,15 @@
 ﻿using Client.BootstrapperLogic;
 using Client.BrickLogic;
 using Server.BrickLogic;
-using Server.Factories;
 using Server.GhostLogic;
 using UnityEngine;
 using Zenject;
 
 namespace Client.GhostLogic
 {
+    /// <summary>
+    /// Создает и поддерживает призрака для блока.
+    /// </summary>
     internal sealed class GhostBootstrapper : Bootstrapper
     {
         [SerializeField] private float _ghostAlpha;
@@ -32,6 +34,9 @@ namespace Client.GhostLogic
             _brickMovementWrapper = brickMovementWrapper;
         }
 
+        /// <summary>
+        /// Запускает призрака.
+        /// </summary>
         public override void Boot()
         {
             CreateGhostCallbacks();
@@ -39,6 +44,9 @@ namespace Client.GhostLogic
             _brickMovementWrapper.OnControllableBrickFall += ChangeGhostCallbacks;
         }
 
+        /// <summary>
+        /// Подписывает призрака на ивенты.
+        /// </summary>
         private void CreateGhostCallbacks()
         {
             DisposeCallbacks();
@@ -49,6 +57,9 @@ namespace Client.GhostLogic
             SetPresenterCallbacksAndInvoke();
         }
 
+        /// <summary>
+        /// Меняет подписки на обновленный блок.
+        /// </summary>
         private void ChangeGhostCallbacks()
         {
             DisposeCallbacks();
@@ -58,6 +69,9 @@ namespace Client.GhostLogic
             SetPresenterCallbacksAndInvoke();
         }
 
+        /// <summary>
+        /// Назначает презентер и вызывает его.
+        /// </summary>
         private void SetPresenterCallbacksAndInvoke()
         {
             _ghostViewPresenter.SetAndInvokeCallbacks();
@@ -65,23 +79,35 @@ namespace Client.GhostLogic
             ChangeGhostView();
         }
 
+        /// <summary>
+        /// Отписывается от презентера.
+        /// </summary>
         private void DisposeCallbacks()
         {
             _instance?.DisposeCallbacks();
             _ghostViewPresenter?.DisposeCallbacks();
         }
 
+        /// <summary>
+        /// Меняет визуальное отображение блока.
+        /// </summary>
         private void ChangeGhostView()
         {
             ChangeGhostMesh();
             ChangeGhostColor();
         }
 
+        /// <summary>
+        /// Меняет меш призрака.
+        /// </summary>
         private void ChangeGhostMesh()
         {
             _instance.SetMesh(_runtimeData.CurrentBrickView.GetMesh());
         }
 
+        /// <summary>
+        /// Меняет цвет призрака.
+        /// </summary>
         private void ChangeGhostColor()
         {
             Color color = _runtimeData.CurrentBrickView.GetColor();
