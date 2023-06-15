@@ -34,12 +34,10 @@ namespace Client.CameraLogic
 
         private void UpdateCamera()
         {
-            Vector3 position = _camera.position;
+            float position = _moveFactor * _brickMovementWrapper.Database.GetHeighestPoint();
+            position += _startPosition.y;
 
-            position.y = _moveFactor * _brickMovementWrapper.Database.GetHeighestPoint();
-            position.y += _startPosition.y;
-
-            _camera.DOMove(position, _moveDuration);
+            _camera.DOMoveY(position, _moveDuration);
         }
 
         private void OnValidate()
