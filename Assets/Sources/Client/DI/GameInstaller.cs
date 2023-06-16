@@ -58,6 +58,7 @@ namespace Client.DI
             Container.Bind<IBrickFactory>().FromInstance(brickFactory).AsSingle();
             Container.Bind<IBrickViewFactory>().FromInstance(brickViewFactory).AsSingle();
             Container.Bind<IGhostViewFactory>().FromInstance(ghostViewFactory).AsSingle();
+            Container.Bind<IReadOnlyBricksDatabase>().FromInstance(bricksDatabase).AsSingle();
             Container.Bind<BrickMovementWrapper>().FromInstance(brickMovementWrapper).AsSingle();
             Container.Bind<BricksDatabaseAccess>().FromInstance(bricksDatabaseAccess).AsSingle();
             Container.Bind<IBrickViewPresenter>().FromInstance(brickPresenter).AsSingle();
