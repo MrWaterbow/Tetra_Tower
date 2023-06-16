@@ -9,8 +9,8 @@ namespace Tests
     /// </summary>
     public sealed class BrickMovementTests
     {
-        private BrickMovementWrapper _brickMovementWrapper;
-        private BricksDatabaseAccess _brickDatabaseAccess;
+        private BrickMovementWrapper _movementWrapper;
+        private BricksDatabaseAccess _databaseAccess;
 
         private BricksDatabase _database;
 
@@ -22,10 +22,10 @@ namespace Tests
 
             _database = new(surface);
 
-            _brickMovementWrapper = new(_database);
-            _brickDatabaseAccess = new(_database);
+            _movementWrapper = new(_database);
+            _databaseAccess = new(_database);
 
-            _brickDatabaseAccess.ChangeAndAddRecentControllableBrick(controlledBrick);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(controlledBrick);
         }
 
         /// <summary>
@@ -34,13 +34,13 @@ namespace Tests
         [Test]
         public void BrickLowerTestOnMin()
         {
-            _brickMovementWrapper.TryMoveBrick(Vector3Int.left);
+            _movementWrapper.TryMoveBrick(Vector3Int.left);
 
-            _brickMovementWrapper.LowerBrickAndCheckGrounding();
+            _movementWrapper.LowerBrickAndCheckGrounding();
 
             Assert.AreEqual(new Vector3Int(-1, 4, 0), _database.ControllableBrick.Position);
 
-            _brickMovementWrapper.LowerControllableBrickToGround();
+            _movementWrapper.LowerControllableBrickToGround();
 
             Assert.AreEqual(Vector3Int.left, _database.ControllableBrick.Position);
         }
@@ -51,13 +51,13 @@ namespace Tests
         [Test]
         public void BrickLowerTestOnMax()
         {
-            _brickMovementWrapper.TryMoveBrick(new Vector3Int(3, 0, 2));
+            _movementWrapper.TryMoveBrick(new Vector3Int(3, 0, 2));
 
-            _brickMovementWrapper.LowerBrickAndCheckGrounding();
+            _movementWrapper.LowerBrickAndCheckGrounding();
 
             Assert.AreEqual(new Vector3Int(3, 4, 2), _database.ControllableBrick.Position);
 
-            _brickMovementWrapper.LowerControllableBrickToGround();
+            _movementWrapper.LowerControllableBrickToGround();
 
             Assert.AreEqual(new Vector3Int(3, 0, 2), _database.ControllableBrick.Position);
         }
@@ -68,10 +68,10 @@ namespace Tests
         [Test]
         public void BrickOnGroundExceptionTest()
         {
-            _brickMovementWrapper.LowerControllableBrickToGround();
+            _movementWrapper.LowerControllableBrickToGround();
 
-            Assert.Throws(typeof(BrickOnGroundException), () => _brickMovementWrapper.LowerBrickAndCheckGrounding());
-            Assert.Throws(typeof(BrickOnGroundException), () => _brickMovementWrapper.LowerControllableBrickToGround());
+            Assert.Throws(typeof(BrickOnGroundException), () => _movementWrapper.LowerBrickAndCheckGrounding());
+            Assert.Throws(typeof(BrickOnGroundException), () => _movementWrapper.LowerControllableBrickToGround());
         }
 
         /// <summary>
@@ -99,11 +99,11 @@ namespace Tests
         [Test]
         public void BrickMovingInsideSurfaceLimitsTest()
         {
-            _brickMovementWrapper.TryMoveBrick(Vector3Int.one);
+            _movementWrapper.TryMoveBrick(Vector3Int.one);
 
             Assert.AreEqual(new Vector3Int(1, 6, 1), _database.ControllableBrick.Position);
 
-            _brickMovementWrapper.TryMoveBrick(Vector3Int.one * 2);
+            _movementWrapper.TryMoveBrick(Vector3Int.one * 2);
 
             Assert.AreEqual(new Vector3Int(1, 6, 1), _database.ControllableBrick.Position);
         }

@@ -9,8 +9,8 @@ namespace Tests
     /// </summary>
     public sealed class BrickCollisionTests
     {
-        private BrickMovementWrapper _brickMovementWrapper;
-        private BricksDatabaseAccess _bricksDatabaseAccess;
+        private BrickMovementWrapper _movementWrapper;
+        private BricksDatabaseAccess _databaseAccess;
 
         private BricksDatabase _database;
 
@@ -24,16 +24,16 @@ namespace Tests
             PlacingSurface placingSurface = new(Vector2Int.one * 3, Vector3.zero);
             _database = new BricksDatabase(placingSurface);
 
-            _brickMovementWrapper = new(_database);
-            _bricksDatabaseAccess = new(_database);
+            _movementWrapper = new(_database);
+            _databaseAccess = new(_database);
 
             _OBrick = new(Vector3Int.zero, BrickPatterns.OBlock);
             _LBrick = new(Vector3Int.one, BrickPatterns.LBlock);
             _SecondLBrick = new(new Vector3Int(1, 2, 0), BrickPatterns.LBlock);
 
-            _bricksDatabaseAccess.ChangeAndAddRecentControllableBrick(_OBrick);
-            _bricksDatabaseAccess.ChangeAndAddRecentControllableBrick(_LBrick);
-            _bricksDatabaseAccess.ChangeAndAddRecentControllableBrick(_SecondLBrick);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(_OBrick);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(_LBrick);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(_SecondLBrick);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Tests
         [Test]
         public void CalculateFutureGroundPositionWithBlocksTest()
         {
-            _bricksDatabaseAccess.PlaceControllableBrick();
+            _databaseAccess.PlaceControllableBrick();
 
             Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.zero));
             Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.right * 2));
@@ -76,7 +76,7 @@ namespace Tests
         public void HeightMapTestOnThreeBlocks()
         {
             // Ставит третий блок
-            _bricksDatabaseAccess.PlaceControllableBrick();
+            _databaseAccess.PlaceControllableBrick();
 
             Assert.AreEqual(3, _database.HeightMap[Vector2Int.zero]);
             Assert.AreEqual(3, _database.HeightMap[Vector2Int.right]);
@@ -95,7 +95,7 @@ namespace Tests
         {
             Assert.AreEqual(2, _database.GetHeighestPoint());
 
-            _bricksDatabaseAccess.PlaceControllableBrick();
+            _databaseAccess.PlaceControllableBrick();
 
             Assert.AreEqual(3, _database.GetHeighestPoint());
         }
