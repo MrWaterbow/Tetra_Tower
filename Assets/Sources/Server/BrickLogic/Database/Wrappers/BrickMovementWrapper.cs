@@ -24,11 +24,6 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Доступ к чтению данных из базы данных.
-        /// </summary>
-        public IReadOnlyBricksDatabase Database => _database;
-
-        /// <summary>
         /// Проверяет возможность движения блока и в случае истины - двигает его в указаном направлении.
         /// </summary>
         /// <param name="direction">Направление движения</param>

@@ -29,6 +29,7 @@ namespace Client.BrickLogic
         private IBrickViewFactory _brickViewFactory;
         private IBrickViewPresenter _brickViewPresenter;
         private IBrickFactory _brickFactory;
+        private IReadOnlyBricksDatabase _database;
         private BrickMovementWrapper _brickMovementWrapper;
         private BricksDatabaseAccess _brickDatabaseAccess;
 
@@ -37,12 +38,14 @@ namespace Client.BrickLogic
             IBrickViewFactory brickViewFactory,
             IBrickViewPresenter brickPresenter,
             IBrickFactory brickFactory,
+            IReadOnlyBricksDatabase database,
             BrickMovementWrapper brickMovementWrapper,
             BricksDatabaseAccess bricksDatabaseAccess)
         {
             _brickViewFactory = brickViewFactory;
             _brickViewPresenter = brickPresenter;
             _brickFactory = brickFactory;
+            _database = database;
             _brickMovementWrapper = brickMovementWrapper;
             _brickDatabaseAccess = bricksDatabaseAccess;
         }
@@ -82,7 +85,7 @@ namespace Client.BrickLogic
             _currentBrickView?.DisposeCallbacks();
             _brickViewPresenter?.DisposeCallbacks();
 
-            _currentBrickView = _brickViewFactory.Create(_brickMovementWrapper.Database.GetControllableBrickWorldPosition());
+            _currentBrickView = _brickViewFactory.Create(_database.GetControllableBrickWorldPosition());
             _currentBrickView.SetCallbacks(_brickViewPresenter);
 
             _brickViewPresenter.SetAndInvokeCallbacks();

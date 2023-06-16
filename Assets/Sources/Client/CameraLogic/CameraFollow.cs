@@ -14,11 +14,13 @@ namespace Client.CameraLogic
 
         private Vector3 _startPosition;
 
+        private IReadOnlyBricksDatabase _database;
         private BrickMovementWrapper _brickMovementWrapper;
 
         [Inject]
-        private void Constructor(BrickMovementWrapper brickMovementWrapper)
+        private void Constructor(IReadOnlyBricksDatabase database, BrickMovementWrapper brickMovementWrapper)
         {
+            _database = database;
             _brickMovementWrapper = brickMovementWrapper;
         }
 
@@ -34,7 +36,7 @@ namespace Client.CameraLogic
 
         private void UpdateCamera()
         {
-            float position = _moveFactor * _brickMovementWrapper.Database.GetHeighestPoint();
+            float position = _moveFactor * _database.GetHeighestPoint();
             position += _startPosition.y;
 
             _camera.DOMoveY(position, _moveDuration);
