@@ -22,7 +22,7 @@ namespace Tests
         public void Setup()
         {
             PlacingSurface placingSurface = new(Vector2Int.one * 3, Vector3.zero);
-            _database = new BricksDatabase(placingSurface);
+            _database = new(placingSurface);
 
             _movementWrapper = new(_database);
             _databaseAccess = new(_database);

@@ -1,6 +1,8 @@
 using DG.Tweening;
 using Server.BrickLogic;
+using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Client.BrickLogic
 {
@@ -10,8 +12,7 @@ namespace Client.BrickLogic
         /// Transform ( компонент Unity )
         /// </summary>
         [SerializeField] private Transform _transform;
-        [SerializeField] private MeshFilter _meshFilter;
-        [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private BrickTileView _prefab;
 
         [Space]
 
@@ -22,6 +23,38 @@ namespace Client.BrickLogic
         [SerializeField] private float _changePositionSmoothTime;
 
         private IBrickViewPresenter _presenter;
+        private ITileViewFactory _tileFactory;
+
+        private List<BrickTileView> _tiles;
+
+        public void Initialize(Vector3Int[] pattern)
+        {
+            _tileFactory = new TileViewFactory(_prefab, _transform);
+            _tiles = new();
+
+            CreateBlockByTiles(pattern);
+            SetTilesColor(GetRandomColor());
+        }
+
+        private void CreateBlockByTiles(Vector3Int[] pattern)
+        {
+            foreach (Vector3Int tile in pattern)
+            {
+                _tiles.Add(_tileFactory.Create(tile));
+            }
+        }
+
+        private void SetTilesColor(Color color)
+        {
+            foreach (BrickTileView tileView in _tiles)
+            {
+                tileView.SetColor(color);
+            }
+        }
+
+        public IReadOnlyList<IReadOnlyBrickTileView> Tiles => _tiles;
+        public Mesh Mesh => _prefab.Mesh;
+        public Color GeneralColor => Color.black;//_tiles[0].Color;
 
         public void SetCallbacks(IBrickViewPresenter presenter)
         {
@@ -46,27 +79,13 @@ namespace Client.BrickLogic
         /// <param name="newPosition"></param>
         private void ChangePosition(Vector3 newPosition)
         {
-            _transform.DOMove(newPosition, _changePositionSmoothTime);
-        }
-
-        private void Awake()
-        {
-            _meshRenderer.material.color = GetRandomColor();
+            _transform.position = newPosition;
+            //_transform.DOMove(newPosition, _changePositionSmoothTime);
         }
 
         private Color GetRandomColor()
         {
             return _colors[Random.Range(0, _colors.Length)];
-        }
-
-        public Mesh GetMesh()
-        {
-            return _meshFilter.mesh;
-        }
-
-        public Color GetColor()
-        {
-            return _meshRenderer.material.color;
         }
     }
 }

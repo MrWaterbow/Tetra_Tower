@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Client.BrickLogic
 {
     internal interface IReadOnlyBrickView
     {
-        Mesh GetMesh();
-        Color GetColor();
+        IReadOnlyList<IReadOnlyBrickTileView> Tiles { get; }
+        Mesh Mesh { get; }
+        Color GeneralColor { get; }
     }
 }

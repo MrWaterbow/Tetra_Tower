@@ -102,7 +102,7 @@ namespace Client.GhostLogic
         /// </summary>
         private void ChangeGhostMesh()
         {
-            _instance.SetMesh(_runtimeData.CurrentBrickView.GetMesh());
+            _instance.SetMesh(_runtimeData.CurrentBrickView.Mesh);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Client.GhostLogic
         /// </summary>
         private void ChangeGhostColor()
         {
-            Color color = _runtimeData.CurrentBrickView.GetColor();
+            Color color = _runtimeData.CurrentBrickView.GeneralColor;
             color.a = _ghostAlpha;
 
             _instance.SetColor(color);
