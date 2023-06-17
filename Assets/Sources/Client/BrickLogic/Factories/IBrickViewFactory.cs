@@ -9,6 +9,6 @@ namespace Client.BrickLogic
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        BrickView Create(Vector3 position);
+        BrickView Create(Vector3 position, Vector3Int[] pattern);
     }
 }

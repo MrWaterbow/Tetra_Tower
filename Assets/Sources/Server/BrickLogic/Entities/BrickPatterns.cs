@@ -34,8 +34,19 @@ namespace Server.BrickLogic
         /// </summary>
         public static readonly Vector3Int[][] AllPatterns = new Vector3Int[][]
         {
-            //LBlock,
-            OBlock
+            OBlock,
+            LBlock,
+            //TestBlocks.UpBlock,
         };
+
+        public static class TestBlocks
+        {
+            public static readonly Vector3Int[] UpBlock = new Vector3Int[]
+            {
+                Vector3Int.zero,
+                Vector3Int.up,
+                Vector3Int.right + Vector3Int.up,
+            };
+        }
     }
 }

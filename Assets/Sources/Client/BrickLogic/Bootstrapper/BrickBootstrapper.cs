@@ -85,7 +85,7 @@ namespace Client.BrickLogic
             _currentBrickView?.DisposeCallbacks();
             _brickViewPresenter?.DisposeCallbacks();
 
-            _currentBrickView = _brickViewFactory.Create(_database.GetControllableBrickWorldPosition());
+            _currentBrickView = _brickViewFactory.Create(_database.GetControllableBrickWorldPosition(), _database.ControllableBrick.Pattern);
             _currentBrickView.SetCallbacks(_brickViewPresenter);
 
             _brickViewPresenter.SetAndInvokeCallbacks();

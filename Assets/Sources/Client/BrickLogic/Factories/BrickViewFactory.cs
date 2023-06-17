@@ -19,9 +19,13 @@ namespace Client.BrickLogic
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public BrickView Create(Vector3 position)
+        public BrickView Create(Vector3 position, Vector3Int[] pattern)
         {
-            return Object.Instantiate(_prefab, position, Quaternion.identity);
+            BrickView instance = Object.Instantiate(_prefab, position, Quaternion.identity);
+
+            instance.Initialize(pattern);
+
+            return instance;
         }
     }
 }

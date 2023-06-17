@@ -90,7 +90,7 @@ namespace Server.BrickLogic
                 Vector3Int tilePosition = patternTile + brick.Position;
                 Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
-                _heightMap[heightMapKey] = brick.Position.y + 1;
+                _heightMap[heightMapKey] = tilePosition.y + 1;
             }
         }
 

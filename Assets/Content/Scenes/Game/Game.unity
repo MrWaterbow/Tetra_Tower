@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fbcc253bf765746a69be63747dc552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brickPrefab: {fileID: 1556693245787531414, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
+  _brickPrefab: {fileID: 2924173047908104221, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
   _ghostPrefab: {fileID: 7475920292617304674, guid: 9eba08440d2d86d41ae8948ea9774d67, type: 3}
   _brickBootstrapper: {fileID: 371654050}
   _startPosition: {x: 0, y: 5, z: 0}
@@ -2503,8 +2503,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125726323}
-  m_LocalRotation: {x: -0.41629976, y: -0.15613231, z: 0.07280569, w: 0.89275783}
-  m_LocalPosition: {x: 123.297295, y: -1.6817741, z: 7.2044773}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 123.297295, y: -1.6817743, z: 7.2044773}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
