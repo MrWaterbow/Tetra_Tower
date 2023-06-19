@@ -26,6 +26,7 @@ namespace Client.BrickLogic
         private ITileViewFactory _tileFactory;
 
         private List<BrickTileView> _tiles;
+        private Color _generalColor;
 
         public void Initialize(Vector3Int[] pattern)
         {
@@ -46,6 +47,8 @@ namespace Client.BrickLogic
 
         private void SetTilesColor(Color color)
         {
+            _generalColor = color;
+
             foreach (BrickTileView tileView in _tiles)
             {
                 tileView.SetColor(color);
@@ -54,7 +57,7 @@ namespace Client.BrickLogic
 
         public IReadOnlyList<IReadOnlyBrickTileView> Tiles => _tiles;
         public Mesh Mesh => _prefab.Mesh;
-        public Color GeneralColor => Color.black;//_tiles[0].Color;
+        public Color GeneralColor => _generalColor;
 
         public void SetCallbacks(IBrickViewPresenter presenter)
         {

@@ -16,6 +16,7 @@ namespace Client.GhostLogic
 
         private GhostView _instance;
 
+        private IReadOnlyBricksDatabase _database;
         private IGhostViewPresenter _ghostViewPresenter;
         private IGhostViewFactory _ghostViewFactory;
         private IBricksRuntimeData _runtimeData;
@@ -23,11 +24,13 @@ namespace Client.GhostLogic
 
         [Inject]
         private void Constructor(
+            IReadOnlyBricksDatabase database,
             IGhostViewPresenter ghostViewPresenter,
             IGhostViewFactory ghostViewFactory,
             IBricksRuntimeData runtimeData,
             BrickMovementWrapper brickMovementWrapper)
         {
+            _database = database;
             _ghostViewPresenter = ghostViewPresenter;
             _ghostViewFactory = ghostViewFactory;
             _runtimeData = runtimeData;
@@ -93,27 +96,10 @@ namespace Client.GhostLogic
         /// </summary>
         private void ChangeGhostView()
         {
-            ChangeGhostMesh();
-            ChangeGhostColor();
-        }
-
-        /// <summary>
-        /// Меняет меш призрака.
-        /// </summary>
-        private void ChangeGhostMesh()
-        {
-            _instance.SetMesh(_runtimeData.CurrentBrickView.Mesh);
-        }
-
-        /// <summary>
-        /// Меняет цвет призрака.
-        /// </summary>
-        private void ChangeGhostColor()
-        {
             Color color = _runtimeData.CurrentBrickView.GeneralColor;
             color.a = _ghostAlpha;
 
-            _instance.SetColor(color);
+            _instance.Initialize(_database.ControllableBrick.Pattern, color);
         }
     }
 }

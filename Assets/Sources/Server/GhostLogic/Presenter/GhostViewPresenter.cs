@@ -42,8 +42,6 @@ namespace Server.GhostLogic
             localPosition.y = _database.GetHeightByPattern(_database.ControllableBrick);
             Vector3 worldPosition = _database.Surface.GetWorldPosition(localPosition);
 
-            worldPosition += new Vector3(0.5f, 0, 0.5f);
-
             return worldPosition;
         }
     }
