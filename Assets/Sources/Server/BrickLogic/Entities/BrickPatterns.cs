@@ -36,7 +36,6 @@ namespace Server.BrickLogic
         {
             OBlock,
             LBlock,
-            //TestBlocks.UpBlock,
         };
 
         public static class TestBlocks
