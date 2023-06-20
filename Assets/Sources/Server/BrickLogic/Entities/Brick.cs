@@ -12,6 +12,7 @@ namespace Server.BrickLogic
         /// Ивент вызывается при смене позиции блока.
         /// </summary>
         public event Action<Vector3Int> OnPositionChanged;
+        public event Action OnDestroy;
 
         /// <summary>
         /// Позиция блока.
@@ -62,6 +63,11 @@ namespace Server.BrickLogic
             _position = position;
 
             OnPositionChanged?.Invoke(_position);
+        }
+
+        public void Destroy()
+        {
+            OnDestroy?.Invoke();
         }
     }
 }

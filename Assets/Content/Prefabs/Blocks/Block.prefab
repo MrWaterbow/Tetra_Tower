@@ -55,3 +55,4 @@ MonoBehaviour:
   - {r: 1, g: 0.96141326, b: 0.2971698, a: 1}
   - {r: 1, g: 0.75082916, b: 0.3160377, a: 1}
   _changePositionSmoothTime: 0.3
+  _destroyTimer: 3

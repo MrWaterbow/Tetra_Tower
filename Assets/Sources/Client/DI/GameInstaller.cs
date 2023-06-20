@@ -45,9 +45,10 @@ namespace Client.DI
             // Создание модулей для работы с базой данных
             BrickMovementWrapper brickMovementWrapper = new(bricksDatabase);
             BricksDatabaseAccess bricksDatabaseAccess = new(bricksDatabase);
+            BricksCrashWrapper bricksCrashWrapper = new(bricksDatabase);
 
             // Создание презентера для блока
-            IBrickViewPresenter brickPresenter = new BrickViewPresenter(bricksDatabase);
+            IControllableBrickViewPresenter controllablePresenter = new ControllableBrickViewPresenter(bricksDatabase);
 
             // Создание презентера для призрака
             IGhostViewPresenter ghostPresenter = new GhostViewPresenter(bricksDatabase);
@@ -61,7 +62,8 @@ namespace Client.DI
             Container.Bind<IReadOnlyBricksDatabase>().FromInstance(bricksDatabase).AsSingle();
             Container.Bind<BrickMovementWrapper>().FromInstance(brickMovementWrapper).AsSingle();
             Container.Bind<BricksDatabaseAccess>().FromInstance(bricksDatabaseAccess).AsSingle();
-            Container.Bind<IBrickViewPresenter>().FromInstance(brickPresenter).AsSingle();
+            Container.Bind<BricksCrashWrapper>().FromInstance(bricksCrashWrapper).AsSingle();
+            Container.Bind<IControllableBrickViewPresenter>().FromInstance(controllablePresenter).AsSingle();
             Container.Bind<IGhostViewPresenter>().FromInstance(ghostPresenter).AsSingle();
             Container.Bind<IBrickInputPresenter>().FromInstance(brickInputPresenter).AsSingle();
             Container.Bind<IBricksRuntimeData>().FromInstance(_brickBootstrapper).AsSingle();

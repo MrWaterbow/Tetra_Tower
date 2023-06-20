@@ -27,27 +27,30 @@ namespace Client.BrickLogic
         private float _lowerTimer;
 
         private IBrickViewFactory _brickViewFactory;
-        private IBrickViewPresenter _brickViewPresenter;
+        private IControllableBrickViewPresenter _controllableViewPresenter;
         private IBrickFactory _brickFactory;
         private IReadOnlyBricksDatabase _database;
         private BrickMovementWrapper _brickMovementWrapper;
         private BricksDatabaseAccess _brickDatabaseAccess;
+        private BricksCrashWrapper _bricksCrashWrapper;
 
         [Inject]
         private void Constructor(
             IBrickViewFactory brickViewFactory,
-            IBrickViewPresenter brickPresenter,
+            IControllableBrickViewPresenter controllableViewPresenter,
             IBrickFactory brickFactory,
             IReadOnlyBricksDatabase database,
             BrickMovementWrapper brickMovementWrapper,
-            BricksDatabaseAccess bricksDatabaseAccess)
+            BricksDatabaseAccess bricksDatabaseAccess,
+            BricksCrashWrapper bricksCrashWrapper)
         {
             _brickViewFactory = brickViewFactory;
-            _brickViewPresenter = brickPresenter;
+            _controllableViewPresenter = controllableViewPresenter;
             _brickFactory = brickFactory;
             _database = database;
             _brickMovementWrapper = brickMovementWrapper;
             _brickDatabaseAccess = bricksDatabaseAccess;
+            _bricksCrashWrapper = bricksCrashWrapper;
         }
 
         public IReadOnlyBrickView CurrentBrickView => _currentBrickView;
@@ -62,6 +65,7 @@ namespace Client.BrickLogic
 
             // Вызов создание нового блока при его падении
             _brickMovementWrapper.OnControllableBrickFall += CreateAndSetControllableBrick;
+            _brickMovementWrapper.OnControllableBrickFall += TestForCrash;
         }
 
         /// <summary>
@@ -76,6 +80,18 @@ namespace Client.BrickLogic
             CreateBlockView();
         }
 
+        private void TestForCrash()
+        {
+            if (_database.Bricks.Count == 10)
+            {
+                _bricksCrashWrapper.CrashAll();
+
+                return;
+            }
+
+            _bricksCrashWrapper.TestForCrash();
+        }
+
         /// <summary>
         /// Создание нового отображения визуального блока
         /// </summary>
@@ -83,12 +99,14 @@ namespace Client.BrickLogic
         private void CreateBlockView()
         {
             _currentBrickView?.DisposeCallbacks();
-            _brickViewPresenter?.DisposeCallbacks();
+            _controllableViewPresenter?.DisposeCallbacks();
 
             _currentBrickView = _brickViewFactory.Create(_database.GetControllableBrickWorldPosition(), _database.ControllableBrick.Pattern);
-            _currentBrickView.SetCallbacks(_brickViewPresenter);
+            BrickViewPresenter brickPresenter = new(_database.ControllableBrick);
+            _currentBrickView.SetCallbacks(_controllableViewPresenter, brickPresenter);
+            brickPresenter.SetCallbacks();
 
-            _brickViewPresenter.SetAndInvokeCallbacks();
+            _controllableViewPresenter.SetAndInvokeCallbacks();
         }
 
         private void Update()

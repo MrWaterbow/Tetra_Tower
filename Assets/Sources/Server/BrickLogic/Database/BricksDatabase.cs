@@ -110,7 +110,7 @@ namespace Server.BrickLogic
 
                 if (GetHeightByKey(heightMapKey) > height)
                 {
-                    height = HeightMap[heightMapKey];
+                    height = HeightMap[heightMapKey] - patternTile.y;
                 }
             }
 
@@ -175,6 +175,13 @@ namespace Server.BrickLogic
             }
 
             return heighestPoint;
+        }
+
+        public void DestroyBrick(Brick brick)
+        {
+            _bricks.Remove(brick);
+
+            brick.Destroy();
         }
     }
 }
