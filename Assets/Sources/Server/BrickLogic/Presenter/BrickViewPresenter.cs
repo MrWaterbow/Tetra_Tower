@@ -1,61 +1,35 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Server.BrickLogic
 {
     public sealed class BrickViewPresenter : IBrickViewPresenter
     {
-        /// <summary>
-        /// Вызывается, если позиция блока сменилась.
-        /// </summary>
-        public event Action<Vector3> OnPositionChanged;
+        public event Action OnDestroy;
 
         /// <summary>
         /// Чтение данных из базы данных.
         /// </summary>
-        private readonly IReadOnlyBricksDatabase _database;
+        private readonly IReadOnlyBrick _brick;
 
-        public BrickViewPresenter(IReadOnlyBricksDatabase database)
+        public BrickViewPresenter(IReadOnlyBrick brick)
         {
-            _database = database;
+            _brick = brick;
         }
 
         /// <summary>
-        /// Подписывается на ивенты
+        /// Подписывается и вызывает нужные ивенты.
         /// </summary>
-        /// <param name="brick"></param>
-        public void SetAndInvokeCallbacks()
+        public void SetCallbacks()
         {
-            _database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
-
-            OnPositionChanged?.Invoke(GetWorldPosition(_database.ControllableBrick.Position));
+            _brick.OnDestroy += OnDestroy.Invoke;
         }
 
         /// <summary>
-        /// Отписывается от ивентов
+        /// Отписывается от ивентов.
         /// </summary>
         public void DisposeCallbacks()
         {
-            _database.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
-        }
-
-        /// <summary>
-        /// Метод вызывается когда позиция блока меняется
-        /// </summary>
-        /// <param name="position"></param>
-        private void InvokeOnPositionChanged(Vector3Int position)
-        {
-            OnPositionChanged?.Invoke(GetWorldPosition(position));
-        }
-
-        /// <summary>
-        /// Получить мировую позицию
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        private Vector3 GetWorldPosition(Vector3Int position)
-        {
-            return _database.Surface.GetWorldPosition(position);
+            _brick.OnDestroy -= OnDestroy.Invoke;
         }
     }
 }

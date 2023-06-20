@@ -12,6 +12,7 @@ namespace Server.BrickLogic
         /// Ивент, который вызывается при смене позиции блока.
         /// </summary>
         event Action<Vector3Int> OnPositionChanged;
+        event Action OnDestroy;
 
         /// <summary>
         /// Возвращает копию позиции блока.

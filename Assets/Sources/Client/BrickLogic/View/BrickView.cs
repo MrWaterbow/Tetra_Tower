@@ -21,8 +21,10 @@ namespace Client.BrickLogic
         /// Плавность сменения позиции
         /// </summary>
         [SerializeField] private float _changePositionSmoothTime;
+        [SerializeField] private float _destroyTimer;
 
-        private IBrickViewPresenter _presenter;
+        private IControllableBrickViewPresenter _controllablePresenter;
+        private IBrickViewPresenter _brickPresenter;
         private ITileViewFactory _tileFactory;
 
         private List<BrickTileView> _tiles;
@@ -59,21 +61,23 @@ namespace Client.BrickLogic
         public Mesh Mesh => _prefab.Mesh;
         public Color GeneralColor => _generalColor;
 
-        public void SetCallbacks(IBrickViewPresenter presenter)
+        public void SetCallbacks(IControllableBrickViewPresenter controllablePresenter,
+            IBrickViewPresenter brickPresenter)
         {
-            presenter.OnPositionChanged += ChangePosition;
+            controllablePresenter.OnPositionChanged += ChangePosition;
+            brickPresenter.OnDestroy += Destroy;
 
-            _presenter = presenter;
+            _controllablePresenter = controllablePresenter;
+            _brickPresenter = brickPresenter;
         }
 
-        public void SetCallbacks()
-        {
-            _presenter.OnPositionChanged += ChangePosition;
-        }
-
+        /// <summary>
+        /// Отписка от presenter'ов
+        /// </summary>
         public void DisposeCallbacks()
         {
-            _presenter.OnPositionChanged -= ChangePosition;
+            _controllablePresenter.OnPositionChanged -= ChangePosition;
+            _brickPresenter.OnDestroy -= Destroy;
         }
 
         /// <summary>
@@ -84,6 +88,28 @@ namespace Client.BrickLogic
         {
             _transform.position = newPosition;
             //_transform.DOMove(newPosition, _changePositionSmoothTime);
+        }
+
+        /// <summary>
+        /// Уничтожение блока и отписка от presenter
+        /// </summary>
+        private void Destroy()
+        {
+            Debug.Log("Brick destroying");
+
+            DisposeCallbacks();
+            ActiveTilesRigidbodies();
+        }
+
+        private void ActiveTilesRigidbodies()
+        {
+            foreach (BrickTileView tileView in _tiles)
+            {
+                tileView.ActiveRigidbody();
+                tileView.AddForceToRigidbody();
+            }
+
+            Destroy(gameObject, _destroyTimer);
         }
 
         private Color GetRandomColor()
