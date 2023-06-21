@@ -51,13 +51,15 @@ namespace Server.BrickLogic
 
             if(footFactor < 0.5f)
             {
-                Debug.Log("Разрушение");
-
                 return true;
             }
             if(footFactor == 0.5f)
             {
-                Debug.Log("ПРЕДУПРЕЖДЕНИЕ!!!!!!!!!!!!!!!!!");
+                brick.InvokeUnstableWarning();
+            }
+            else
+            {
+                brick.InvokeStableWarning();
             }
 
             return false;

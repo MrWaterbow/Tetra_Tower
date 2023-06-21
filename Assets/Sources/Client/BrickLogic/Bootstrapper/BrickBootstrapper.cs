@@ -82,13 +82,6 @@ namespace Client.BrickLogic
 
         private void TestForCrash()
         {
-            if (_database.Bricks.Count == 10)
-            {
-                _bricksCrashWrapper.CrashAll();
-
-                return;
-            }
-
             _bricksCrashWrapper.TestForCrash();
         }
 

@@ -4,6 +4,7 @@ namespace Server.BrickLogic
 {
     public sealed class BrickViewPresenter : IBrickViewPresenter
     {
+        public event Action<bool> UnstableWarning;
         public event Action OnDestroy;
 
         /// <summary>
@@ -22,6 +23,7 @@ namespace Server.BrickLogic
         public void SetCallbacks()
         {
             _brick.OnDestroy += OnDestroy.Invoke;
+            _brick.UnstableWarning += UnstableWarning.Invoke;
         }
 
         /// <summary>
@@ -30,6 +32,7 @@ namespace Server.BrickLogic
         public void DisposeCallbacks()
         {
             _brick.OnDestroy -= OnDestroy.Invoke;
+            _brick.UnstableWarning -= UnstableWarning.Invoke;
         }
     }
 }

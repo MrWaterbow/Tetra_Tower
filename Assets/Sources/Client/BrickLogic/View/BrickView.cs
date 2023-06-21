@@ -22,6 +22,7 @@ namespace Client.BrickLogic
         /// </summary>
         [SerializeField] private float _changePositionSmoothTime;
         [SerializeField] private float _destroyTimer;
+        [SerializeField] private float _unstableTimer;
 
         private IControllableBrickViewPresenter _controllablePresenter;
         private IBrickViewPresenter _brickPresenter;
@@ -30,13 +31,25 @@ namespace Client.BrickLogic
         private List<BrickTileView> _tiles;
         private Color _generalColor;
 
+        private Sequence _fadeSequence;
+
         public void Initialize(Vector3Int[] pattern)
         {
+            _fadeSequence = DOTween.Sequence();
             _tileFactory = new TileViewFactory(_prefab, _transform);
             _tiles = new();
 
             CreateBlockByTiles(pattern);
             SetTilesColor(GetRandomColor());
+        }
+
+        /// <summary>
+        /// Получение случайного цвета
+        /// </summary>
+        /// <returns></returns>
+        private Color GetRandomColor()
+        {
+            return _colors[Random.Range(0, _colors.Length)];
         }
 
         private void CreateBlockByTiles(Vector3Int[] pattern)
@@ -65,6 +78,7 @@ namespace Client.BrickLogic
             IBrickViewPresenter brickPresenter)
         {
             controllablePresenter.OnPositionChanged += ChangePosition;
+            brickPresenter.UnstableWarning += SetUnstableFlagEffect;
             brickPresenter.OnDestroy += Destroy;
 
             _controllablePresenter = controllablePresenter;
@@ -77,6 +91,7 @@ namespace Client.BrickLogic
         public void DisposeCallbacks()
         {
             _controllablePresenter.OnPositionChanged -= ChangePosition;
+            _brickPresenter.UnstableWarning -= SetUnstableFlagEffect;
             _brickPresenter.OnDestroy -= Destroy;
         }
 
@@ -90,17 +105,62 @@ namespace Client.BrickLogic
             //_transform.DOMove(newPosition, _changePositionSmoothTime);
         }
 
+        private void SetUnstableFlagEffect(bool unstableWarning)
+        {
+            //if(unstableWarning)
+            //{
+            //    FadeIn();
+            //}
+            //else
+            //{
+            //    FastFadeOut();
+            //}
+        }
+
+        private void FadeIn()
+        {
+            foreach (BrickTileView tileView in _tiles)
+            {
+                _fadeSequence.Join(tileView.FadeIn());
+            }
+
+            _fadeSequence.Play();
+            _fadeSequence.onComplete += FadeOut;
+        }
+
+        private void FadeOut()
+        {
+            foreach (BrickTileView tileView in _tiles)
+            {
+                _fadeSequence.Join(tileView.FadeOut());
+            }
+
+            _fadeSequence.Play();
+            _fadeSequence.onComplete += FadeIn;
+        }
+
+        private void FastFadeOut()
+        {
+            _fadeSequence.Kill();
+
+            foreach (BrickTileView tileView in _tiles)
+            {
+                tileView.FastFadeOut();
+            }
+        }
+
         /// <summary>
         /// Уничтожение блока и отписка от presenter
         /// </summary>
         private void Destroy()
         {
-            Debug.Log("Brick destroying");
-
             DisposeCallbacks();
             ActiveTilesRigidbodies();
         }
 
+        /// <summary>
+        /// Активирует rigidbody для тайлов
+        /// </summary>
         private void ActiveTilesRigidbodies()
         {
             foreach (BrickTileView tileView in _tiles)
@@ -110,11 +170,6 @@ namespace Client.BrickLogic
             }
 
             Destroy(gameObject, _destroyTimer);
-        }
-
-        private Color GetRandomColor()
-        {
-            return _colors[Random.Range(0, _colors.Length)];
         }
     }
 }

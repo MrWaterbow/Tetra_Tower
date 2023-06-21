@@ -180,8 +180,20 @@ namespace Server.BrickLogic
         public void DestroyBrick(Brick brick)
         {
             _bricks.Remove(brick);
+            ClearHeightMap(brick);
 
             brick.Destroy();
+        }
+
+        public void ClearHeightMap(Brick brick)
+        {
+            foreach (Vector3Int patternTile in brick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + brick.Position;
+                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                _heightMap[heightMapKey] = tilePosition.y - 1;
+            }
         }
     }
 }
