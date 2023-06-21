@@ -13,6 +13,7 @@ namespace Server.BrickLogic
         /// </summary>
         event Action<Vector3Int> OnPositionChanged;
         event Action OnDestroy;
+        event Action<bool> UnstableWarning;
 
         /// <summary>
         /// Возвращает копию позиции блока.

@@ -4,6 +4,7 @@ namespace Server.BrickLogic
 {
     public interface IBrickViewPresenter
     {
+        event Action<bool> UnstableWarning;
         event Action OnDestroy;
 
         /// <summary>

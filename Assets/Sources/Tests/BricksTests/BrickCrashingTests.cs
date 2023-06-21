@@ -73,5 +73,19 @@ namespace Tests
             Assert.AreEqual(0, _database.HeightMap[Vector2Int.up]);
             Assert.AreEqual(0, _database.HeightMap[Vector2Int.one]);
         }
+
+        [Test]
+        public void HeightMapWithBlocksCrashingTest()
+        {
+            Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
+            Brick secondBrick = new(Vector3Int.one, BrickPatterns.OBlock);
+
+            _database.AddBrickAndUpdateHeightMap(brick);
+            _database.AddBrickAndUpdateHeightMap(secondBrick);
+
+            _crashWrapper.TestForCrash();
+
+            Assert.AreEqual(1, _database.Bricks.Count);
+        }
     }
 }

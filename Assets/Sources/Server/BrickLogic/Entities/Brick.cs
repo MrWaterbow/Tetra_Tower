@@ -12,6 +12,7 @@ namespace Server.BrickLogic
         /// Ивент вызывается при смене позиции блока.
         /// </summary>
         public event Action<Vector3Int> OnPositionChanged;
+        public event Action<bool> UnstableWarning;
         public event Action OnDestroy;
 
         /// <summary>
@@ -68,6 +69,16 @@ namespace Server.BrickLogic
         public void Destroy()
         {
             OnDestroy?.Invoke();
+        }
+
+        public void InvokeUnstableWarning()
+        {
+            UnstableWarning?.Invoke(true);
+        }
+
+        public void InvokeStableWarning()
+        {
+            UnstableWarning?.Invoke(false);
         }
     }
 }
