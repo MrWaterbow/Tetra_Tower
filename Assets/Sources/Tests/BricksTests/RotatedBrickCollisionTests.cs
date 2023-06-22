@@ -28,8 +28,8 @@ namespace Tests
         [Test]
         public void OneUpBlockTest()
         {
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.zero]);
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.right]);
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.zero));
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.right));
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace Tests
             _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
             _databaseAccess.PlaceControllableBrick();
 
-            Assert.AreEqual(4, _database.HeightMap[Vector2Int.zero]);
-            Assert.AreEqual(4, _database.HeightMap[Vector2Int.right]);
+            Assert.AreEqual(4, _database.GetHeightByKey(Vector2Int.zero));
+            Assert.AreEqual(4, _database.GetHeightByKey(Vector2Int.right));
         }
 
         [Test]

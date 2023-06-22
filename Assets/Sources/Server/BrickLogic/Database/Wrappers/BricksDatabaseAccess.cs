@@ -23,7 +23,7 @@
         {
             if (_database.ControllableBrick != null)
             {
-                _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);
+                _database.AddBrickAndUpdateDatabase(_database.ControllableBrick);
             }
 
             _database.ControllableBrick = brick;
@@ -34,7 +34,7 @@
         /// </summary>
         public void PlaceControllableBrick()
         {
-            _database.AddBrickAndUpdateHeightMap(_database.ControllableBrick);
+            _database.AddBrickAndUpdateDatabase(_database.ControllableBrick);
 
             _database.ControllableBrick = null;
         }

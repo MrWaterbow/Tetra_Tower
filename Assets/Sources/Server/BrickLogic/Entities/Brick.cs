@@ -70,15 +70,5 @@ namespace Server.BrickLogic
         {
             OnDestroy?.Invoke();
         }
-
-        public void InvokeUnstableWarning()
-        {
-            UnstableWarning?.Invoke(true);
-        }
-
-        public void InvokeStableWarning()
-        {
-            UnstableWarning?.Invoke(false);
-        }
     }
 }
