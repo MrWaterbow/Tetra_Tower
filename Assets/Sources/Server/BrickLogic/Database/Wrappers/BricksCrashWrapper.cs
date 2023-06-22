@@ -64,9 +64,10 @@ namespace Server.BrickLogic
             foreach (Vector3Int tile in brick.Pattern)
             {
                 Vector3Int tilePosition = brick.Position + tile;
+                Vector3Int bricksMapKey = tilePosition - Vector3Int.up;
                 Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
-                if(_database.GetHeightByKey(heightMapKey) >= tilePosition.y && _database.Surface.PositionInSurfaceLimits(heightMapKey))
+                if (_database.GetBrickByKey(bricksMapKey) != null || tilePosition.y <= 0 && _database.Surface.PositionInSurfaceLimits(heightMapKey))
                 {
                     stableTilesCount++;
                 }

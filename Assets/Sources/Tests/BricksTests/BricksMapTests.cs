@@ -27,15 +27,15 @@ namespace Tests
         [Test]
         public void KeyValueTest()
         {
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.zero));
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.right));
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.forward));
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.right + Vector3Int.forward));
+            Assert.AreEqual(_brick.Position, _database.GetBrickByKey(Vector3Int.zero).Position);
+            Assert.AreEqual(_brick.Position, _database.GetBrickByKey(Vector3Int.right).Position);
+            Assert.AreEqual(_brick.Position, _database.GetBrickByKey(Vector3Int.forward).Position);
+            Assert.AreEqual(_brick.Position, _database.GetBrickByKey(Vector3Int.right + Vector3Int.forward).Position);
 
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.one));
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.right + Vector3Int.one));
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.forward + Vector3Int.one));
-            Assert.AreEqual(_brick, _database.GetBrickByKey(Vector3Int.right + Vector3Int.forward + Vector3Int.one));
+            Assert.AreEqual(_brick2.Position, _database.GetBrickByKey(Vector3Int.one).Position);
+            Assert.AreEqual(_brick2.Position, _database.GetBrickByKey(Vector3Int.right + Vector3Int.one).Position);
+            Assert.AreEqual(_brick2.Position, _database.GetBrickByKey(Vector3Int.forward + Vector3Int.one).Position);
+            Assert.AreEqual(_brick2.Position, _database.GetBrickByKey(Vector3Int.right + Vector3Int.forward + Vector3Int.one).Position);
         }
     }
 }

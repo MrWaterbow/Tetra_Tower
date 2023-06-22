@@ -138,7 +138,7 @@ namespace Server.BrickLogic
         {
             if (_heightMap.TryGetValue(key, out int value) == false)
             {
-                SetOrAddIntoHeightMap(key, 0);
+                return 0;
             }
 
             return _heightMap[key];
@@ -148,7 +148,7 @@ namespace Server.BrickLogic
         {
             if(_bricksMap.TryGetValue(key, out Brick value) == false)
             {
-                SetOrAddIntoBricksMap(key, null);
+                return null;
             }
 
             return _bricksMap[key];
@@ -224,8 +224,16 @@ namespace Server.BrickLogic
             {
                 Vector3Int tilePosition = patternTile + brick.Position;
                 Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+                int underHeight = 0;
+                int i = 1;
 
-                _heightMap[heightMapKey] = tilePosition.y;
+                while(GetBrickByKey(tilePosition - Vector3Int.up * i) == null && tilePosition.y - (i - 1) > 0)
+                {
+                    underHeight++;
+                    i++;
+                }
+
+                _heightMap[heightMapKey] = tilePosition.y - underHeight;
             }
         }
 
