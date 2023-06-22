@@ -46,19 +46,14 @@ namespace Client.BrickLogic
             _rigidbody.AddForce(sideImpulse, ForceMode.Impulse);
         }
 
-        public Tweener FadeIn()
+        public void PlayLoopUnstableEffect()
         {
-            return _meshRenderer.material.DOColor(_startColor + _fadeColorOffset, _fadeTime);
+            _meshRenderer.material.DOColor(_startColor + _fadeColorOffset, _fadeTime).SetLoops(-1, LoopType.Yoyo);
         }
 
-        public Tweener FadeOut()
+        public void KillLoopUnstableEffect()
         {
-            return _meshRenderer.material.DOColor(_startColor, _fadeTime);
-        }
-
-        public void FastFadeOut()
-        {
-            _meshRenderer.material.color = _startColor;
+            _meshRenderer.material.DOKill(true);
         }
     }
 }
