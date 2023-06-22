@@ -109,6 +109,7 @@ namespace Tests
             Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.right));
             Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.up));
             Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.one));
+            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.one * 2));
         }
     }
 }
