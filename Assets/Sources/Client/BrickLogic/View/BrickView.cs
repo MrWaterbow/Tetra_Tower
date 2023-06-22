@@ -31,11 +31,10 @@ namespace Client.BrickLogic
         private List<BrickTileView> _tiles;
         private Color _generalColor;
 
-        private Sequence _fadeSequence;
+        private bool _unstableEffect;
 
         public void Initialize(Vector3Int[] pattern)
         {
-            _fadeSequence = DOTween.Sequence();
             _tileFactory = new TileViewFactory(_prefab, _transform);
             _tiles = new();
 
@@ -78,7 +77,7 @@ namespace Client.BrickLogic
             IBrickViewPresenter brickPresenter)
         {
             controllablePresenter.OnPositionChanged += ChangePosition;
-            brickPresenter.UnstableWarning += SetUnstableFlagEffect;
+            brickPresenter.UnstableWarning += UpdateUnstableEffect;
             brickPresenter.OnDestroy += Destroy;
 
             _controllablePresenter = controllablePresenter;
@@ -91,7 +90,7 @@ namespace Client.BrickLogic
         public void DisposeCallbacks()
         {
             _controllablePresenter.OnPositionChanged -= ChangePosition;
-            _brickPresenter.UnstableWarning -= SetUnstableFlagEffect;
+            _brickPresenter.UnstableWarning -= UpdateUnstableEffect;
             _brickPresenter.OnDestroy -= Destroy;
         }
 
@@ -105,47 +104,37 @@ namespace Client.BrickLogic
             //_transform.DOMove(newPosition, _changePositionSmoothTime);
         }
 
-        private void SetUnstableFlagEffect(bool unstableWarning)
+        private void UpdateUnstableEffect(bool unstableWarning)
         {
-            //if(unstableWarning)
-            //{
-            //    FadeIn();
-            //}
-            //else
-            //{
-            //    FastFadeOut();
-            //}
-        }
+            if (unstableWarning && _unstableEffect) return;
 
-        private void FadeIn()
-        {
-            foreach (BrickTileView tileView in _tiles)
+            if(unstableWarning)
             {
-                _fadeSequence.Join(tileView.FadeIn());
+                _unstableEffect = true;
+                PlayUnstableEffect();
+                Debug.Log("Enable unstable effect");
             }
-
-            _fadeSequence.Play();
-            _fadeSequence.onComplete += FadeOut;
-        }
-
-        private void FadeOut()
-        {
-            foreach (BrickTileView tileView in _tiles)
+            else
             {
-                _fadeSequence.Join(tileView.FadeOut());
+                _unstableEffect = false;
+                KillUnstableEffect();
+                Debug.Log("Disable unstable effect");
             }
-
-            _fadeSequence.Play();
-            _fadeSequence.onComplete += FadeIn;
         }
 
-        private void FastFadeOut()
+        private void PlayUnstableEffect()
         {
-            _fadeSequence.Kill();
-
             foreach (BrickTileView tileView in _tiles)
             {
-                tileView.FastFadeOut();
+                tileView.PlayLoopUnstableEffect();
+            }
+        }
+
+        private void KillUnstableEffect()
+        {
+            foreach (BrickTileView tileView in _tiles)
+            {
+                tileView.KillLoopUnstableEffect();
             }
         }
 

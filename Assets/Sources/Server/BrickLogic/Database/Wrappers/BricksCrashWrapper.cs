@@ -53,6 +53,10 @@ namespace Server.BrickLogic
             {
                 return true;
             }
+            if(footFactor == 0.5f)
+            {
+                brick.InvokeUnstableWarning(true);
+            }
 
             return false;
         }
