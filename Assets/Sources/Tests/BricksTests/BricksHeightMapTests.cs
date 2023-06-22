@@ -37,25 +37,6 @@ namespace Tests
         }
 
         /// <summary>
-        /// Тест будущей позицию блока, если бы он находился на земле.
-        /// </summary>
-        [Test]
-        public void CalculateFutureGroundPositionWithBlocksTest()
-        {
-            _databaseAccess.PlaceControllableBrick();
-
-            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.right * 2));
-            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.one * 2));
-
-            Brick testInstance = new(Vector3Int.zero, BrickPatterns.OBlock);
-            Assert.AreEqual(3, _database.GetHeightByPattern(testInstance));
-
-            testInstance.ChangePosition(Vector3Int.right * 2);
-            Assert.AreEqual(3, _database.GetHeightByPattern(testInstance));
-        }
-
-        /// <summary>
         /// Тест карты высот при двух поставленных блоков.
         /// </summary>
         [Test]

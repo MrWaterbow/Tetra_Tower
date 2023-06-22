@@ -43,12 +43,12 @@ namespace Tests
         {
             Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
             _database.AddBrick(brick);
-            _crashWrapper.TestForCrash();
+            _crashWrapper.TryCrashAll();
 
             Assert.AreEqual(1, _database.Bricks.Count);
 
             brick.ChangePosition(Vector3Int.up);
-            _crashWrapper.TestForCrash();
+            _crashWrapper.TryCrashAll();
 
             Assert.AreEqual(0, _database.Bricks.Count);
         }
@@ -81,7 +81,7 @@ namespace Tests
             _database.AddBrickAndUpdateDatabase(brick);
             _database.AddBrickAndUpdateDatabase(brick2);
 
-            _crashWrapper.TestForCrash();
+            _crashWrapper.TryCrashAll();
 
             Assert.AreEqual(1, _database.Bricks.Count);
         }
@@ -103,7 +103,7 @@ namespace Tests
             Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one + Vector2Int.up));
             Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one * 2));
 
-            _crashWrapper.TestForCrash();
+            _crashWrapper.TryCrashAll();
 
             Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.zero));
             Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.right));

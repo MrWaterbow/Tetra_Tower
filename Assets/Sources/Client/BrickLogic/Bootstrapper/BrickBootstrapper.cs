@@ -82,7 +82,7 @@ namespace Client.BrickLogic
 
         private void TestForCrash()
         {
-            _bricksCrashWrapper.TestForCrash();
+            _bricksCrashWrapper.TryCrashAll();
         }
 
         /// <summary>

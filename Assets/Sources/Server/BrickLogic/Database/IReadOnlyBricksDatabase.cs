@@ -32,7 +32,7 @@ namespace Server.BrickLogic
         /// </summary>
         /// <param name="brick"></param>
         /// <returns></returns>
-        int GetHeightByPattern(IReadOnlyBrick brick);
+        int GetHeightByBlock(IReadOnlyBrick brick);
         /// <summary>
         /// Возвращает мировую позицию контролируемого блока.
         /// </summary>
@@ -42,6 +42,7 @@ namespace Server.BrickLogic
         /// Поставлен ли блок на землю.
         /// </summary>
         /// <returns></returns>
+        bool PatternOnGround(Vector3Int[] pattern, Vector3Int position);
         bool ControllableBrickOnGround();
         /// <summary>
         /// Возвращает наивысшую точку (высоту).
