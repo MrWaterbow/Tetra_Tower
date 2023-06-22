@@ -63,18 +63,6 @@ namespace Tests
         }
 
         /// <summary>
-        /// “ест который провер€ют выбрасываютс€ ли исключени€ о том, что блок уже находитс€ на земле, когда его пытаютс€ опустить.
-        /// </summary>
-        [Test]
-        public void BrickOnGroundExceptionTest()
-        {
-            _movementWrapper.LowerControllableBrickToGround();
-
-            Assert.Throws(typeof(BrickOnGroundException), () => _movementWrapper.LowerBrickAndCheckGrounding());
-            Assert.Throws(typeof(BrickOnGroundException), () => _movementWrapper.LowerControllableBrickToGround());
-        }
-
-        /// <summary>
         /// “ест дл€ вычислени€ мировой позиции.
         /// </summary>
         [Test]
@@ -90,7 +78,7 @@ namespace Tests
         public void ComputeFeatureGroundPositionWithoutBlocksTest()
         {
             Assert.AreEqual(0, _database.GetHeightByKey(new Vector2Int(2, 1)));
-            Assert.AreEqual(0, _database.GetHeightByPattern(new Brick(Vector3Int.zero, BrickPatterns.OBlock)));
+            Assert.AreEqual(0, _database.GetHeightByBlock(new Brick(Vector3Int.zero, BrickPatterns.OBlock)));
         }
 
         [Test]
@@ -101,6 +89,7 @@ namespace Tests
 
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
+            _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick3);
             _movementWrapper.TryMoveBrick(Vector3Int.right);
 
@@ -120,6 +109,16 @@ namespace Tests
             _movementWrapper.TryMoveBrick(Vector3Int.one * 2);
 
             Assert.AreEqual(new Vector3Int(1, 6, 1), _database.ControllableBrick.Position);
+        }
+
+        [Test]
+        public void LowerOnMinHeightTest()
+        {
+            Brick brick = new(Vector3Int.up, BrickPatterns.OBlock);
+
+            _movementWrapper.LowerControllableBrickToGround();
+            _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
+            _movementWrapper.LowerBrickAndCheckGrounding();
         }
     }
 }

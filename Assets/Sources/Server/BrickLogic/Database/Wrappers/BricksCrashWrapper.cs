@@ -12,13 +12,13 @@ namespace Server.BrickLogic
             _database = database;
         }
 
-        public void TestForCrash()
+        public void TryCrashAll()
         {
             List<Brick> destroyingBricks = new();
 
             foreach (Brick brick in _database.Bricks)
             {
-                if(CheckBrickForCrashing(brick))
+                if(TestToCrash(brick))
                 {
                     destroyingBricks.Add(brick);
                 }
@@ -45,7 +45,7 @@ namespace Server.BrickLogic
             }
         }
 
-        public bool CheckBrickForCrashing(Brick brick)
+        public bool TestToCrash(Brick brick)
         {
             float footFactor = ComputeFootFactor(brick);
 

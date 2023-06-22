@@ -81,15 +81,22 @@ namespace Server.BrickLogic
             }
         }
 
-        private void SetOrAddIntoHeightMap(Vector2Int key, int value)
+        private void SetOrAddIntoHeightMap(Vector2Int key, int height)
         {
             try
             {
-                _heightMap[key] = value;
+                if (_heightMap.TryGetValue(key, out int currentHeight) == false)
+                {
+                    _heightMap[key] = height;
+                }
+                else if (currentHeight < height)
+                {
+                    _heightMap[key] = height;
+                }
             }
             catch
             {
-                _heightMap.Add(key, value);
+                _heightMap.Add(key, height);
             }
         }
 
@@ -110,22 +117,65 @@ namespace Server.BrickLogic
         /// </summary>
         /// <param name="brick"></param>
         /// <returns></returns>
-        public int GetHeightByPattern(IReadOnlyBrick brick)
+        public int GetHeightByBlock(IReadOnlyBrick brick)
         {
-            int height = 0;
-
-            foreach (Vector3Int patternTile in brick.Pattern)
+            foreach (Vector3Int tile in brick.Pattern)
             {
-                Vector3Int tilePosition = patternTile + brick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+                Vector3Int tilePosition = tile + brick.Position;
+                int i = 0;
+                int debug = 0;
 
-                if (GetHeightByKey(heightMapKey) > height)
+                while (PatternOnGround(brick.Pattern, brick.Position - Vector3Int.up * i) == false && debug < 100)
                 {
-                    height = GetHeightByKey(heightMapKey) - patternTile.y;
+                    i++;
+                    debug++;
+                }
+
+                return tilePosition.y - i;
+            }
+
+            throw new System.Exception("tiles not found");
+        }
+
+        public bool ControllableBrickOnGround()
+        {
+            return PatternOnGround(ControllableBrick.Pattern, ControllableBrick.Position);
+        }
+
+        /// <summary>
+        /// Проверка блока находится ли он на земле.
+        /// </summary>
+        /// <returns></returns>
+        public bool PatternOnGround(Vector3Int[] pattern, Vector3Int position)
+        {
+            bool onGround = false;
+
+            foreach (Vector3Int tile in pattern)
+            {
+                Vector3Int tilePosition = tile + position;
+                Vector3Int underPosition = tilePosition - Vector3Int.up;
+
+                if(underPosition.y == -1)
+                {
+                    onGround = true;
+
+                    break;
+                }
+
+                if (_bricksMap.TryGetValue(underPosition, out Brick value) == false)
+                {
+                    SetOrAddIntoBricksMap(underPosition, null);
+                }
+
+                if (_bricksMap[underPosition] != null)
+                {
+                    onGround = true;
+
+                    break;
                 }
             }
 
-            return height;
+            return onGround;
         }
 
         /// <summary>
@@ -163,33 +213,6 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// Проверка блока находится ли он на земле.
-        /// </summary>
-        /// <returns></returns>
-        public bool ControllableBrickOnGround()
-        {
-            bool onGround = false;
-
-            foreach (Vector3Int patternTile in ControllableBrick.Pattern)
-            {
-                Vector3Int tilePosition = patternTile + ControllableBrick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
-
-                if (_heightMap.TryGetValue(heightMapKey, out int value) == false)
-                {
-                    SetOrAddIntoHeightMap(heightMapKey, 0);
-                }
-
-                if (_heightMap[heightMapKey] == tilePosition.y)
-                {
-                    onGround = true;
-                }
-            }
-
-            return onGround;
-        }
-
-        /// <summary>
         /// Возвращает наивысшую высоту.
         /// </summary>
         /// <returns></returns>
@@ -219,9 +242,9 @@ namespace Server.BrickLogic
 
         private void ClearHeightMap(Brick brick)
         {
-            foreach (Vector3Int patternTile in brick.Pattern)
+            foreach (Vector3Int tile in brick.Pattern)
             {
-                Vector3Int tilePosition = patternTile + brick.Position;
+                Vector3Int tilePosition = tile + brick.Position;
                 Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
                 int underHeight = 0;
                 int i = 1;

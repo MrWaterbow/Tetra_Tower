@@ -44,11 +44,23 @@ namespace Tests
         }
 
         [Test]
-        public void CorrectUpBlockFall()
+        public void CorrectUpBlockFastLowering()
         {
-            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 5, BrickPatterns.TestBlocks.UpBlock);
+            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickPatterns.TestBlocks.UpBlock);
             _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
             _movementWrapper.LowerControllableBrickToGround();
+
+            Assert.AreEqual(Vector3Int.left + Vector3Int.up, upBlock.Position);
+        }
+
+        [Test]
+        public void CorrectUpBlockLowering()
+        {
+            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickPatterns.TestBlocks.UpBlock);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
+            _movementWrapper.LowerBrickAndCheckGrounding();
+            _movementWrapper.LowerBrickAndCheckGrounding();
+            _movementWrapper.LowerBrickAndCheckGrounding();
 
             Assert.AreEqual(Vector3Int.left + Vector3Int.up, upBlock.Position);
         }

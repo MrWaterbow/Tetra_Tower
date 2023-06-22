@@ -57,7 +57,7 @@ namespace Server.BrickLogic
         /// <returns></returns>
         private Vector3Int ComputeFeaturePosition(Vector3Int direction)
         {
-            return new(_database.ControllableBrick.Position.x + direction.x, _database.ControllableBrick.Position.z + direction.z);
+            return _database.ControllableBrick.Position + direction;
         }
 
         private bool BrickMovedIntoAnotherBrick(Vector3Int[] pattern, Vector3Int position)
@@ -77,15 +77,13 @@ namespace Server.BrickLogic
             return movedInto;
         }
 
-        /// <summary>
-        /// Снижает высоту блока на одну единицу и проверяет находится ли он на земле.
-        /// </summary>
-        /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerBrickAndCheckGrounding()
         {
             if (_database.ControllableBrickOnGround())
             {
-                throw new BrickOnGroundException();
+                OnControllableBrickFall?.Invoke();
+
+                return;
             }
 
             _database.ControllableBrick.Move(Vector3Int.down);
@@ -96,18 +94,16 @@ namespace Server.BrickLogic
             }
         }
 
-        /// <summary>
-        /// Опускает блок сразу на землю в одно действие.
-        /// </summary>
-        /// <exception cref="BrickOnGroundException">Исключение выбрасывается в случае того, если блок уже на земле</exception>
         public void LowerControllableBrickToGround()
         {
             if (_database.ControllableBrickOnGround())
             {
-                throw new BrickOnGroundException();
+                OnControllableBrickFall?.Invoke();
+
+                return;
             }
 
-            int height = _database.GetHeightByPattern(_database.ControllableBrick);
+            int height = _database.GetHeightByBlock(_database.ControllableBrick);
             Vector3Int brickPosition = _database.ControllableBrick.Position;
             Vector3Int newPosition = new(brickPosition.x, height, brickPosition.z);
 
