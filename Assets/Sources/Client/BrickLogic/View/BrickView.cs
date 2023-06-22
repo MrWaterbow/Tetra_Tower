@@ -112,13 +112,11 @@ namespace Client.BrickLogic
             {
                 _unstableEffect = true;
                 PlayUnstableEffect();
-                Debug.Log("Enable unstable effect");
             }
             else
             {
                 _unstableEffect = false;
                 KillUnstableEffect();
-                Debug.Log("Disable unstable effect");
             }
         }
 
