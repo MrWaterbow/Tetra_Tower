@@ -7,7 +7,7 @@ namespace Tests
     /// <summary>
     /// Тесты коллизий блока. Под коллизиями подразумевается карта высот.
     /// </summary>
-    public sealed class BrickCollisionTests
+    public sealed class BricksHeightMapTests
     {
         private BrickMovementWrapper _movementWrapper;
         private BricksDatabaseAccess _databaseAccess;
@@ -61,12 +61,12 @@ namespace Tests
         [Test]
         public void HeightMapTestOnTwoBlocks()
         {
-            Assert.AreEqual(1, _database.HeightMap[Vector2Int.zero]);
-            Assert.AreEqual(1, _database.HeightMap[Vector2Int.right]);
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.up]);
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.one]);
-            Assert.AreEqual(2, _database.HeightMap[new Vector2Int(2, 1)]);
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
+            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.zero));
+            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.right));
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.up));
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one));
+            Assert.AreEqual(2, _database.GetHeightByKey(new Vector2Int(2, 1)));
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.up * 2));
         }
 
         /// <summary>
@@ -78,13 +78,13 @@ namespace Tests
             // Ставит третий блок
             _databaseAccess.PlaceControllableBrick();
 
-            Assert.AreEqual(3, _database.HeightMap[Vector2Int.zero]);
-            Assert.AreEqual(3, _database.HeightMap[Vector2Int.right]);
-            Assert.AreEqual(3, _database.HeightMap[Vector2Int.right * 2]);
-            Assert.AreEqual(3, _database.HeightMap[Vector2Int.up]);
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.one]);
-            Assert.AreEqual(2, _database.HeightMap[new Vector2Int(2, 1)]);
-            Assert.AreEqual(2, _database.HeightMap[Vector2Int.up * 2]);
+            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.zero));
+            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.right));
+            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.right * 2));
+            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.up));
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one));
+            Assert.AreEqual(2, _database.GetHeightByKey(new Vector2Int(2, 1)));
+            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.up * 2));
         }
 
         /// <summary>

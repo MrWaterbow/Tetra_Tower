@@ -53,14 +53,6 @@ namespace Server.BrickLogic
             {
                 return true;
             }
-            if(footFactor == 0.5f)
-            {
-                brick.InvokeUnstableWarning();
-            }
-            else
-            {
-                brick.InvokeStableWarning();
-            }
 
             return false;
         }
@@ -74,7 +66,7 @@ namespace Server.BrickLogic
                 Vector3Int tilePosition = brick.Position + tile;
                 Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
-                if(_database.GetHeightByKey(heightMapKey) > tilePosition.y && _database.Surface.PositionInSurfaceLimits(heightMapKey))
+                if(_database.GetHeightByKey(heightMapKey) >= tilePosition.y && _database.Surface.PositionInSurfaceLimits(heightMapKey))
                 {
                     stableTilesCount++;
                 }

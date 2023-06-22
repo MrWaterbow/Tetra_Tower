@@ -9,10 +9,6 @@ namespace Server.BrickLogic
     public interface IReadOnlyBricksDatabase
     {
         /// <summary>
-        /// Доступ к чтению карты высот.
-        /// </summary>
-        IReadOnlyDictionary<Vector2Int, int> HeightMap { get; }
-        /// <summary>
         /// Доступ к чтению списка поставленных блоков.
         /// </summary>
         IReadOnlyList<IReadOnlyBrick> Bricks { get; }
