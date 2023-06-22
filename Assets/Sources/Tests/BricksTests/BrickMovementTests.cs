@@ -93,6 +93,20 @@ namespace Tests
             Assert.AreEqual(0, _database.GetHeightByPattern(new Brick(Vector3Int.zero, BrickPatterns.OBlock)));
         }
 
+        [Test]
+        public void MoveIntoBrickTest()
+        {
+            Brick brick2 = new(new Vector3Int(2, 1), BrickPatterns.OBlock);
+            Brick brick3 = new(new Vector3Int(1, 1), BrickPatterns.OBlock);
+
+            _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
+            _databaseAccess.ChangeAndAddRecentControllableBrick(brick3);
+            _movementWrapper.TryMoveBrick(Vector3Int.right);
+
+            Assert.AreEqual(new Vector3Int(1, 1), brick3.Position);
+        }
+
         /// <summary>
         /// Тест движения блока по поверхности.
         /// </summary>

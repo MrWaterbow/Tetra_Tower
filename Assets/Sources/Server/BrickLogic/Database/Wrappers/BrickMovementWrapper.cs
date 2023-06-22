@@ -42,9 +42,12 @@ namespace Server.BrickLogic
         /// <returns></returns>
         private bool PossibleMoveBrickTo(Vector3Int direction)
         {
-            Vector2Int featurePosition = ComputeFeaturePosition(direction);
+            Vector3Int featurePosition = ComputeFeaturePosition(direction);
 
-            return _database.Surface.PatternInSurfaceLimits(_database.ControllableBrick.Pattern, featurePosition);
+            bool intoSurfaceLimits = _database.Surface.PatternInSurfaceLimits(_database.ControllableBrick.Pattern, new Vector2Int(featurePosition.x, featurePosition.z));
+            bool movedIntoAnother = BrickMovedIntoAnotherBrick(_database.ControllableBrick.Pattern, featurePosition);
+
+            return intoSurfaceLimits && movedIntoAnother == false;
         }
 
         /// <summary>
@@ -52,9 +55,26 @@ namespace Server.BrickLogic
         /// </summary>
         /// <param name="direction">Направление движения</param>
         /// <returns></returns>
-        private Vector2Int ComputeFeaturePosition(Vector3Int direction)
+        private Vector3Int ComputeFeaturePosition(Vector3Int direction)
         {
             return new(_database.ControllableBrick.Position.x + direction.x, _database.ControllableBrick.Position.z + direction.z);
+        }
+
+        private bool BrickMovedIntoAnotherBrick(Vector3Int[] pattern, Vector3Int position)
+        {
+            bool movedInto = false;
+
+            foreach (Vector3Int tile in pattern)
+            {
+                Vector3Int tilePosition = tile + position;
+
+                if (_database.GetBrickByKey(tilePosition) != null)
+                {
+                    movedInto = true;
+                }
+            }
+
+            return movedInto;
         }
 
         /// <summary>
