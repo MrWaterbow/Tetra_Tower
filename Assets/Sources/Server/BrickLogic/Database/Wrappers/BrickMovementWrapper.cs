@@ -44,7 +44,7 @@ namespace Server.BrickLogic
         {
             Vector3Int featurePosition = ComputeFeaturePosition(direction);
 
-            bool intoSurfaceLimits = _database.Surface.PatternInSurfaceLimits(_database.ControllableBrick.Pattern, new Vector2Int(featurePosition.x, featurePosition.z));
+            bool intoSurfaceLimits = _database.Surface.PatternIntoSurfaceTiles(_database.ControllableBrick.Pattern, new Vector2Int(featurePosition.x, featurePosition.z));
             bool movedIntoAnother = BrickMovedIntoAnotherBrick(_database.ControllableBrick.Pattern, featurePosition);
 
             return intoSurfaceLimits && movedIntoAnother == false;

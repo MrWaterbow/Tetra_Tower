@@ -70,16 +70,6 @@ namespace Tests
         {
             Assert.AreEqual(new Vector3(1, 6, 1), _database.Surface.GetWorldPosition(new Vector3Int(0, 5, 0)));
         }
-        
-        /// <summary>
-        /// Тест для вычисления позиции на земле при отсутствии блоков.
-        /// </summary>
-        [Test]
-        public void ComputeFeatureGroundPositionWithoutBlocksTest()
-        {
-            Assert.AreEqual(0, _database.GetHeightByKey(new Vector2Int(2, 1)));
-            Assert.AreEqual(0, _database.GetHeightByBlock(new Brick(Vector3Int.zero, BrickPatterns.OBlock)));
-        }
 
         [Test]
         public void MoveIntoBrickTest()

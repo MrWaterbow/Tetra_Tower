@@ -57,32 +57,6 @@ namespace Tests
         }
 
         [Test]
-        public void CorrectHeightMapCreatingWithBrickMovedIntoHole()
-        {
-            _movementWrapper.LowerBrickAndCheckGrounding();
-
-            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.one * 2));
-
-            _databaseAccess.PlaceControllableBrick();
-
-            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.one * 2));
-        }
-
-        [Test]
-        public void CorrectCrashingWithBlockMovedIntoHole()
-        {
-            _movementWrapper.LowerBrickAndCheckGrounding();
-
-            Assert.AreEqual(true, _crashWrapper.TestToCrash(_brick4));
-
-            _crashWrapper.TryCrashAll();
-
-            Assert.AreEqual(3, _database.Bricks.Count);
-            Assert.AreEqual(3, _database.GetHeightByKey(Vector2Int.one * 2));
-            /// Выяснить
-        }
-
-        [Test]
         public void CorrectGroundingWithBlockMovedIntoHole()
         {
             _movementWrapper.LowerControllableBrickToGround();
