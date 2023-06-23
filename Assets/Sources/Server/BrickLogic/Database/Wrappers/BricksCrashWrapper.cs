@@ -61,9 +61,31 @@ namespace Server.BrickLogic
             return false;
         }
 
-        public float ComputeFootFactor(Brick brick)
+        public float ComputeFootFactor(IReadOnlyBrick brick)
         {
-            float stableTilesCount = 0;
+            float stableTilesCount = GetTilesWhatStabilityFlagEquals(true, brick).Count;
+            int tilesCount = brick.Pattern.Length;
+
+            return stableTilesCount / tilesCount;
+        }
+
+        public float ComputeDistanceFromNearUnstableTile(Vector3Int stableTilePosition, IReadOnlyBrick brick)
+        {
+            LinkedList<Vector3Int> unstableTiles = GetTilesWhatStabilityFlagEquals(false, brick);
+
+            return ComputeMinDistance(stableTilePosition, unstableTiles);
+        }
+
+        public float ComputeDistanceFromNearStableTile(Vector3Int unstableTilePosition, IReadOnlyBrick brick)
+        {
+            LinkedList<Vector3Int> stableTiles = GetTilesWhatStabilityFlagEquals(true, brick);
+
+            return ComputeMinDistance(unstableTilePosition, stableTiles);
+        }
+
+        public LinkedList<Vector3Int> GetTilesWhatStabilityFlagEquals(bool stable, IReadOnlyBrick brick)
+        {
+            LinkedList<Vector3Int> tiles = new();
 
             foreach (Vector3Int tile in brick.Pattern)
             {
@@ -71,13 +93,43 @@ namespace Server.BrickLogic
                 Vector3Int bricksMapKey = tilePosition - Vector3Int.up;
                 Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
-                if (_database.GetBrickByKey(bricksMapKey) != null || tilePosition.y <= 0 && _database.Surface.PositionInSurfaceLimits(heightMapKey))
+                if (IsStableTile(tilePosition, bricksMapKey, heightMapKey) == stable)
                 {
-                    stableTilesCount++;
+                    tiles.AddLast(tilePosition);
                 }
             }
 
-            return stableTilesCount / brick.Pattern.Length;
+            return tiles;
+        }
+
+        private bool IsStableTile(Vector3Int tilePosition, Vector3Int bricksMapKey, Vector2Int heightMapKey)
+        {
+            if (_database.GetBrickByKey(bricksMapKey) != null || tilePosition.y <= 0 && _database.Surface.PositionIntoSurfaceSize(heightMapKey))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public float ComputeMinDistance(Vector3Int tilePosition, LinkedList<Vector3Int> tiles)
+        {
+            float minDistance = ComputeDistance(tilePosition, tiles.First.Value);
+
+            foreach (Vector3Int unstableTile in tiles)
+            {
+                if (minDistance > ComputeDistance(tilePosition, unstableTile))
+                {
+                    minDistance = ComputeDistance(tilePosition, unstableTile);
+                }
+            }
+
+            return minDistance;
+        }
+
+        public float ComputeDistance(Vector3Int a, Vector3Int b)
+        {
+            return Vector3Int.Distance(a, b);
         }
     }
 }

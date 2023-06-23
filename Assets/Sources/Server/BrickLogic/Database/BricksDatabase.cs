@@ -6,10 +6,6 @@ namespace Server.BrickLogic
     public sealed class BricksDatabase : IReadOnlyBricksDatabase
     {
         /// <summary>
-        /// Карта высот - это словарь, который хранит высоту по позиции на поверхности.
-        /// </summary>
-        private readonly Dictionary<Vector2Int, int> _heightMap;
-        /// <summary>
         /// Карта блоков - это словарь, который хранит ссылку на блок по позиции.
         /// </summary>
         private readonly Dictionary<Vector3Int, Brick> _bricksMap;
@@ -28,16 +24,16 @@ namespace Server.BrickLogic
         /// Платформа на которую ставяться блоки.
         /// </summary>
         public readonly PlacingSurface Surface;
+        private int _heighestPoint;
 
         private BricksDatabase()
         {
-            _heightMap = new();
+            //_heightMap = new();
             _bricksMap = new();
 
             _bricks = new();
             ControllableBrick = null;
         }
-
 
         public BricksDatabase(Vector2Int surfaceSize, Vector3 worldPositionOffset) : this()
         {
@@ -61,6 +57,7 @@ namespace Server.BrickLogic
         /// Возвращает копию поверхности на которую ставят блоки.
         /// </summary>
         PlacingSurface IReadOnlyBricksDatabase.Surface => Surface;
+        public int HeighestPoint => _heighestPoint;
 
         /// <summary>
         /// Добавляет блок в список поставленных и обновляет карту высот.
@@ -73,30 +70,10 @@ namespace Server.BrickLogic
             foreach (Vector3Int patternTile in brick.Pattern)
             {
                 Vector3Int tilePosition = patternTile + brick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
-                int height = tilePosition.y + 1;
 
-                SetOrAddIntoHeightMap(heightMapKey, height);
+                ComputeHeighestPoint(brick);
                 SetOrAddIntoBricksMap(tilePosition, brick);
-            }
-        }
-
-        private void SetOrAddIntoHeightMap(Vector2Int key, int height)
-        {
-            try
-            {
-                if (_heightMap.TryGetValue(key, out int currentHeight) == false)
-                {
-                    _heightMap[key] = height;
-                }
-                else if (currentHeight < height)
-                {
-                    _heightMap[key] = height;
-                }
-            }
-            catch
-            {
-                _heightMap.Add(key, height);
+                Surface.TryExtendSurface(brick);
             }
         }
 
@@ -178,21 +155,6 @@ namespace Server.BrickLogic
             return onGround;
         }
 
-        /// <summary>
-        /// Возвращает высоту по ключу (позиции).
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public int GetHeightByKey(Vector2Int key)
-        {
-            if (_heightMap.TryGetValue(key, out int value) == false)
-            {
-                return 0;
-            }
-
-            return _heightMap[key];
-        }
-
         public Brick GetBrickByKey(Vector3Int key)
         {
             if(_bricksMap.TryGetValue(key, out Brick value) == false)
@@ -212,51 +174,25 @@ namespace Server.BrickLogic
             return Surface.GetWorldPosition(ControllableBrick.Position);
         }
 
-        /// <summary>
-        /// Возвращает наивысшую высоту.
-        /// </summary>
-        /// <returns></returns>
-        public int GetHeighestPoint()
+        public void ComputeHeighestPoint(IReadOnlyBrick brick)
         {
-            int heighestPoint = 0;
-
-            foreach (KeyValuePair<Vector2Int, int> pair in _heightMap)
+            foreach (Vector3Int tile in brick.Pattern)
             {
-                if (pair.Value > heighestPoint)
+                int tileHeight = tile.y + brick.Position.y + 1;
+
+                if(tileHeight > _heighestPoint)
                 {
-                    heighestPoint = pair.Value;
+                    _heighestPoint = tileHeight;
                 }
             }
-
-            return heighestPoint;
         }
 
         public void DestroyBrick(Brick brick)
         {
             _bricks.Remove(brick);
-            ClearHeightMap(brick);
             ClearBricksMap(brick);
 
             brick.Destroy();
-        }
-
-        private void ClearHeightMap(Brick brick)
-        {
-            foreach (Vector3Int tile in brick.Pattern)
-            {
-                Vector3Int tilePosition = tile + brick.Position;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
-                int underHeight = 0;
-                int i = 1;
-
-                while(GetBrickByKey(tilePosition - Vector3Int.up * i) == null && tilePosition.y - (i - 1) > 0)
-                {
-                    underHeight++;
-                    i++;
-                }
-
-                _heightMap[heightMapKey] = tilePosition.y - underHeight;
-            }
         }
 
         private void ClearBricksMap(Brick brick)

@@ -36,7 +36,7 @@ namespace Client.CameraLogic
 
         private void UpdateCamera()
         {
-            float position = _moveFactor * _database.GetHeighestPoint();
+            float position = _moveFactor * _database.HeighestPoint;
             position += _startPosition.y;
 
             _camera.DOMoveY(position, _moveDuration);

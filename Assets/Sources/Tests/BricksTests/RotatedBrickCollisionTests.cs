@@ -26,24 +26,6 @@ namespace Tests
         }
 
         [Test]
-        public void OneUpBlockTest()
-        {
-            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.right));
-        }
-
-        [Test]
-        public void TwoUpBlockTest()
-        {
-            Brick upBlock = new(Vector3Int.up * 2, BrickPatterns.TestBlocks.UpBlock);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
-            _databaseAccess.PlaceControllableBrick();
-
-            Assert.AreEqual(4, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(4, _database.GetHeightByKey(Vector2Int.right));
-        }
-
-        [Test]
         public void CorrectUpBlockFastLowering()
         {
             Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickPatterns.TestBlocks.UpBlock);

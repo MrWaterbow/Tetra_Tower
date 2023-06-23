@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Server.BrickLogic
 {
@@ -10,6 +12,7 @@ namespace Server.BrickLogic
         /// <summary>
         /// Размер площадки.
         /// </summary>
+        public readonly HashSet<Vector2Int> SurfaceTiles;
         public readonly Vector2Int SurfaceSize;
         /// <summary>
         /// Для того что бы превращать локальные коорданаты блоков в мировые координаты относительно клиента. Он нужен что бы отобразить блок относительно мировых координат Unity со смещением относительно их.
@@ -23,7 +26,16 @@ namespace Server.BrickLogic
         /// <param name="worldPositionOffset">Смещение относительно мировых координат</param>
         public PlacingSurface(Vector2Int surfaceSize, Vector3 worldPositionOffset)
         {
+            SurfaceTiles = new();
             SurfaceSize = surfaceSize;
+
+            for (int x = 0; x < surfaceSize.x; x++)
+            {
+                for (int y = 0; y < surfaceSize.y; y++)
+                {
+                    SurfaceTiles.Add(new Vector2Int(x, y));
+                }
+            }
 
             WorldPositionOffset = worldPositionOffset;
         }
@@ -34,13 +46,13 @@ namespace Server.BrickLogic
         /// <param name="pattern"></param>
         /// <param name="position"></param>
         /// <returns></returns>
-        public bool PatternInSurfaceLimits(Vector3Int[] pattern, Vector2Int position)
+        public bool PatternIntoSurfaceTiles(Vector3Int[] pattern, Vector2Int position)
         {
-            foreach (Vector3Int cell in pattern)
+            foreach (Vector3Int tile in pattern)
             {
-                Vector2Int featureCellPosition = new Vector2Int(cell.x, cell.z) + position;
+                Vector2Int featureCellPosition = new Vector2Int(tile.x, tile.z) + position;
 
-                if (PositionInSurfaceLimits(featureCellPosition)) return true;
+                if (PositionIntoSurfaceTiles(featureCellPosition)) return true;
             }
 
             return false;
@@ -51,9 +63,27 @@ namespace Server.BrickLogic
         /// </summary>
         /// <param name="position">Позиция, которую проверяет</param>
         /// <returns></returns>
-        public bool PositionInSurfaceLimits(Vector2Int position)
+        public bool PositionIntoSurfaceTiles(Vector2Int position)
+        {
+            return SurfaceTiles.Contains(position);
+        }
+
+        public bool PositionIntoSurfaceSize(Vector2Int position)
         {
             return position.x > -1 && position.x < SurfaceSize.x && position.y > -1 && position.y < SurfaceSize.y;
+        }
+
+        public void TryExtendSurface(IReadOnlyBrick brick)
+        {
+            foreach (Vector3Int tile in brick.Pattern)
+            {
+                Vector3Int tilePosition = tile + brick.Position;
+                Vector2Int key = new(tilePosition.x, tilePosition.z);
+
+                if (SurfaceTiles.Contains(key)) continue;
+
+                SurfaceTiles.Add(key);
+            }
         }
         
         /// <summary>

@@ -20,13 +20,8 @@ namespace Server.BrickLogic
         /// Возвращает копию поверхности на которую ставятся блоки.
         /// </summary>
         PlacingSurface Surface { get; }
+        int HeighestPoint { get; }
 
-        /// <summary>
-        /// Возвращает высоту по ключу (позиции).
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        int GetHeightByKey(Vector2Int position);
         /// <summary>
         /// Возвращает высоту по паттерну блока.
         /// </summary>
@@ -44,10 +39,5 @@ namespace Server.BrickLogic
         /// <returns></returns>
         bool PatternOnGround(Vector3Int[] pattern, Vector3Int position);
         bool ControllableBrickOnGround();
-        /// <summary>
-        /// Возвращает наивысшую точку (высоту).
-        /// </summary>
-        /// <returns></returns>
-        int GetHeighestPoint();
     }
 }

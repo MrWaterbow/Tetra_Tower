@@ -30,16 +30,16 @@ namespace Tests
         [Test]
         public void PositionsInsideSurfaceLimitsTest()
         {
-            Assert.IsTrue(_surface.PositionInSurfaceLimits(Vector2Int.one * 2));
-            Assert.IsTrue(_surface.PositionInSurfaceLimits(Vector2Int.up * 2));
-            Assert.IsTrue(_surface.PositionInSurfaceLimits(Vector2Int.right * 2));
-            Assert.IsTrue(_surface.PositionInSurfaceLimits(Vector2Int.zero));
+            Assert.IsTrue(_surface.PositionIntoSurfaceTiles(Vector2Int.one * 2));
+            Assert.IsTrue(_surface.PositionIntoSurfaceTiles(Vector2Int.up * 2));
+            Assert.IsTrue(_surface.PositionIntoSurfaceTiles(Vector2Int.right * 2));
+            Assert.IsTrue(_surface.PositionIntoSurfaceTiles(Vector2Int.zero));
 
-            Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.one * 3));
-            Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.right * 3));
-            Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.left));
-            Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.up * 3));
-            Assert.IsFalse(_surface.PositionInSurfaceLimits(Vector2Int.down));
+            Assert.IsFalse(_surface.PositionIntoSurfaceTiles(Vector2Int.one * 3));
+            Assert.IsFalse(_surface.PositionIntoSurfaceTiles(Vector2Int.right * 3));
+            Assert.IsFalse(_surface.PositionIntoSurfaceTiles(Vector2Int.left));
+            Assert.IsFalse(_surface.PositionIntoSurfaceTiles(Vector2Int.up * 3));
+            Assert.IsFalse(_surface.PositionIntoSurfaceTiles(Vector2Int.down));
 
             // TODO 6.1 Блок может выйти за границы, только если они расширины с помощью других блоков
             // ( у этого должны быть свои ограничения, которые задаются в пространстве для блоков
@@ -51,20 +51,20 @@ namespace Tests
         [Test]
         public void PatternsInsideSurfaceLimitsTest()
         {
-            Assert.IsTrue(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.one * 2));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.one * 2));
 
-            Assert.IsTrue(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.right * 2));
-            Assert.IsTrue(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.left));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.right * 2));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.left));
 
-            Assert.IsTrue(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.up * 2));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.up * 2));
 
-            Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.one * 3));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.one * 3));
 
-            Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.right * 4));
-            Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.left * 2));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.right * 4));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.left * 2));
 
-            Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.up * 3));
-            Assert.IsFalse(_surface.PatternInSurfaceLimits(BrickPatterns.LBlock, Vector2Int.down));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.up * 3));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickPatterns.LBlock, Vector2Int.down));
         }
 
         [Test]
@@ -82,18 +82,18 @@ namespace Tests
         public void SurfaceExtendTest()
         {
             Brick brick = new(Vector3Int.left, BrickPatterns.OBlock);
-            Brick brick2 = new(Vector3Int.zero, BrickPatterns.OBlock);
+            Brick brick2 = new(Vector3Int.up, BrickPatterns.OBlock);
 
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
 
             _movementWrapper.TryMoveBrick(Vector3Int.left * 3);
 
-            Assert.AreEqual(Vector3Int.zero, brick2.Position);
+            Assert.AreEqual(Vector3Int.up, brick2.Position);
 
             _movementWrapper.TryMoveBrick(Vector3Int.left * 2);
 
-            Assert.AreEqual(Vector3Int.left * 2, brick2.Position);
+            Assert.AreEqual(Vector3Int.left * 2 + Vector3Int.up, brick2.Position);
         }
     }
 }

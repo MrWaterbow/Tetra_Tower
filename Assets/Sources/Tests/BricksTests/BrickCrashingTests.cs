@@ -19,26 +19,6 @@ namespace Tests
         }
 
         [Test]
-        public void ComputeFootFactorTest()
-        {
-            Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
-
-            Assert.AreEqual(1f, _crashWrapper.ComputeFootFactor(brick));
-
-            brick.ChangePosition(Vector3Int.left);
-
-            Assert.AreEqual(0.5f, _crashWrapper.ComputeFootFactor(brick));
-
-            brick.ChangePosition(Vector3Int.back * 2);
-
-            Assert.AreEqual(0f, _crashWrapper.ComputeFootFactor(brick));
-
-            brick.ChangePosition(Vector3Int.up);
-
-            Assert.AreEqual(0f, _crashWrapper.ComputeFootFactor(brick));
-        }
-
-        [Test]
         public void DestroyBlocksWithLowFootFactorTest()
         {
             Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
@@ -51,25 +31,6 @@ namespace Tests
             _crashWrapper.TryCrashAll();
 
             Assert.AreEqual(0, _database.Bricks.Count);
-        }
-
-        [Test]
-        public void HeightMapClearTest()
-        {
-            Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
-            _database.AddBrickAndUpdateDatabase(brick);
-
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.right));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.up));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.one));
-
-            _crashWrapper.CrashAll();
-
-            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.right));
-            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.up));
-            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.one));
         }
 
         [Test]
@@ -87,29 +48,16 @@ namespace Tests
         }
 
         [Test]
-        public void HeightMapClearingWithTwoBlocksTest()
+        public void CrashingByGroundTest()
         {
-            Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
-            Brick brick2 = new(Vector3Int.one, BrickPatterns.OBlock);
-
+            Brick brick = new(Vector3Int.left * 2, BrickPatterns.LBlock);
             _database.AddBrickAndUpdateDatabase(brick);
-            _database.AddBrickAndUpdateDatabase(brick2);
 
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.right));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.up));
-            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one));
-            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one + Vector2Int.right));
-            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one + Vector2Int.up));
-            Assert.AreEqual(2, _database.GetHeightByKey(Vector2Int.one * 2));
+            Assert.AreEqual(1, _database.Bricks.Count);
 
             _crashWrapper.TryCrashAll();
 
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.zero));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.right));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.up));
-            Assert.AreEqual(1, _database.GetHeightByKey(Vector2Int.one));
-            Assert.AreEqual(0, _database.GetHeightByKey(Vector2Int.one * 2));
+            Assert.AreEqual(0, _database.Bricks.Count);
         }
     }
 }
