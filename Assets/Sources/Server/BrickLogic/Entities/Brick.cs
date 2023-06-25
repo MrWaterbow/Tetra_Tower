@@ -23,6 +23,7 @@ namespace Server.BrickLogic
         /// Массив кубиков из которых состоит блок.
         /// </summary>
         private Vector3Int[] _pattern;
+        private bool _unstableEffect;
 
         /// <summary>
         /// //Конструктор позволяет назначить position и pattern блока.
@@ -43,6 +44,7 @@ namespace Server.BrickLogic
         /// Возвращает копию паттерна блока.
         /// </summary>
         public Vector3Int[] Pattern => _pattern;
+        public bool UnstableEffect => _unstableEffect;
 
         /// <summary>
         /// Двигает блок в указаном направлении.
@@ -73,7 +75,16 @@ namespace Server.BrickLogic
 
         public void InvokeUnstableWarning(bool value)
         {
-            UnstableWarning?.Invoke(value);
+            if (_unstableEffect && value == false)
+            {
+                UnstableWarning?.Invoke(value);
+            }
+            else if(_unstableEffect == false && value)
+            {
+                UnstableWarning?.Invoke(value);
+            }
+
+            _unstableEffect = value;
         }
     }
 }

@@ -28,8 +28,8 @@ namespace Tests
         [Test]
         public void HeighestPointTest()
         {
-            Brick brick = new(Vector3Int.zero, BrickPatterns.OBlock);
-            Brick upBrick = new(Vector3Int.up, BrickPatterns.TestBlocks.UpBlock);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
+            Brick upBrick = new(Vector3Int.up, BrickBlanks.TestBlocks.UpBlock.BrickPattern);
 
             Assert.AreEqual(0, _database.HeighestPoint);
 

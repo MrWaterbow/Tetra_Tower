@@ -23,5 +23,6 @@ namespace Server.BrickLogic
         /// Возвращает копию паттерна блока.
         /// </summary>
         Vector3Int[] Pattern { get; }
+        bool UnstableEffect { get; }
     }
 }

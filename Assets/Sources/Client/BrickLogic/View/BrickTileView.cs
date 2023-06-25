@@ -53,7 +53,8 @@ namespace Client.BrickLogic
 
         public void KillLoopUnstableEffect()
         {
-            _meshRenderer.material.DOKill(true);
+            _meshRenderer.material.DOKill();
+            _meshRenderer.material.color = _startColor;
         }
     }
 }

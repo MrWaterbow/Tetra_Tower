@@ -20,7 +20,7 @@ namespace Tests
             _movementWrapper = new(_database);
             _databaseAccess = new(_database);
 
-            Brick upBlock = new(Vector3Int.zero, BrickPatterns.TestBlocks.UpBlock);
+            Brick upBlock = new(Vector3Int.zero, BrickBlanks.TestBlocks.UpBlock.BrickPattern);
             _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
             _databaseAccess.PlaceControllableBrick();
         }
@@ -28,7 +28,7 @@ namespace Tests
         [Test]
         public void CorrectUpBlockFastLowering()
         {
-            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickPatterns.TestBlocks.UpBlock);
+            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickBlanks.TestBlocks.UpBlock.BrickPattern);
             _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
             _movementWrapper.LowerControllableBrickToGround();
 
@@ -38,7 +38,7 @@ namespace Tests
         [Test]
         public void CorrectUpBlockLowering()
         {
-            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickPatterns.TestBlocks.UpBlock);
+            Brick upBlock = new(Vector3Int.left + Vector3Int.up * 2, BrickBlanks.TestBlocks.UpBlock.BrickPattern);
             _databaseAccess.ChangeAndAddRecentControllableBrick(upBlock);
             _movementWrapper.LowerBrickAndCheckGrounding();
             _movementWrapper.LowerBrickAndCheckGrounding();
