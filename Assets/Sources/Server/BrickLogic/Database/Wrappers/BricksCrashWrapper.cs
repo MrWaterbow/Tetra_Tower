@@ -14,13 +14,13 @@ namespace Server.BrickLogic
 
         public void TryCrashAll()
         {
-            List<Brick> destroyingBricks = new();
+            LinkedList<IReadOnlyBrick> destroyingBricks = new();
 
             foreach (Brick brick in _database.Bricks)
             {
-                if(TestToCrash(brick))
+                if(TestToCrash(brick, destroyingBricks))
                 {
-                    destroyingBricks.Add(brick);
+                    destroyingBricks.AddLast(brick);
                 }
             }
 
@@ -45,61 +45,141 @@ namespace Server.BrickLogic
             }
         }
 
-        public bool TestToCrash(Brick brick)
+        public bool TestToCrash(Brick brick, LinkedList<IReadOnlyBrick> destroyingBricks)
         {
-            float footFactor = ComputeFootFactor(brick);
+            float footFactor = ComputeFootFactor(brick, destroyingBricks);
 
-            if(footFactor < 0.5f)
+            if(footFactor < 0)
             {
                 return true;
             }
-            if(footFactor == 0.5f)
+            if(footFactor == 0)
             {
                 brick.InvokeUnstableWarning(true);
+            }
+            if(footFactor > 0)
+            {
+                brick.InvokeUnstableWarning(false);
             }
 
             return false;
         }
 
-        public float ComputeFootFactor(IReadOnlyBrick brick)
+        public float ComputeFootFactor(IReadOnlyBrick brick, LinkedList<IReadOnlyBrick> destroyingBricks = null)
         {
-            float stableTilesCount = GetTilesWhatStabilityFlagEquals(true, brick).Count;
-            int tilesCount = brick.Pattern.Length;
+            if(destroyingBricks == null)
+            {
+                destroyingBricks = new();
+            }
 
-            return stableTilesCount / tilesCount;
+            LinkedList<Vector3Int> stableTiles = GetTilesWhatStabilityFlagEquals(true, brick, destroyingBricks);
+            LinkedList<Vector3Int> unstableTiles = GetTilesWhatStabilityFlagEquals(false, brick, destroyingBricks);
+            float stableScore = 0f;
+            float unstableScore = 0f;
+
+            foreach (Vector3Int stableTile in stableTiles)
+            {
+                stableScore += ComputeDistanceFromNearUnstableTile(stableTile, brick, destroyingBricks);
+            }
+
+            foreach (Vector3Int unstableTile in unstableTiles)
+            {
+                unstableScore += ComputeDistanceFromNearStableTile(unstableTile, brick, destroyingBricks);
+            }
+
+            return stableScore - unstableScore;
         }
 
-        public float ComputeDistanceFromNearUnstableTile(Vector3Int stableTilePosition, IReadOnlyBrick brick)
+        public float ComputeDistanceFromNearUnstableTile(Vector3Int stableTilePosition, IReadOnlyBrick brick, LinkedList<IReadOnlyBrick> destroyingBricks = null)
         {
-            LinkedList<Vector3Int> unstableTiles = GetTilesWhatStabilityFlagEquals(false, brick);
+            if(destroyingBricks == null)
+            {
+                destroyingBricks = new();
+            }
+
+            LinkedList<Vector3Int> unstableTiles = GetTilesWhatStabilityFlagEquals(false, brick, destroyingBricks);
 
             return ComputeMinDistance(stableTilePosition, unstableTiles);
         }
 
-        public float ComputeDistanceFromNearStableTile(Vector3Int unstableTilePosition, IReadOnlyBrick brick)
+        public float ComputeDistanceFromNearStableTile(Vector3Int unstableTilePosition, IReadOnlyBrick brick, LinkedList<IReadOnlyBrick> destroyingBricks = null)
         {
-            LinkedList<Vector3Int> stableTiles = GetTilesWhatStabilityFlagEquals(true, brick);
+            if (destroyingBricks == null)
+            {
+                destroyingBricks = new();
+            }
+
+            LinkedList<Vector3Int> stableTiles = GetTilesWhatStabilityFlagEquals(true, brick, destroyingBricks);
 
             return ComputeMinDistance(unstableTilePosition, stableTiles);
         }
 
-        public LinkedList<Vector3Int> GetTilesWhatStabilityFlagEquals(bool stable, IReadOnlyBrick brick)
+        public LinkedList<Vector3Int> GetTilesWhatStabilityFlagEquals(bool stable, IReadOnlyBrick brick, LinkedList<IReadOnlyBrick> destroyingBricks)
         {
+            LinkedList<IReadOnlyBrick> bricks = new();
             LinkedList<Vector3Int> tiles = new();
 
-            foreach (Vector3Int tile in brick.Pattern)
-            {
-                Vector3Int tilePosition = brick.Position + tile;
-                Vector3Int bricksMapKey = tilePosition - Vector3Int.up;
-                Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+            bricks.AddLast(brick);
 
-                if (IsStableTile(tilePosition, bricksMapKey, heightMapKey) == stable)
+            LinkedList<IReadOnlyBrick> upperBricks = _database.GetUpperBricks(brick);
+
+            if (stable)
+            {
+                foreach (IReadOnlyBrick upperBrick in upperBricks)
                 {
-                    tiles.AddLast(tilePosition);
+                    if (bricks.Contains(upperBrick) || ComputeFootFactor(upperBrick, new()) <= 0) continue;
+
+                    bricks.AddLast(upperBrick);
+                }
+            }
+            else
+            {
+                foreach (IReadOnlyBrick upperBrick in upperBricks)
+                {
+                    if (bricks.Contains(upperBrick) || IsNegativeSupportBrick(upperBrick, brick) == false) continue;
+
+                    bricks.AddLast(upperBrick);
+                }
+            }
+
+            foreach (IReadOnlyBrick processBrick in bricks)
+            {
+                foreach (Vector3Int tile in processBrick.Pattern)
+                {
+                    Vector3Int tilePosition = brick.Position + tile;
+                    Vector3Int bricksMapKey = tilePosition - Vector3Int.up;
+                    Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
+
+                    if (IsStableTile(tilePosition, bricksMapKey, heightMapKey) == stable && destroyingBricks.Contains(_database.GetBrickByKey(bricksMapKey)) == false)
+                    {
+                        tiles.AddLast(tilePosition);
+                    }
                 }
             }
 
             return tiles;
+        }
+
+        private bool IsNegativeSupportBrick(IReadOnlyBrick upperBrick, IReadOnlyBrick startBrick)
+        {
+            foreach (Vector3Int tile in startBrick.Pattern)
+            {
+                Vector3Int tilePosition = tile + startBrick.Position;
+                Vector2Int tileKeyPosition = new(tilePosition.x, tilePosition.z);
+
+                foreach (Vector3Int upperTile in upperBrick.Pattern)
+                {
+                    Vector3Int upperTilePosition = upperTile + upperBrick.Position;
+                    Vector2Int upperTileKeyPosition = new(upperTilePosition.x, upperTilePosition.z);
+
+                    if (tileKeyPosition == upperTileKeyPosition && IsStableTile(tilePosition, tilePosition - Vector3Int.up, tileKeyPosition) == false)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private bool IsStableTile(Vector3Int tilePosition, Vector3Int bricksMapKey, Vector2Int heightMapKey)
@@ -114,6 +194,8 @@ namespace Server.BrickLogic
 
         public float ComputeMinDistance(Vector3Int tilePosition, LinkedList<Vector3Int> tiles)
         {
+            if (tiles.Count == 0) return 1f;
+
             float minDistance = ComputeDistance(tilePosition, tiles.First.Value);
 
             foreach (Vector3Int unstableTile in tiles)

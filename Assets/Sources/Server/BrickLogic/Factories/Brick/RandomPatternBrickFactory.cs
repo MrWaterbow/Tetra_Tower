@@ -11,7 +11,7 @@ namespace Server.Factories
         /// <summary>
         /// Массив паттернов для блока
         /// </summary>
-        private readonly Vector3Int[][] _patterns;
+        private readonly BrickBlank[] _patterns;
         private readonly Vector3Int _startPosition;
 
         private readonly IReadOnlyBricksDatabase _database;
@@ -20,7 +20,7 @@ namespace Server.Factories
         /// 
         /// </summary>
         /// <param name="patterns">Массив паттернов для блока</param>
-        public RandomPatternBrickFactory(Vector3Int[][] patterns, Vector3Int startPosition, IReadOnlyBricksDatabase database)
+        public RandomPatternBrickFactory(BrickBlank[] patterns, Vector3Int startPosition, IReadOnlyBricksDatabase database)
         {
             _patterns = patterns;
             _startPosition = startPosition;
@@ -39,7 +39,7 @@ namespace Server.Factories
             position.y = _database.HeighestPoint;
             position.y += _startPosition.y;
 
-            return new Brick(position, _patterns[Random.Range(0, _patterns.Length)]);
+            return new Brick(position, _patterns[Random.Range(0, _patterns.Length)].BrickPattern);
         }
     }
 }

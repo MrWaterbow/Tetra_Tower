@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1011
   m_ShowMode: 4
-  m_Title: Test Runner
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 117
+  controlID: 119
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,12 +139,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1470
+    width: 1471
     height: 961
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 57
+  controlID: 120
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,12 +165,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1470
+    width: 1471
     height: 647
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 58
+  controlID: 121
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,7 +188,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 179
+    width: 216
     height: 647
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
@@ -212,9 +212,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 179
+    x: 216
     y: 0
-    width: 421
+    width: 384
     height: 647
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -240,13 +240,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 600
     y: 0
-    width: 870
+    width: 871
     height: 647
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 13}
   m_Panes:
-  - {fileID: 16}
+  - {fileID: 13}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &11
@@ -266,13 +266,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 647
-    width: 1470
+    width: 1471
     height: 314
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
-  - {fileID: 13}
+  - {fileID: 16}
   - {fileID: 17}
   m_Selected: 1
   m_LastSelected: 0
@@ -291,12 +291,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1470
+    x: 1471
     y: 0
-    width: 450
+    width: 449
     height: 961
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 18}
@@ -312,137 +312,89 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
-    m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+    m_Text: Game
+    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 716
-    width: 1463
-    height: 293
+    x: 600
+    y: 69
+    width: 869
+    height: 626
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
-  m_SearchFilter:
-    m_NameFilter: 
-    m_ClassNames: []
-    m_AssetLabels: []
-    m_AssetBundleNames: []
-    m_VersionControlStates: []
-    m_SoftLockControlStates: []
-    m_ReferencingInstanceIDs: 
-    m_SceneHandles: 
-    m_ShowAllHits: 0
-    m_SkipHidden: 1
-    m_SearchArea: 1
-    m_Folders:
-    - Assets/Content/Prefabs/Blocks
-    m_Globs: []
-    m_OriginalText: 
-  m_ViewMode: 1
-  m_StartGridSize: 64
-  m_LastFolders:
-  - Assets/Content/Prefabs/Blocks
-  m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Github\Tetra_Tower
-  m_LockTracker:
-    m_IsLocked: 0
-  m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ca760000
-    m_LastClickedID: 30410
-    m_ExpandedIDs: 000000001e75000020750000227500002475000026750000287500002a7500002c7500002e750000307500003275000034750000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 000000001e75000020750000227500002475000026750000287500002a7500002c7500002e750000307500003275000034750000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_SearchString: 
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-  m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c62300000000000092720000389900009e760000c8760000
-    m_RenameOverlay:
-      m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
-      m_EditFieldRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-      m_UserData: 0
-      m_IsWaitingForDelay: 0
-      m_IsRenaming: 0
-      m_OriginalEventType: 11
-      m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
-    m_CreateAssetUtility:
-      m_EndAction: {fileID: 0}
-      m_InstanceID: 0
-      m_Path: 
-      m_Icon: {fileID: 0}
-      m_ResourceFile: 
-    m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 64
-  m_SkipHiddenPackages: 1
-  m_DirectoriesAreaWidth: 246
+  m_SerializedViewNames: []
+  m_SerializedViewValues: []
+  m_PlayModeViewName: GameView
+  m_ShowGizmos: 1
+  m_TargetDisplay: 0
+  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+  m_TargetSize: {x: 1920, y: 1080}
+  m_TextureFilterMode: 0
+  m_TextureHideFlags: 61
+  m_RenderIMGUI: 1
+  m_EnterPlayModeBehavior: 0
+  m_UseMipMap: 0
+  m_VSyncEnabled: 0
+  m_Gizmos: 1
+  m_Stats: 0
+  m_SelectedSizes: 03000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_ZoomArea:
+    m_HRangeLocked: 0
+    m_VRangeLocked: 0
+    hZoomLockedByDefault: 0
+    vZoomLockedByDefault: 0
+    m_HBaseRangeMin: -960
+    m_HBaseRangeMax: 960
+    m_VBaseRangeMin: -540
+    m_VBaseRangeMax: 540
+    m_HAllowExceedBaseRangeMin: 1
+    m_HAllowExceedBaseRangeMax: 1
+    m_VAllowExceedBaseRangeMin: 1
+    m_VAllowExceedBaseRangeMax: 1
+    m_ScaleWithWindow: 0
+    m_HSlider: 0
+    m_VSlider: 0
+    m_IgnoreScrollWheelUntilClicked: 0
+    m_EnableMouseInput: 1
+    m_EnableSliderZoomHorizontal: 0
+    m_EnableSliderZoomVertical: 0
+    m_UniformScale: 1
+    m_UpDirection: 1
+    m_DrawArea:
+      serializedVersion: 2
+      x: 0
+      y: 21
+      width: 869
+      height: 605
+    m_Scale: {x: 0.45260417, y: 0.45260417}
+    m_Translation: {x: 434.5, y: 302.5}
+    m_MarginLeft: 0
+    m_MarginRight: 0
+    m_MarginTop: 0
+    m_MarginBottom: 0
+    m_LastShownAreaInsideMargins:
+      serializedVersion: 2
+      x: -960
+      y: -668.35443
+      width: 1920
+      height: 1336.7089
+    m_MinimalGUI: 1
+  m_defaultScale: 0.45260417
+  m_LastWindowPixelSize: {x: 869, y: 626}
+  m_ClearInEditMode: 1
+  m_NoCameraWarning: 1
+  m_LowResolutionForAspectRatios: 01000000000000000000
+  m_XRRenderMode: 0
+  m_RenderTexture: {fileID: 0}
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -465,7 +417,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 69
-    width: 178
+    width: 215
     height: 626
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -476,7 +428,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 6ce1ffff38e4ffff4ae6ffffb0edffffa0f2ffff20fbffff
+      m_ExpandedIDs: 6cefffff28fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -520,9 +472,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 179
+    x: 216
     y: 69
-    width: 419
+    width: 382
     height: 626
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -836,89 +788,137 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
-    m_Text: Game
-    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
+    m_Text: Project
+    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 600
-    y: 69
-    width: 868
-    height: 626
+    x: 0
+    y: 716
+    width: 1470
+    height: 293
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
-  m_SerializedViewNames: []
-  m_SerializedViewValues: []
-  m_PlayModeViewName: GameView
-  m_ShowGizmos: 1
-  m_TargetDisplay: 0
-  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1920, y: 1080}
-  m_TextureFilterMode: 0
-  m_TextureHideFlags: 61
-  m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 0
-  m_UseMipMap: 0
-  m_VSyncEnabled: 0
-  m_Gizmos: 1
-  m_Stats: 0
-  m_SelectedSizes: 03000000000000000000000000000000000000000000000000000000000000000000000000000000
-  m_ZoomArea:
-    m_HRangeLocked: 0
-    m_VRangeLocked: 0
-    hZoomLockedByDefault: 0
-    vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -960
-    m_HBaseRangeMax: 960
-    m_VBaseRangeMin: -540
-    m_VBaseRangeMax: 540
-    m_HAllowExceedBaseRangeMin: 1
-    m_HAllowExceedBaseRangeMax: 1
-    m_VAllowExceedBaseRangeMin: 1
-    m_VAllowExceedBaseRangeMax: 1
-    m_ScaleWithWindow: 0
-    m_HSlider: 0
-    m_VSlider: 0
-    m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
-    m_EnableSliderZoomHorizontal: 0
-    m_EnableSliderZoomVertical: 0
-    m_UniformScale: 1
-    m_UpDirection: 1
-    m_DrawArea:
-      serializedVersion: 2
-      x: 0
-      y: 21
-      width: 868
-      height: 605
-    m_Scale: {x: 0.45208332, y: 0.45208332}
-    m_Translation: {x: 434, y: 302.5}
-    m_MarginLeft: 0
-    m_MarginRight: 0
-    m_MarginTop: 0
-    m_MarginBottom: 0
-    m_LastShownAreaInsideMargins:
-      serializedVersion: 2
-      x: -960
-      y: -669.12445
-      width: 1920
-      height: 1338.2489
-    m_MinimalGUI: 1
-  m_defaultScale: 0.45208332
-  m_LastWindowPixelSize: {x: 868, y: 626}
-  m_ClearInEditMode: 1
-  m_NoCameraWarning: 1
-  m_LowResolutionForAspectRatios: 01000000000000000000
-  m_XRRenderMode: 0
-  m_RenderTexture: {fileID: 0}
+  m_SearchFilter:
+    m_NameFilter: 
+    m_ClassNames: []
+    m_AssetLabels: []
+    m_AssetBundleNames: []
+    m_VersionControlStates: []
+    m_SoftLockControlStates: []
+    m_ReferencingInstanceIDs: 
+    m_SceneHandles: 
+    m_ShowAllHits: 0
+    m_SkipHidden: 1
+    m_SearchArea: 1
+    m_Folders:
+    - Assets/Content/Prefabs/Blocks
+    m_Globs: []
+    m_OriginalText: 
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/Content/Prefabs/Blocks
+  m_LastFoldersGridSize: -1
+  m_LastProjectPath: C:\Github\Tetra_Tower
+  m_LockTracker:
+    m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: d6760000
+    m_LastClickedID: 30422
+    m_ExpandedIDs: 0000000016750000187500001a7500001c7500001e75000020750000227500002475000026750000287500002a7500002c750000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_AssetTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 0000000016750000187500001a7500001c7500001e75000020750000227500002475000026750000287500002a7500002c750000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_ListAreaState:
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: c62300000000000092720000389900009e760000c8760000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+    m_NewAssetIndexInList: -1
+    m_ScrollPosition: {x: 0, y: 0}
+    m_GridSize: 64
+  m_SkipHiddenPackages: 1
+  m_DirectoriesAreaWidth: 246
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -941,7 +941,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 716
-    width: 1469
+    width: 1470
     height: 293
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1008,9 +1008,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1470
+    x: 1471
     y: 69
-    width: 449
+    width: 448
     height: 940
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1084,7 +1084,7 @@ MonoBehaviour:
       name: Tetra_ Tower
       fullName: Tetra_ Tower
       resultStatus: 1
-      duration: 0.2361067
+      duration: 0.2630482
       messages: 
       output: 
       stacktrace: 
@@ -1100,7 +1100,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Github/Tetra_Tower/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.2092414
+      duration: 0.2389904
       messages: 
       output: 
       stacktrace: 
@@ -1116,7 +1116,7 @@ MonoBehaviour:
       name: Tests
       fullName: Tests
       resultStatus: 1
-      duration: 0.2013733
+      duration: 0.2355601
       messages: 
       output: 
       stacktrace: 
@@ -1132,7 +1132,7 @@ MonoBehaviour:
       name: BrickCrashingTests
       fullName: Tests.BrickCrashingTests
       resultStatus: 1
-      duration: 0.0764966
+      duration: 0.08693
       messages: 
       output: 
       stacktrace: 
@@ -1148,7 +1148,7 @@ MonoBehaviour:
       name: BrickCrashingTestWithTwoBlocks
       fullName: Tests.BrickCrashingTests.BrickCrashingTestWithTwoBlocks
       resultStatus: 1
-      duration: 0.0416282
+      duration: 0.0495081
       messages: 
       output: 
       stacktrace: 
@@ -1165,7 +1165,7 @@ MonoBehaviour:
       name: CrashingByGroundTest
       fullName: Tests.BrickCrashingTests.CrashingByGroundTest
       resultStatus: 1
-      duration: 0.0006807
+      duration: 0.0010486
       messages: 
       output: 
       stacktrace: 
@@ -1182,7 +1182,7 @@ MonoBehaviour:
       name: DestroyBlocksWithLowFootFactorTest
       fullName: Tests.BrickCrashingTests.DestroyBlocksWithLowFootFactorTest
       resultStatus: 1
-      duration: 0.0011995
+      duration: 0.0010186
       messages: 
       output: 
       stacktrace: 
@@ -1194,12 +1194,29 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1006
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.BrickCrashingTests][suite]
+    - id: 1005
+      uniqueId: Tests.dll/Tests/BrickCrashingTests/[Tests][Tests.BrickCrashingTests.GroupCrashingTest]
+      name: GroupCrashingTest
+      fullName: Tests.BrickCrashingTests.GroupCrashingTest
+      resultStatus: 1
+      duration: 0.0015837
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/Tests/[Tests][Tests.BrickCrashingTests][suite]
     - id: 1001
       uniqueId: Tests.dll/Tests/[Tests][Tests.BrickMovementTests][suite]
       name: BrickMovementTests
       fullName: Tests.BrickMovementTests
       resultStatus: 1
-      duration: 0.0383368
+      duration: 0.0469769
       messages: 
       output: 
       stacktrace: 
@@ -1215,7 +1232,7 @@ MonoBehaviour:
       name: BrickLowerTestOnMax
       fullName: Tests.BrickMovementTests.BrickLowerTestOnMax
       resultStatus: 1
-      duration: 0.0055599
+      duration: 0.0065989
       messages: 
       output: 
       stacktrace: 
@@ -1232,7 +1249,7 @@ MonoBehaviour:
       name: BrickLowerTestOnMin
       fullName: Tests.BrickMovementTests.BrickLowerTestOnMin
       resultStatus: 1
-      duration: 0.0006821
+      duration: 0.0008299
       messages: 
       output: 
       stacktrace: 
@@ -1249,7 +1266,7 @@ MonoBehaviour:
       name: BrickMovingInsideSurfaceLimitsTest
       fullName: Tests.BrickMovementTests.BrickMovingInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0005985
+      duration: 0.0009622
       messages: 
       output: 
       stacktrace: 
@@ -1266,7 +1283,7 @@ MonoBehaviour:
       name: ComputeWorldPositionTest
       fullName: Tests.BrickMovementTests.ComputeWorldPositionTest
       resultStatus: 1
-      duration: 0.0008346
+      duration: 0.0011539
       messages: 
       output: 
       stacktrace: 
@@ -1283,7 +1300,7 @@ MonoBehaviour:
       name: LowerOnMinHeightTest
       fullName: Tests.BrickMovementTests.LowerOnMinHeightTest
       resultStatus: 1
-      duration: 0.0004888
+      duration: 0.0007781
       messages: 
       output: 
       stacktrace: 
@@ -1300,7 +1317,7 @@ MonoBehaviour:
       name: MoveIntoBrickTest
       fullName: Tests.BrickMovementTests.MoveIntoBrickTest
       resultStatus: 1
-      duration: 0.0007285
+      duration: 0.0014634
       messages: 
       output: 
       stacktrace: 
@@ -1317,7 +1334,7 @@ MonoBehaviour:
       name: BricksHeightMapAndCrashingMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole
       resultStatus: 1
-      duration: 0.0109003
+      duration: 0.0162743
       messages: 
       output: 
       stacktrace: 
@@ -1333,7 +1350,7 @@ MonoBehaviour:
       name: BrickGroundingMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.BrickGroundingMovedIntoHole
       resultStatus: 1
-      duration: 0.0016412
+      duration: 0.0021013
       messages: 
       output: 
       stacktrace: 
@@ -1350,7 +1367,7 @@ MonoBehaviour:
       name: CorrectGroundingWithBlockMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.CorrectGroundingWithBlockMovedIntoHole
       resultStatus: 1
-      duration: 0.0005167
+      duration: 0.0007859
       messages: 
       output: 
       stacktrace: 
@@ -1367,7 +1384,7 @@ MonoBehaviour:
       name: MoveBrickIntoHoleTest
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.MoveBrickIntoHoleTest
       resultStatus: 1
-      duration: 0.0005127
+      duration: 0.000756
       messages: 
       output: 
       stacktrace: 
@@ -1384,7 +1401,7 @@ MonoBehaviour:
       name: BricksMapTests
       fullName: Tests.BricksMapTests
       resultStatus: 1
-      duration: 0.0085518
+      duration: 0.0096446
       messages: 
       output: 
       stacktrace: 
@@ -1400,7 +1417,7 @@ MonoBehaviour:
       name: KeyValueTest
       fullName: Tests.BricksMapTests.KeyValueTest
       resultStatus: 1
-      duration: 0.0015352
+      duration: 0.0023298
       messages: 
       output: 
       stacktrace: 
@@ -1417,7 +1434,7 @@ MonoBehaviour:
       name: BricksSurfaceTests
       fullName: Tests.BricksSurfaceTests
       resultStatus: 1
-      duration: 0.0125474
+      duration: 0.0156911
       messages: 
       output: 
       stacktrace: 
@@ -1433,7 +1450,7 @@ MonoBehaviour:
       name: PatternsInsideSurfaceLimitsTest
       fullName: Tests.BricksSurfaceTests.PatternsInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0019263
+      duration: 0.002218
       messages: 
       output: 
       stacktrace: 
@@ -1450,7 +1467,7 @@ MonoBehaviour:
       name: PositionsInsideSurfaceLimitsTest
       fullName: Tests.BricksSurfaceTests.PositionsInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0008519
+      duration: 0.0012114
       messages: 
       output: 
       stacktrace: 
@@ -1467,7 +1484,7 @@ MonoBehaviour:
       name: SurfaceExtendTest
       fullName: Tests.BricksSurfaceTests.SurfaceExtendTest
       resultStatus: 1
-      duration: 0.0007683
+      duration: 0.0010569
       messages: 
       output: 
       stacktrace: 
@@ -1484,7 +1501,7 @@ MonoBehaviour:
       name: SurfaceWithoutExtendTest
       fullName: Tests.BricksSurfaceTests.SurfaceWithoutExtendTest
       resultStatus: 1
-      duration: 0.0005942
+      duration: 0.0007578
       messages: 
       output: 
       stacktrace: 
@@ -1501,7 +1518,7 @@ MonoBehaviour:
       name: FootFactorCalculatingTests
       fullName: Tests.FootFactorCalculatingTests
       resultStatus: 1
-      duration: 0.0117151
+      duration: 0.0217438
       messages: 
       output: 
       stacktrace: 
@@ -1517,7 +1534,7 @@ MonoBehaviour:
       name: CalculateFootFactorByGroundWithoutBricksTest
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorByGroundWithoutBricksTest
       resultStatus: 1
-      duration: 0.0019112
+      duration: 0.0029154
       messages: 
       output: 
       stacktrace: 
@@ -1534,7 +1551,7 @@ MonoBehaviour:
       name: CalculateFootFactorWithBricksTest
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithBricksTest
       resultStatus: 1
-      duration: 0.0007565
+      duration: 0.0011775
       messages: 
       output: 
       stacktrace: 
@@ -1546,12 +1563,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1032
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.FootFactorCalculatingTests][suite]
-    - id: 1035
-      uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.CalculateFootFactorWithDistanceCheckingWithoutBricks]
-      name: CalculateFootFactorWithDistanceCheckingWithoutBricks
-      fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithDistanceCheckingWithoutBricks
+    - id: 1025
+      uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.CalculateFootFactorWithLBlock]
+      name: CalculateFootFactorWithLBlock
+      fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithLBlock
       resultStatus: 1
-      duration: 0.0004212
+      duration: 0.0008332
       messages: 
       output: 
       stacktrace: 
@@ -1561,14 +1578,48 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1032
+      parentId: 1023
+      parentUniqueId: Tests.dll/Tests/[Tests][Tests.FootFactorCalculatingTests][suite]
+    - id: 1028
+      uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.DestroyBrickOnNegativeSupportTest]
+      name: DestroyBrickOnNegativeSupportTest
+      fullName: Tests.FootFactorCalculatingTests.DestroyBrickOnNegativeSupportTest
+      resultStatus: 1
+      duration: 0.0015958
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
+      parentUniqueId: Tests.dll/Tests/[Tests][Tests.FootFactorCalculatingTests][suite]
+    - id: 1027
+      uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.UnstableEffectStoppingOnSupportTest]
+      name: UnstableEffectStoppingOnSupportTest
+      fullName: Tests.FootFactorCalculatingTests.UnstableEffectStoppingOnSupportTest
+      resultStatus: 1
+      duration: 0.0044969
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.FootFactorCalculatingTests][suite]
     - id: 1036
       uniqueId: Tests.dll/Tests/[Tests][Tests.FootFactorDistanceCalculatingTests][suite]
       name: FootFactorDistanceCalculatingTests
       fullName: Tests.FootFactorDistanceCalculatingTests
       resultStatus: 1
-      duration: 0.0115185
+      duration: 0.0087906
       messages: 
       output: 
       stacktrace: 
@@ -1584,7 +1635,7 @@ MonoBehaviour:
       name: DistanceCalculatingWithoutBlocksTest
       fullName: Tests.FootFactorDistanceCalculatingTests.DistanceCalculatingWithoutBlocksTest
       resultStatus: 1
-      duration: 0.0029443
+      duration: 0.0013545
       messages: 
       output: 
       stacktrace: 
@@ -1601,7 +1652,7 @@ MonoBehaviour:
       name: HeighestPointTests
       fullName: Tests.HeighestPointTests
       resultStatus: 1
-      duration: 0.0126425
+      duration: 0.0090307
       messages: 
       output: 
       stacktrace: 
@@ -1617,7 +1668,7 @@ MonoBehaviour:
       name: HeighestPointTest
       fullName: Tests.HeighestPointTests.HeighestPointTest
       resultStatus: 1
-      duration: 0.0011372
+      duration: 0.0014532
       messages: 
       output: 
       stacktrace: 
@@ -1634,7 +1685,7 @@ MonoBehaviour:
       name: RotatedBrickCollisionTests
       fullName: Tests.RotatedBrickCollisionTests
       resultStatus: 1
-      duration: 0.0090931
+      duration: 0.0107663
       messages: 
       output: 
       stacktrace: 
@@ -1650,7 +1701,7 @@ MonoBehaviour:
       name: CorrectUpBlockFastLowering
       fullName: Tests.RotatedBrickCollisionTests.CorrectUpBlockFastLowering
       resultStatus: 1
-      duration: 0.0007863
+      duration: 0.0019793
       messages: 
       output: 
       stacktrace: 
@@ -1667,7 +1718,7 @@ MonoBehaviour:
       name: CorrectUpBlockLowering
       fullName: Tests.RotatedBrickCollisionTests.CorrectUpBlockLowering
       resultStatus: 1
-      duration: 0.0007333
+      duration: 0.0009231
       messages: 
       output: 
       stacktrace: 
@@ -1679,12 +1730,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1033
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.RotatedBrickCollisionTests][suite]
-    m_ResultText: HeighestPointTest (0,001s)
+    m_ResultText: GroupCrashingTest (0,002s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 9ec1c880
-      m_LastClickedID: -2134326882
+      m_SelectedIDs: e77aeee5
+      m_LastClickedID: -437355801
       m_ExpandedIDs: 604d49b57e13ccc57b2d0fd6878c50d6406f10d9e557abf7c3f8a5fbc6d5ba06a7c26707f8521a0a86e0d7118359db41dc7d8a4fab0d1f5927641a5affffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0

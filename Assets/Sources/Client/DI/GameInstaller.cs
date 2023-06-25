@@ -36,7 +36,7 @@ namespace Client.DI
             BricksDatabase bricksDatabase = new(placingSurface);
 
             // Создание фабрики для блока
-            IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickPatterns.AllPatterns, _startPosition, bricksDatabase);
+            IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickBlanks.AllPatterns, _startPosition, bricksDatabase);
             IBrickViewFactory brickViewFactory = new BrickViewFactory(_brickPrefab);
 
             // Создание фабрики для призрака

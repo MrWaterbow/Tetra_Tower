@@ -28,7 +28,6 @@ namespace Server.BrickLogic
 
         private BricksDatabase()
         {
-            //_heightMap = new();
             _bricksMap = new();
 
             _bricks = new();
@@ -77,6 +76,11 @@ namespace Server.BrickLogic
             }
         }
 
+        /// <summary>
+        /// Пробует найти значение по ключу в карте блоков и в случае неудачи добавляет такой элемент
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         private void SetOrAddIntoBricksMap(Vector3Int key, Brick value)
         {
             try
@@ -114,6 +118,10 @@ namespace Server.BrickLogic
             throw new System.Exception("tiles not found");
         }
 
+        /// <summary>
+        /// Контролируемый блок на земле
+        /// </summary>
+        /// <returns></returns>
         public bool ControllableBrickOnGround()
         {
             return PatternOnGround(ControllableBrick.Pattern, ControllableBrick.Position);
@@ -155,6 +163,11 @@ namespace Server.BrickLogic
             return onGround;
         }
 
+        /// <summary>
+        /// Получить блок по ключу
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public Brick GetBrickByKey(Vector3Int key)
         {
             if(_bricksMap.TryGetValue(key, out Brick value) == false)
@@ -174,6 +187,10 @@ namespace Server.BrickLogic
             return Surface.GetWorldPosition(ControllableBrick.Position);
         }
 
+        /// <summary>
+        /// Перерасчитывает наивысшую точку
+        /// </summary>
+        /// <param name="brick"></param>
         public void ComputeHeighestPoint(IReadOnlyBrick brick)
         {
             foreach (Vector3Int tile in brick.Pattern)
@@ -187,15 +204,24 @@ namespace Server.BrickLogic
             }
         }
 
+        /// <summary>
+        /// Разрушает блок с обновлением базы данных
+        /// </summary>
+        /// <param name="brick"></param>
         public void DestroyBrick(Brick brick)
         {
             _bricks.Remove(brick);
             ClearBricksMap(brick);
+            _heighestPoint--;
 
             brick.Destroy();
         }
 
-        private void ClearBricksMap(Brick brick)
+        /// <summary>
+        /// Очищает карту блоков
+        /// </summary>
+        /// <param name="brick"></param>
+        private void ClearBricksMap(IReadOnlyBrick brick)
         {
             foreach (Vector3Int patternTile in brick.Pattern)
             {
@@ -204,7 +230,40 @@ namespace Server.BrickLogic
                 _bricksMap.Remove(tilePosition);
             }
         }
+        
+        /// <summary>
+        /// Дает блоки соединенные с указанным сверху
+        /// </summary>
+        /// <param name="brick"></param>
+        public LinkedList<IReadOnlyBrick> GetUpperBricks(IReadOnlyBrick brick)
+        {
+            LinkedList<IReadOnlyBrick> upperBricks = new();
 
+            foreach (Vector3Int tile in brick.Pattern)
+            {
+                Vector3Int tilePosition = tile + brick.Position;
+                Vector3Int upperPosition = tilePosition + Vector3Int.up;
+
+                if(_bricksMap.TryGetValue(upperPosition, out Brick upperBrick))
+                {
+                    if (upperBrick == null) continue;
+
+                    upperBricks.AddLast(upperBrick);
+
+                    foreach (IReadOnlyBrick nextBrick in GetUpperBricks(upperBrick))
+                    {
+                        upperBricks.AddLast(nextBrick);
+                    }
+                }
+            }
+
+            return upperBricks;
+        }
+
+        /// <summary>
+        /// Добавляет блок без обновления базы данных
+        /// </summary>
+        /// <param name="brick"></param>
         public void AddBrick(Brick brick)
         {
             _bricks.Add(brick);
