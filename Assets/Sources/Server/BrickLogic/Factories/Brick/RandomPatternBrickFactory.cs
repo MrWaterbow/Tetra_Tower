@@ -39,7 +39,9 @@ namespace Server.Factories
             position.y = _database.HeighestPoint;
             position.y += _startPosition.y;
 
-            return new Brick(position, _patterns[Random.Range(0, _patterns.Length)].BrickPattern);
+            BrickBlank randomBlank = _patterns[Random.Range(0, _patterns.Length)];
+
+            return new Brick(position, randomBlank.Pattern, randomBlank.Matrix);
         }
     }
 }

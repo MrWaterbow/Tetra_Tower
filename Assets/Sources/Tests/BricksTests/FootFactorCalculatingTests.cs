@@ -21,7 +21,7 @@ namespace Tests
         [Test]
         public void CalculateFootFactorByGroundWithoutBricksTest()
         {
-            Brick brick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
 
             Assert.AreEqual(4f, _crashWrapper.ComputeFootFactor(brick));
 
@@ -41,7 +41,7 @@ namespace Tests
         [Test]
         public void CalculateFootFactorWithLBlock()
         {
-            Brick brick = new(Vector3Int.zero, BrickBlanks.LBlock.BrickPattern);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.LBrick);
 
             Assert.AreEqual(0.585786343f, _crashWrapper.ComputeFootFactor(brick));
 
@@ -53,9 +53,9 @@ namespace Tests
         [Test]
         public void CalculateFootFactorWithBricksTest()
         {
-            Brick groundBrick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
-            Brick groundBrick2 = new(Vector3Int.right * 2, BrickBlanks.OBlock.BrickPattern);
-            Brick mainBrick = new(Vector3Int.forward + Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
+            Brick groundBrick = new(Vector3Int.zero, BrickBlanks.OBrick);
+            Brick groundBrick2 = new(Vector3Int.right * 2, BrickBlanks.OBrick);
+            Brick mainBrick = new(Vector3Int.forward + Vector3Int.up, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(groundBrick);
             _database.AddBrickAndUpdateDatabase(groundBrick2);
@@ -70,8 +70,8 @@ namespace Tests
         [Test]
         public void UnstableEffectStoppingOnSupportTest()
         {
-            Brick unstableBrick = new(Vector3Int.left, BrickBlanks.OBlock.BrickPattern);
-            Brick supportingBrick = new(Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
+            Brick unstableBrick = new(Vector3Int.left, BrickBlanks.OBrick);
+            Brick supportingBrick = new(Vector3Int.up, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(unstableBrick);
             _database.AddBrickAndUpdateDatabase(supportingBrick);
@@ -79,14 +79,14 @@ namespace Tests
             Assert.AreEqual(0f, _crashWrapper.ComputeFootFactor(unstableBrick));
             Assert.AreEqual(0f, _crashWrapper.ComputeFootFactor(supportingBrick));
 
-            Brick helpingToSupportBrick = new(Vector3Int.right, BrickBlanks.OBlock.BrickPattern);
+            Brick helpingToSupportBrick = new(Vector3Int.right, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(helpingToSupportBrick);
 
             Assert.AreEqual(4f, _crashWrapper.ComputeFootFactor(supportingBrick));
             Assert.AreEqual(2f, _crashWrapper.ComputeFootFactor(unstableBrick));
 
-            Brick helpingToSupportBrick2 = new(Vector3Int.up * 2, BrickBlanks.OBlock.BrickPattern);
+            Brick helpingToSupportBrick2 = new(Vector3Int.up * 2, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(helpingToSupportBrick2);
 
@@ -96,8 +96,8 @@ namespace Tests
         [Test]
         public void DestroyBrickOnNegativeSupportTest()
         {
-            Brick destroyingBrick = new(Vector3Int.left, BrickBlanks.OBlock.BrickPattern);
-            Brick negativeBrick = new(Vector3Int.left * 2 + Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
+            Brick destroyingBrick = new(Vector3Int.left, BrickBlanks.OBrick);
+            Brick negativeBrick = new(Vector3Int.left * 2 + Vector3Int.up, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(destroyingBrick);
             _database.AddBrickAndUpdateDatabase(negativeBrick);

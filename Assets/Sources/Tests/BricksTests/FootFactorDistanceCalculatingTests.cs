@@ -21,7 +21,7 @@ namespace Tests
         [Test]
         public void DistanceCalculatingWithoutBlocksTest()
         {
-            Brick brick = new(Vector3Int.zero, BrickBlanks.LBlock.BrickPattern);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.LBrick);
 
             Assert.AreEqual(2f, _crashWrapper.ComputeDistanceFromNearUnstableTile(Vector3Int.right, brick));
             Assert.AreEqual(1f, _crashWrapper.ComputeDistanceFromNearUnstableTile(Vector3Int.zero, brick));

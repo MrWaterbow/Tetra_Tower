@@ -20,10 +20,10 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            _brick1 = new(Vector3Int.zero, BrickBlanks.LBlock.BrickPattern);
-            _brick2 = new(Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
-            _brick3 = new(Vector3Int.up * 2, BrickBlanks.OBlock.BrickPattern);
-            _brick4 = new(Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
+            _brick1 = new(Vector3Int.zero, BrickBlanks.LBrick);
+            _brick2 = new(Vector3Int.up, BrickBlanks.OBrick);
+            _brick3 = new(Vector3Int.up * 2, BrickBlanks.OBrick);
+            _brick4 = new(Vector3Int.up, BrickBlanks.OBrick);
             PlacingSurface surface = new(Vector2Int.one * 3, Vector3Int.one);
 
             _database = new(surface);

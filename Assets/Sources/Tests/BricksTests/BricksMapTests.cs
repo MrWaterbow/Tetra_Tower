@@ -17,8 +17,8 @@ namespace Tests
             PlacingSurface surface = new(Vector2Int.one * 3, Vector3.zero);
             _database = new(surface);
 
-            _brick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
-            _brick2 = new(Vector3Int.one, BrickBlanks.OBlock.BrickPattern);
+            _brick = new(Vector3Int.zero, BrickBlanks.OBrick);
+            _brick2 = new(Vector3Int.one, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(_brick);
             _database.AddBrickAndUpdateDatabase(_brick2);
