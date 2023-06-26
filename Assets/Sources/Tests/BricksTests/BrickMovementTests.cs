@@ -17,7 +17,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            Brick controlledBrick = new(Vector3Int.up * 5, BrickBlanks.LBlock.BrickPattern);
+            Brick controlledBrick = new(Vector3Int.up * 5, BrickBlanks.LBrick);
             PlacingSurface surface = new(Vector2Int.one * 3, Vector3Int.one);
 
             _database = new(surface);
@@ -74,8 +74,8 @@ namespace Tests
         [Test]
         public void MoveIntoBrickTest()
         {
-            Brick brick2 = new(new Vector3Int(2, 1), BrickBlanks.OBlock.BrickPattern);
-            Brick brick3 = new(new Vector3Int(1, 1), BrickBlanks.OBlock.BrickPattern);
+            Brick brick2 = new(new Vector3Int(2, 1), BrickBlanks.OBrick);
+            Brick brick3 = new(new Vector3Int(1, 1), BrickBlanks.OBrick);
 
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
@@ -104,7 +104,7 @@ namespace Tests
         [Test]
         public void LowerOnMinHeightTest()
         {
-            Brick brick = new(Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
+            Brick brick = new(Vector3Int.up, BrickBlanks.OBrick);
 
             _movementWrapper.LowerControllableBrickToGround();
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick);

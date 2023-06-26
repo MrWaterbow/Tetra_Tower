@@ -2,18 +2,6 @@
 
 namespace Server.BrickLogic
 {
-    public class BrickBlank
-    {
-        public readonly Vector3Int[] BrickPattern;
-        public readonly int[,] BrickMatrix;
-
-        public BrickBlank(Vector3Int[] brickPattern, int[,] brickMatrix)
-        {
-            BrickPattern = brickPattern;
-            BrickMatrix = brickMatrix;
-        }
-    }
-
     /// <summary>
     /// Паттерны блоков.
     /// </summary>
@@ -22,7 +10,7 @@ namespace Server.BrickLogic
         /// <summary>
         /// Заготовка L блока.
         /// </summary>
-        public static readonly BrickBlank LBlock = new(
+        public static readonly BrickBlank LBrick = new(
             new[] {
             Vector3Int.zero,
             Vector3Int.right,
@@ -30,13 +18,15 @@ namespace Server.BrickLogic
             Vector3Int.left + Vector3Int.forward, },
             new int[,]
             {
-
+                { 1, 0, 0 },
+                { 1, 1, 1 },
+                { 0, 0, 0 }
             });
 
         /// <summary>
         /// Заготовка O блока.
         /// </summary>
-        public static readonly BrickBlank OBlock = new(
+        public static readonly BrickBlank OBrick = new(
             new[] {
             Vector3Int.zero,
             Vector3Int.zero + Vector3Int.forward,
@@ -52,13 +42,13 @@ namespace Server.BrickLogic
         /// </summary>
         public static readonly BrickBlank[] AllPatterns = new[]
         {
-            OBlock,
-            LBlock,
+            OBrick,
+            LBrick,
         };
 
         public static class TestBlocks
         {
-            public static readonly BrickBlank UpBlock = new(
+            public static readonly BrickBlank UpBrick = new(
                 new[] {
                 Vector3Int.zero,
                 Vector3Int.up,

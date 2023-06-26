@@ -21,7 +21,7 @@ namespace Tests
         [Test]
         public void DestroyBlocksWithLowFootFactorTest()
         {
-            Brick brick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
             _database.AddBrick(brick);
             _crashWrapper.TryCrashAll();
 
@@ -36,8 +36,8 @@ namespace Tests
         [Test]
         public void BrickCrashingTestWithTwoBlocks()
         {
-            Brick brick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
-            Brick brick2 = new(Vector3Int.one, BrickBlanks.OBlock.BrickPattern);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
+            Brick brick2 = new(Vector3Int.one, BrickBlanks.OBrick);
 
             _database.AddBrickAndUpdateDatabase(brick);
             _database.AddBrickAndUpdateDatabase(brick2);
@@ -50,7 +50,7 @@ namespace Tests
         [Test]
         public void CrashingByGroundTest()
         {
-            Brick brick = new(Vector3Int.left * 2, BrickBlanks.LBlock.BrickPattern);
+            Brick brick = new(Vector3Int.left * 2, BrickBlanks.OBrick);
             _database.AddBrickAndUpdateDatabase(brick);
 
             Assert.AreEqual(1, _database.Bricks.Count);
@@ -63,8 +63,8 @@ namespace Tests
         [Test]
         public void GroupCrashingTest()
         {
-            Brick OBrick = new(Vector3Int.left, BrickBlanks.OBlock.BrickPattern);
-            Brick LBrick = new(Vector3Int.left + Vector3Int.up, BrickBlanks.LBlock.BrickPattern);
+            Brick OBrick = new(Vector3Int.left, BrickBlanks.OBrick);
+            Brick LBrick = new(Vector3Int.left + Vector3Int.up, BrickBlanks.LBrick);
             _database.AddBrickAndUpdateDatabase(OBrick);
             _database.AddBrickAndUpdateDatabase(LBrick);
 
@@ -74,6 +74,22 @@ namespace Tests
 
             Assert.AreEqual(0, _database.Bricks.Count);
             Assert.AreEqual(0, _database.HeighestPoint);
+        }
+
+        [Test]
+        public void NegativeSupportCrashTest()
+        {
+            Brick LBrick = new(Vector3Int.zero, BrickBlanks.LBrick);
+            Brick OBrick = new(Vector3Int.left * 2 + Vector3Int.up, BrickBlanks.OBrick);
+
+            _database.AddBrickAndUpdateDatabase(LBrick);
+            _database.AddBrickAndUpdateDatabase(OBrick);
+
+            Assert.AreEqual(2, _database.Bricks.Count);
+
+            _crashWrapper.TryCrashAll();
+
+            Assert.AreEqual(0, _database.Bricks.Count);
         }
     }
 }

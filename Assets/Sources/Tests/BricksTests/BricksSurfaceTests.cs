@@ -51,26 +51,26 @@ namespace Tests
         [Test]
         public void PatternsInsideSurfaceLimitsTest()
         {
-            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.one * 2));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.one * 2));
 
-            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.right * 2));
-            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.left));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.right * 2));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.left));
 
-            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.up * 2));
+            Assert.IsTrue(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.up * 2));
 
-            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.one * 3));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.one * 3));
 
-            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.right * 4));
-            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.left * 2));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.right * 4));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.left * 2));
 
-            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.up * 3));
-            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBlock.BrickPattern, Vector2Int.down));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.up * 3));
+            Assert.IsFalse(_surface.PatternIntoSurfaceTiles(BrickBlanks.LBrick.Pattern, Vector2Int.down));
         }
 
         [Test]
         public void SurfaceWithoutExtendTest()
         {
-            Brick brick = new(Vector3Int.zero, BrickBlanks.OBlock.BrickPattern);
+            Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
 
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
             _movementWrapper.TryMoveBrick(Vector3Int.left * 2);
@@ -81,8 +81,8 @@ namespace Tests
         [Test]
         public void SurfaceExtendTest()
         {
-            Brick brick = new(Vector3Int.left, BrickBlanks.OBlock.BrickPattern);
-            Brick brick2 = new(Vector3Int.up, BrickBlanks.OBlock.BrickPattern);
+            Brick brick = new(Vector3Int.left, BrickBlanks.OBrick);
+            Brick brick2 = new(Vector3Int.up, BrickBlanks.OBrick);
 
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
             _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
