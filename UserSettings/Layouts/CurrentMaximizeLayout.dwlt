@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 3239
+  controlID: -1
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 3205
+  controlID: -1
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 3197
+  controlID: -1
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -227,7 +227,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 3450ffff0053ffff0c55ffff1c57ffffcc5dffffae6affffe872fffff6a3ffff7cc2ffff9cc7ffff72cafffff0cdffffb6d0ffff0cd5ffffb8dbffffbadeffff7ee1ffff20e9ffff7eedffff00f1ffff28fbffff
+      m_ExpandedIDs: 28fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -713,7 +713,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 08750000
     m_LastClickedID: 29960
-    m_ExpandedIDs: 00000000087500000a7500000c7500000e75000010750000127500001475000016750000187500001a7500001c7500001e75000000ca9a3b
+    m_ExpandedIDs: 0000000006750000087500000a7500000c7500000e75000010750000127500001475000016750000187500001a7500001c750000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -741,7 +741,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000087500000a7500000c7500000e75000010750000127500001475000016750000187500001a7500001c7500001e75000000ca9a3b
+    m_ExpandedIDs: 0000000006750000087500000a7500000c7500000e75000010750000127500001475000016750000187500001a7500001c750000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -922,7 +922,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 3265
+    ID: 148
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -989,7 +989,7 @@ MonoBehaviour:
       name: Tetra_ Tower
       fullName: Tetra_ Tower
       resultStatus: 2
-      duration: 0.3256318
+      duration: 53.146393
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1005,7 +1005,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Github/Tetra_Tower/Library/ScriptAssemblies/Tests.dll
       resultStatus: 2
-      duration: 0.2980273
+      duration: 53.10375
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1021,7 +1021,7 @@ MonoBehaviour:
       name: Tests
       fullName: Tests
       resultStatus: 2
-      duration: 0.2922645
+      duration: 53.075344
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1037,7 +1037,7 @@ MonoBehaviour:
       name: BrickCrashingTests
       fullName: Tests.BrickCrashingTests
       resultStatus: 2
-      duration: 0.1446338
+      duration: 53.072098
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1121,7 +1121,7 @@ MonoBehaviour:
       name: NegativeSupportCrashTest
       fullName: Tests.BrickCrashingTests.NegativeSupportCrashTest
       resultStatus: 2
-      duration: 0.0138983
+      duration: 52.9958
       messages: "  Expected: 0\r\n  But was:  2\r\n"
       output: 
       stacktrace: 'at Tests.BrickCrashingTests.NegativeSupportCrashTest () [0x00078]
@@ -1705,12 +1705,17 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1046
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.RotatedBrickCollisionTests][suite]
-    m_ResultText: RotationLimitIfNotInSurfaceTest (0,002s)
-    m_ResultStacktrace: 
+    m_ResultText: "NegativeSupportCrashTest (52,996s)\n---\nExpected: 0\r\n  But
+      was:  2\n---\nat Tests.BrickCrashingTests.NegativeSupportCrashTest () [0x00078]
+      in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\BrickCrashingTests.cs:92"
+    m_ResultStacktrace: 'at Tests.BrickCrashingTests.NegativeSupportCrashTest ()
+      [0x00078] in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\BrickCrashingTests.cs:92
+
+'
     m_TestListState:
       scrollPos: {x: 0, y: 8}
-      m_SelectedIDs: 1a86fcbb
-      m_LastClickedID: -1141078502
+      m_SelectedIDs: fab7c584
+      m_LastClickedID: -2067417094
       m_ExpandedIDs: ebbba383604d49b57e13ccc57b2d0fd6878c50d6406f10d97f0762db170e37dc6e3560dce557abf7c3f8a5fbc6d5ba06a7c26707f8521a0a86e0d7118359db41dc7d8a4fab0d1f5927641a5affffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
