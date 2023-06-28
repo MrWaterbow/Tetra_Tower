@@ -9,7 +9,7 @@ namespace Client.BrickLogic
     internal sealed class BrickView : MonoBehaviour, IReadOnlyBrickView
     {
         /// <summary>
-        /// Transform ( компонент Unity )
+        /// Transform (компонент Unity)
         /// </summary>
         [SerializeField] private Transform _transform;
         [SerializeField] private BrickTileView _prefab;
@@ -77,6 +77,8 @@ namespace Client.BrickLogic
             IBrickViewPresenter brickPresenter)
         {
             controllablePresenter.OnPositionChanged += ChangePosition;
+            controllablePresenter.OnRotate90 += Rotate90;
+
             brickPresenter.UnstableWarning += UpdateUnstableEffect;
             brickPresenter.OnDestroy += Destroy;
 
@@ -90,6 +92,8 @@ namespace Client.BrickLogic
         public void DisposeCallbacks()
         {
             _controllablePresenter.OnPositionChanged -= ChangePosition;
+            _controllablePresenter.OnRotate90 -= Rotate90;
+
             _brickPresenter.UnstableWarning -= UpdateUnstableEffect;
             _brickPresenter.OnDestroy -= Destroy;
         }
@@ -102,6 +106,24 @@ namespace Client.BrickLogic
         {
             _transform.position = newPosition;
             //_transform.DOMove(newPosition, _changePositionSmoothTime);
+        }
+
+        private void Rotate90(Vector3Int[] pattern)
+        {
+            foreach (BrickTileView tileView in _tiles)
+            {
+                tileView.KillLoopUnstableEffect();
+                Destroy(tileView.gameObject);
+            }
+
+            _tiles.Clear();
+
+            CreateBlockByTiles(pattern);
+            SetTilesColor(GetRandomColor());
+
+            //print("Rotating");
+
+            //_transform.Rotate(Vector3.up, 90);
         }
 
         private void UpdateUnstableEffect(bool unstableWarning)

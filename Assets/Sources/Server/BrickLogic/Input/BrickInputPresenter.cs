@@ -7,16 +7,18 @@ namespace Server.BrickLogic
         /// <summary>
         /// Пространство блоков.
         /// </summary>
-        private readonly BrickMovementWrapper _brickMovementWrapper;
+        private readonly BrickMovementWrapper _movementWrapper;
+        private readonly BricksRotatingWrapper _rotatingWrapper;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="brickSpace">Пространство блоков</param>
         /// <param name="brickInputView">Реализация получения ввода от игрока</param>
-        public BrickInputPresenter(BrickMovementWrapper brickMovementWrapper)
+        public BrickInputPresenter(BrickMovementWrapper movementWrapper, BricksRotatingWrapper rotatingWrapper)
         {
-            _brickMovementWrapper = brickMovementWrapper;
+            _movementWrapper = movementWrapper;
+            _rotatingWrapper = rotatingWrapper;
         }
 
         /// <summary>
@@ -25,7 +27,12 @@ namespace Server.BrickLogic
         /// <param name="direction"></param>
         public void MoveTo(Vector3Int direction)
         {
-            _brickMovementWrapper.TryMoveBrick(direction);
+            _movementWrapper.TryMoveBrick(direction);
+        }
+
+        public void Rotate()
+        {
+            _rotatingWrapper.TryRotate90();
         }
 
         /// <summary>
@@ -33,7 +40,7 @@ namespace Server.BrickLogic
         /// </summary>
         public void ToGround()
         {
-            _brickMovementWrapper.LowerControllableBrickToGround();
+            _movementWrapper.LowerControllableBrickToGround();
         }
     }
 }

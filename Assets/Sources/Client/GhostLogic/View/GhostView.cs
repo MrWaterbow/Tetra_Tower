@@ -1,5 +1,4 @@
-﻿using Client.BrickLogic;
-using Server.GhostLogic;
+﻿using Server.GhostLogic;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,6 +60,7 @@ namespace Client.GhostLogic
         public void SetCallbacks(IGhostViewPresenter presenter)
         {
             presenter.OnPositionChanged += ChangePosition;
+            presenter.OnRotate90 += Rotate90;
 
             _presenter = presenter;
         }
@@ -71,6 +71,7 @@ namespace Client.GhostLogic
         public void SetCallbacks()
         {
             _presenter.OnPositionChanged += ChangePosition;
+            _presenter.OnRotate90 += Rotate90;
         }
 
         /// <summary>
@@ -79,33 +80,26 @@ namespace Client.GhostLogic
         public void DisposeCallbacks()
         {
             _presenter.OnPositionChanged -= ChangePosition;
+            _presenter.OnRotate90 -= Rotate90;
         }
 
         /// <summary>
         /// Изменяет позицию блока (использует DOTween).
         /// </summary>
         /// <param name="newPosition"></param>
-        public void ChangePosition(Vector3 newPosition)
+        private void ChangePosition(Vector3 newPosition)
         {
             _transform.position = newPosition;
         }
 
-        ///// <summary>
-        ///// Меняет меш призрака.
-        ///// </summary>
-        ///// <param name="mesh"></param>
-        //public void SetMesh(Mesh mesh)
-        //{
-        //    _meshFilter.mesh = mesh;
-        //}
+        private void Rotate90(Vector3Int[] pattern)
+        {
+            _transform.Rotate(Vector3.up, 90);
+        }
 
-        ///// <summary>
-        ///// Меняет цвет призрака.
-        ///// </summary>
-        ///// <param name="color"></param>
-        //public void SetColor(Color color)
-        //{
-        //    _meshRenderer.material.color = color;
-        //}
+        public void RefreshTransform()
+        {
+            _transform.eulerAngles = Vector3.zero;
+        }
     }
 }

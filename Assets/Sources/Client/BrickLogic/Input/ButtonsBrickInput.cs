@@ -13,6 +13,7 @@ namespace Client.BrickLogic
         [SerializeField] private Button _forwardButton;
         [SerializeField] private Button _backButton;
 
+        [SerializeField] private Button _rotateButton;
         [SerializeField] private Button _toGroundButton;
 
         private IBrickInputPresenter _presenter;
@@ -33,6 +34,7 @@ namespace Client.BrickLogic
             _forwardButton.onClick.AddListener(InvokeMoveForward);
             _backButton.onClick.AddListener(InvokeMoveBack);
 
+            _rotateButton.onClick.AddListener(InvokeRotate);
             _toGroundButton.onClick.AddListener(InvokeToGround);
         }
 
@@ -46,6 +48,7 @@ namespace Client.BrickLogic
             _forwardButton.onClick.RemoveListener(InvokeMoveForward);
             _backButton.onClick.RemoveListener(InvokeMoveBack);
 
+            _rotateButton.onClick.RemoveListener(InvokeRotate);
             _toGroundButton.onClick.RemoveListener(InvokeToGround);
         }
 
@@ -68,6 +71,11 @@ namespace Client.BrickLogic
         private void InvokeMoveBack()
         {
             _presenter.MoveTo(Vector3Int.back);
+        }
+        
+        private void InvokeRotate()
+        {
+            _presenter.Rotate();
         }
 
         private void InvokeToGround()

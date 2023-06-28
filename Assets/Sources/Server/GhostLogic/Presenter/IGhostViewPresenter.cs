@@ -12,6 +12,7 @@ namespace Server.GhostLogic
         /// Вызывается когда позиция меняется.
         /// </summary>
         event Action<Vector3> OnPositionChanged;
+        event Action<Vector3Int[]> OnRotate90;
         
         /// <summary>
         /// Подписывается и вызывает нужные ивенты.

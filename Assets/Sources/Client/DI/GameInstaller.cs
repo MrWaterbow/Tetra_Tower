@@ -44,6 +44,7 @@ namespace Client.DI
 
             // Создание модулей для работы с базой данных
             BrickMovementWrapper brickMovementWrapper = new(bricksDatabase);
+            BricksRotatingWrapper brickRotatingWrapper = new(bricksDatabase);
             BricksDatabaseAccess bricksDatabaseAccess = new(bricksDatabase);
             BricksCrashWrapper bricksCrashWrapper = new(bricksDatabase);
 
@@ -54,7 +55,7 @@ namespace Client.DI
             IGhostViewPresenter ghostPresenter = new GhostViewPresenter(bricksDatabase);
 
             // Создание презентера для кнопок управления
-            IBrickInputPresenter brickInputPresenter = new BrickInputPresenter(brickMovementWrapper);
+            IBrickInputPresenter brickInputPresenter = new BrickInputPresenter(brickMovementWrapper, brickRotatingWrapper);
 
             Container.Bind<IBrickFactory>().FromInstance(brickFactory).AsSingle();
             Container.Bind<IBrickViewFactory>().FromInstance(brickViewFactory).AsSingle();

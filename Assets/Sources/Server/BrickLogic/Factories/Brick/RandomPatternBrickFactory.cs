@@ -41,7 +41,7 @@ namespace Server.Factories
 
             BrickBlank randomBlank = _patterns[Random.Range(0, _patterns.Length)];
 
-            return new Brick(position, randomBlank.Pattern, randomBlank.Matrix);
+            return new Brick(position, randomBlank);
         }
     }
 }
