@@ -32,13 +32,13 @@ namespace Tests
             _crashWrapper = new(_database);
             _databaseAccess = new(_database);
 
-            _databaseAccess.ChangeAndAddRecentControllableBrick(_brick1);
+            _databaseAccess.SetAndAddRecentControllableBrick(_brick1);
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(_brick2);
+            _databaseAccess.SetAndAddRecentControllableBrick(_brick2);
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(_brick3);
+            _databaseAccess.SetAndAddRecentControllableBrick(_brick3);
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2 + Vector3Int.forward);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(_brick4);
+            _databaseAccess.SetAndAddRecentControllableBrick(_brick4);
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2 + Vector3Int.forward * 2);
         }
 

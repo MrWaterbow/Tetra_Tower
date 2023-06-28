@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RotationBlank = Server.BrickLogic.BricksPatternRotationBlanks;
 
 namespace Server.BrickLogic
 {
@@ -16,36 +17,31 @@ namespace Server.BrickLogic
             Vector3Int.right,
             Vector3Int.left,
             Vector3Int.left + Vector3Int.forward, },
-            new int[,]
+            new Vector3Int[][]
             {
-                { 1, 0, 0 },
-                { 1, 1, 1 },
-                { 0, 0, 0 }
-            },
-            new(1, 1));
+                RotationBlank.LBlock0DegressRotated,
+                RotationBlank.LBlock90DegressRotated,
+                RotationBlank.LBlock180DegressRotated,
+                RotationBlank.LBlock270DegressRotated
+            });
+            
 
         /// <summary>
         /// Заготовка O блока.
         /// </summary>
         public static readonly BrickBlank OBrick = new(
-            new[] {
-            Vector3Int.zero,
-            Vector3Int.zero + Vector3Int.forward,
-            Vector3Int.right,
-            Vector3Int.right + Vector3Int.forward, },
-            new int[,]
+            RotationBlank.OBlockStaticPattern,
+            new Vector3Int[][]
             {
-                { 1, 1 },
-                { 1, 1 }
-            },
-            new(0, 1));
+                RotationBlank.OBlockStaticPattern
+            });
 
         /// <summary>
         /// Список всех возможных паттернов блока.
         /// </summary>
         public static readonly BrickBlank[] AllPatterns = new[]
         {
-            //OBrick,
+            OBrick,
             LBrick,
         };
 
@@ -56,12 +52,7 @@ namespace Server.BrickLogic
                 Vector3Int.zero,
                 Vector3Int.up,
                 Vector3Int.right + Vector3Int.up },
-                new int[,]
-                {
-                    { 1, 1 },
-                    { 1, 1 }
-                },
-                Vector2Int.zero);
+                new Vector3Int[1][]);
         }
     }
 }

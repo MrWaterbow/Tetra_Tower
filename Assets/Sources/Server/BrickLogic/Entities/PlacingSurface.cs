@@ -85,6 +85,11 @@ namespace Server.BrickLogic
                 SurfaceTiles.Add(key);
             }
         }
+
+        public void DeleteSurfaceTile(Vector2Int tile)
+        {
+            SurfaceTiles.Remove(tile);
+        }
         
         /// <summary>
         /// Расчитывает и возвращает позицию относительно мировых координат.

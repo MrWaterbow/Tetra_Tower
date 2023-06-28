@@ -14,6 +14,7 @@ namespace Tests
         private BricksDatabase _database;
         private BrickMovementWrapper _movementWrapper;
         private BricksDatabaseAccess _databaseAccess;
+        private BricksCrashWrapper _crashWrapper;
 
         [SetUp]
         public void Setup()
@@ -22,6 +23,7 @@ namespace Tests
             _database = new(_surface);
             _movementWrapper = new(_database);
             _databaseAccess = new(_database);
+            _crashWrapper = new(_database);
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace Tests
         {
             Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
 
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick);
             _movementWrapper.TryMoveBrick(Vector3Int.left * 2);
 
             Assert.AreEqual(Vector3Int.zero, brick.Position);
@@ -84,8 +86,8 @@ namespace Tests
             Brick brick = new(Vector3Int.left, BrickBlanks.OBrick);
             Brick brick2 = new(Vector3Int.up, BrickBlanks.OBrick);
 
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick2);
 
             _movementWrapper.TryMoveBrick(Vector3Int.left * 3);
 
@@ -94,6 +96,24 @@ namespace Tests
             _movementWrapper.TryMoveBrick(Vector3Int.left * 2);
 
             Assert.AreEqual(Vector3Int.left * 2 + Vector3Int.up, brick2.Position);
+        }
+
+        [Test]
+        public void ClearExtendOnCrashTest()
+        {
+            Brick brick = new(Vector3Int.left, BrickBlanks.OBrick);
+
+            _databaseAccess.SetAndAddRecentControllableBrick(brick);
+            _movementWrapper.LowerControllableBrickToGround();
+            _databaseAccess.PlaceControllableBrick();
+
+            Assert.IsTrue(_database.Surface.SurfaceTiles.Contains(Vector2Int.left));
+            Assert.IsTrue(_database.Surface.SurfaceTiles.Contains(Vector2Int.left + Vector2Int.up));
+
+            _crashWrapper.CrashAll();
+
+            Assert.IsFalse(_database.Surface.SurfaceTiles.Contains(Vector2Int.left));
+            Assert.IsFalse(_database.Surface.SurfaceTiles.Contains(Vector2Int.left + Vector2Int.up));
         }
     }
 }

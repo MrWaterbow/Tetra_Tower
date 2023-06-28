@@ -19,7 +19,7 @@
         /// Меняет управляемый игроком блок и добавляет новый в список блоков
         /// </summary>
         /// <param name="brick"></param>
-        public void ChangeAndAddRecentControllableBrick(Brick brick)
+        public void SetAndAddRecentControllableBrick(Brick brick)
         {
             if (_database.ControllableBrick != null)
             {

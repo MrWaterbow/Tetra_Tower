@@ -75,7 +75,7 @@ namespace Client.BrickLogic
         {
             Brick brick = _brickFactory.Create();
 
-            _brickDatabaseAccess.ChangeAndAddRecentControllableBrick(brick);
+            _brickDatabaseAccess.SetAndAddRecentControllableBrick(brick);
 
             CreateBlockView();
         }
