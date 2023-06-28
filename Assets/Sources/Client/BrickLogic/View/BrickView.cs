@@ -1,8 +1,6 @@
-using DG.Tweening;
 using Server.BrickLogic;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace Client.BrickLogic
 {
