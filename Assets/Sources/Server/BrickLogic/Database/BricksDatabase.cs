@@ -212,6 +212,7 @@ namespace Server.BrickLogic
         {
             _bricks.Remove(brick);
             ClearBricksMap(brick);
+            ClearSurfaceExtend(brick);
             _heighestPoint--;
 
             brick.Destroy();
@@ -228,6 +229,20 @@ namespace Server.BrickLogic
                 Vector3Int tilePosition = patternTile + brick.Position;
 
                 _bricksMap.Remove(tilePosition);
+            }
+        }
+
+        private void ClearSurfaceExtend(IReadOnlyBrick brick)
+        {
+            foreach (Vector3Int patternTile in brick.Pattern)
+            {
+                Vector3Int tilePosition = patternTile + brick.Position;
+                Vector2Int tileKeyPosition = new(tilePosition.x, tilePosition.z);
+
+                if(Surface.PositionIntoSurfaceSize(tileKeyPosition) == false)
+                {
+                    Surface.DeleteSurfaceTile(tileKeyPosition);
+                }
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Server.BrickLogic
@@ -25,8 +26,6 @@ namespace Server.BrickLogic
         /// Возвращает копию паттерна блока.
         /// </summary>
         Vector3Int[] Pattern { get; }
-        int[,] Matrix { get; }
-        int MatrixColumnLength { get; }
 
         bool UnstableEffect { get; }
     }

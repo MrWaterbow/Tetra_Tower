@@ -5,14 +5,12 @@ namespace Server.BrickLogic
     public readonly struct BrickBlank
     {
         public readonly Vector3Int[] Pattern;
-        public readonly int[,] Matrix;
-        public readonly Vector2Int Center;
+        public readonly Vector3Int[][] PatternRotation;
 
-        public BrickBlank(Vector3Int[] brickPattern, int[,] brickMatrix, Vector2Int center)
+        public BrickBlank(Vector3Int[] brickPattern, Vector3Int[][] patternRotation)
         {
             Pattern = brickPattern;
-            Matrix = brickMatrix;
-            Center = center;
+            PatternRotation = patternRotation;
         }
     }
 }

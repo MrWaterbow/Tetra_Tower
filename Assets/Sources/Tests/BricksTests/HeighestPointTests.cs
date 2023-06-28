@@ -33,8 +33,8 @@ namespace Tests
 
             Assert.AreEqual(0, _database.HeighestPoint);
 
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(upBrick);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick);
+            _databaseAccess.SetAndAddRecentControllableBrick(upBrick);
 
             Assert.AreEqual(1, _database.HeighestPoint);
 

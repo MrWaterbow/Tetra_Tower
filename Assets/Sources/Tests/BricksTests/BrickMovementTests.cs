@@ -25,7 +25,7 @@ namespace Tests
             _movementWrapper = new(_database);
             _databaseAccess = new(_database);
 
-            _databaseAccess.ChangeAndAddRecentControllableBrick(controlledBrick);
+            _databaseAccess.SetAndAddRecentControllableBrick(controlledBrick);
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Tests
             Brick brick3 = new(new Vector3Int(1, 1), BrickBlanks.OBrick);
 
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick2);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick2);
             _movementWrapper.TryMoveBrick(Vector3Int.right * 2);
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick3);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick3);
             _movementWrapper.TryMoveBrick(Vector3Int.right);
 
             Assert.AreEqual(new Vector3Int(1, 1), brick3.Position);
@@ -107,7 +107,7 @@ namespace Tests
             Brick brick = new(Vector3Int.up, BrickBlanks.OBrick);
 
             _movementWrapper.LowerControllableBrickToGround();
-            _databaseAccess.ChangeAndAddRecentControllableBrick(brick);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick);
             _movementWrapper.LowerBrickAndCheckGrounding();
         }
     }

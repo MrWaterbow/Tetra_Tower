@@ -29,9 +29,9 @@ namespace Server.BrickLogic
         /// Массив кубиков из которых состоит блок.
         /// </summary>
         private Vector3Int[] _pattern;
-        private int[,] _matrix;
-        private readonly int _matrixColumnLength;
-        private readonly Vector2Int _center;
+        private Vector3Int[][] _patternRotation;
+        private int _rotationCounter;
+        private readonly int _rotationCounterBorder;
 
         private bool _unstableEffect;
 
@@ -45,23 +45,18 @@ namespace Server.BrickLogic
         /// </summary>
         /// <param name="position">Позиция блока</param>
         /// <param name="pattern">Массив кубиков из которых состоит блок</param>
-        public Brick(Vector3Int position, Vector3Int[] pattern, int[,] matrix, Vector2Int center) : this(position)
+        public Brick(Vector3Int position, Vector3Int[] pattern, Vector3Int[][] rotationPattern) : this(position)
         {
             _pattern = pattern;
-            _matrix = matrix;
-            _matrixColumnLength = ComputeColumnLength(matrix.Length);
-            _center = center;
+            _patternRotation = rotationPattern;
+            _rotationCounter = 1;
+            _rotationCounterBorder = rotationPattern.Length;
         }
 
         public Brick(Vector3Int position, BrickBlank blank) : 
-            this(position, blank.Pattern, blank.Matrix, blank.Center)
+            this(position, blank.Pattern, blank.PatternRotation)
         {
 
-        }
-
-        private int ComputeColumnLength(int length)
-        {
-            return (int)Mathf.Sqrt(length);
         }
 
         /// <summary>
@@ -72,8 +67,6 @@ namespace Server.BrickLogic
         /// Возвращает копию паттерна блока.
         /// </summary>
         public Vector3Int[] Pattern => _pattern;
-        public int[,] Matrix => _matrix;
-        public int MatrixColumnLength => _matrixColumnLength;
 
         public bool UnstableEffect => _unstableEffect;
 
@@ -90,84 +83,33 @@ namespace Server.BrickLogic
 
         public void Rotate90()
         {
-            int[,] rotatedMatrix = new int[_matrixColumnLength, _matrixColumnLength];
+            if (_rotationCounterBorder == 1) return;
 
-            for (int i = 0; i < _matrixColumnLength; i++)
+            if(_rotationCounter == _rotationCounterBorder)
             {
-                for (int j = 0; j < _matrixColumnLength; j++)
-                {
-                    rotatedMatrix[i, j] = _matrix[_matrixColumnLength - j - 1, i];
-                }
+                _rotationCounter = 1;
+            }
+            else
+            {
+                _rotationCounter++;
             }
 
-            _matrix = rotatedMatrix;
-
-            UpdatePatternByMatrix();
+            _pattern = _patternRotation[_rotationCounter - 1];
 
             OnRotate90?.Invoke(_pattern);
+            OnPositionChanged?.Invoke(_position);
         }
-
-        public void RotateMinus90()
+        
+        public Vector3Int[] GetFeatureRotatePattern()
         {
-            int[,] rotatedMatrix = new int[_matrixColumnLength, _matrixColumnLength];
-
-            for (int i = 0; i < _matrixColumnLength; i++)
+            if(_rotationCounter == _rotationCounterBorder)
             {
-                for (int j = 0; j < _matrixColumnLength; j++)
-                {
-                    rotatedMatrix[_matrixColumnLength - j - 1, i] = _matrix[i, j];
-                }
+                return _patternRotation[0];
             }
-
-            _matrix = rotatedMatrix;
-
-            UpdatePatternByMatrix();
-        }
-
-        private void UpdatePatternByMatrix()
-        {
-            _pattern = GetPatternByMatrix(GetIndicesOfMatrix()).ToArray();
-        }
-
-        public LinkedList<Vector3Int> GetPatternByMatrix(LinkedList<Vector2Int> rawIndices)
-        {
-            LinkedList<Vector3Int> directions = new();
-
-            foreach (Vector2Int index in rawIndices)
+            else
             {
-                // ( 0, 1 )
-                // ( 0, 1 ) - ( 1, 1 ) = ( -1, 0 )
-
-                //Vector2Int indexDirection = index - _center;
-                Vector3Int direction = new(index.x, 0, index.y);
-
-                //if(direction.x != 0)
-                //{
-                //    direction.y = 1;
-                //}
-
-                directions.AddLast(direction);
+                return _patternRotation[_rotationCounter];
             }
-
-            return directions;
-        }
-
-        public LinkedList<Vector2Int> GetIndicesOfMatrix()
-        {
-            LinkedList<Vector2Int> result = new();
-
-            for (int i = 0; i < _matrixColumnLength; i++)
-            {
-                for (int j = 0; j < _matrixColumnLength; j++)
-                {
-                    if (_matrix[j, i] == 1)
-                    {
-                        result.AddLast(new Vector2Int(j, i));
-                    }
-                }
-            }
-
-            return result;
         }
 
         /// <summary>
