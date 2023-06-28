@@ -2,7 +2,6 @@ using Client.BrickLogic;
 using Client.GhostLogic;
 using Server.BrickLogic;
 using Server.Factories;
-using Server.GhostLogic;
 using UnityEngine;
 using Zenject;
 
@@ -48,12 +47,6 @@ namespace Client.DI
             BricksDatabaseAccess bricksDatabaseAccess = new(bricksDatabase);
             BricksCrashWrapper bricksCrashWrapper = new(bricksDatabase);
 
-            // Создание презентера для блока
-            IControllableBrickViewPresenter controllablePresenter = new ControllableBrickViewPresenter(bricksDatabase);
-
-            // Создание презентера для призрака
-            IGhostViewPresenter ghostPresenter = new GhostViewPresenter(bricksDatabase);
-
             // Создание презентера для кнопок управления
             IBrickInputPresenter brickInputPresenter = new BrickInputPresenter(brickMovementWrapper, brickRotatingWrapper);
 
@@ -64,8 +57,6 @@ namespace Client.DI
             Container.Bind<BrickMovementWrapper>().FromInstance(brickMovementWrapper).AsSingle();
             Container.Bind<BricksDatabaseAccess>().FromInstance(bricksDatabaseAccess).AsSingle();
             Container.Bind<BricksCrashWrapper>().FromInstance(bricksCrashWrapper).AsSingle();
-            Container.Bind<IControllableBrickViewPresenter>().FromInstance(controllablePresenter).AsSingle();
-            Container.Bind<IGhostViewPresenter>().FromInstance(ghostPresenter).AsSingle();
             Container.Bind<IBrickInputPresenter>().FromInstance(brickInputPresenter).AsSingle();
             Container.Bind<IBricksRuntimeData>().FromInstance(_brickBootstrapper).AsSingle();
         }
