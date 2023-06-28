@@ -146,7 +146,7 @@ namespace Server.BrickLogic
             {
                 foreach (Vector3Int tile in processBrick.Pattern)
                 {
-                    Vector3Int tilePosition = brick.Position + tile;
+                    Vector3Int tilePosition = processBrick.Position + tile;
                     Vector3Int bricksMapKey = tilePosition - Vector3Int.up;
                     Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
@@ -184,7 +184,7 @@ namespace Server.BrickLogic
 
         private bool IsStableTile(Vector3Int tilePosition, Vector3Int bricksMapKey, Vector2Int heightMapKey)
         {
-            if (_database.GetBrickByKey(bricksMapKey) != null || tilePosition.y <= 0 && _database.Surface.PositionIntoSurfaceSize(heightMapKey))
+            if (_database.GetBrickByKey(bricksMapKey) != null || bricksMapKey.y < 0 && _database.Surface.PositionIntoSurfaceSize(heightMapKey) && _database.Surface.PositionIntoSurfaceTiles(heightMapKey))
             {
                 return true;
             }
