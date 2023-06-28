@@ -1,7 +1,6 @@
 ﻿using Client.BootstrapperLogic;
 using Client.BrickLogic;
 using Server.BrickLogic;
-using Server.GhostLogic;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +16,6 @@ namespace Client.GhostLogic
         private GhostView _instance;
 
         private IReadOnlyBricksDatabase _database;
-        private IGhostViewPresenter _ghostViewPresenter;
         private IGhostViewFactory _ghostViewFactory;
         private IBricksRuntimeData _runtimeData;
         private BrickMovementWrapper _brickMovementWrapper;
@@ -25,13 +23,11 @@ namespace Client.GhostLogic
         [Inject]
         private void Constructor(
             IReadOnlyBricksDatabase database,
-            IGhostViewPresenter ghostViewPresenter,
             IGhostViewFactory ghostViewFactory,
             IBricksRuntimeData runtimeData,
             BrickMovementWrapper brickMovementWrapper)
         {
             _database = database;
-            _ghostViewPresenter = ghostViewPresenter;
             _ghostViewFactory = ghostViewFactory;
             _runtimeData = runtimeData;
             _brickMovementWrapper = brickMovementWrapper;
@@ -55,7 +51,7 @@ namespace Client.GhostLogic
             DisposeCallbacks();
 
             _instance = _ghostViewFactory.Create();
-            _instance.SetCallbacks(_ghostViewPresenter);
+            _instance.SetCallbacks(_database);
 
             SetPresenterCallbacksAndInvoke();
         }
@@ -68,7 +64,7 @@ namespace Client.GhostLogic
             DisposeCallbacks();
 
             _instance.RefreshTransform();
-            _instance.SetCallbacks();
+            _instance.SetCallbacks(_database);
 
             SetPresenterCallbacksAndInvoke();
         }
@@ -78,8 +74,6 @@ namespace Client.GhostLogic
         /// </summary>
         private void SetPresenterCallbacksAndInvoke()
         {
-            _ghostViewPresenter.SetAndInvokeCallbacks();
-
             ChangeGhostView();
         }
 
@@ -89,7 +83,6 @@ namespace Client.GhostLogic
         private void DisposeCallbacks()
         {
             _instance?.DisposeCallbacks();
-            _ghostViewPresenter?.DisposeCallbacks();
         }
 
         /// <summary>

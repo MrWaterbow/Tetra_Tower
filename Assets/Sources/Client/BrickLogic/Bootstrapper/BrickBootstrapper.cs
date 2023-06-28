@@ -27,7 +27,6 @@ namespace Client.BrickLogic
         private float _lowerTimer;
 
         private IBrickViewFactory _brickViewFactory;
-        private IControllableBrickViewPresenter _controllableViewPresenter;
         private IBrickFactory _brickFactory;
         private IReadOnlyBricksDatabase _database;
         private BrickMovementWrapper _brickMovementWrapper;
@@ -37,7 +36,6 @@ namespace Client.BrickLogic
         [Inject]
         private void Constructor(
             IBrickViewFactory brickViewFactory,
-            IControllableBrickViewPresenter controllableViewPresenter,
             IBrickFactory brickFactory,
             IReadOnlyBricksDatabase database,
             BrickMovementWrapper brickMovementWrapper,
@@ -45,7 +43,6 @@ namespace Client.BrickLogic
             BricksCrashWrapper bricksCrashWrapper)
         {
             _brickViewFactory = brickViewFactory;
-            _controllableViewPresenter = controllableViewPresenter;
             _brickFactory = brickFactory;
             _database = database;
             _brickMovementWrapper = brickMovementWrapper;
@@ -92,14 +89,9 @@ namespace Client.BrickLogic
         private void CreateBlockView()
         {
             _currentBrickView?.DisposeCallbacks();
-            _controllableViewPresenter?.DisposeCallbacks();
 
             _currentBrickView = _brickViewFactory.Create(_database.GetControllableBrickWorldPosition(), _database.ControllableBrick.Pattern);
-            BrickViewPresenter brickPresenter = new(_database.ControllableBrick);
-            _currentBrickView.SetCallbacks(_controllableViewPresenter, brickPresenter);
-            brickPresenter.SetCallbacks();
-
-            _controllableViewPresenter.SetAndInvokeCallbacks();
+            _currentBrickView.SetCallbacks(_database.ControllableBrick, _database.Surface);
         }
 
         private void Update()

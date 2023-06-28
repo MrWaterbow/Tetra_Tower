@@ -22,12 +22,14 @@ namespace Client.BrickLogic
         [SerializeField] private float _destroyTimer;
         [SerializeField] private float _unstableTimer;
 
-        private IControllableBrickViewPresenter _controllablePresenter;
-        private IBrickViewPresenter _brickPresenter;
+        private PlacingSurface _placingSurface;
+        private IReadOnlyBrick _brick;
         private ITileViewFactory _tileFactory;
 
         private List<BrickTileView> _tiles;
         private Color _generalColor;
+
+        private Color _randomColor;
 
         private bool _unstableEffect;
 
@@ -37,7 +39,9 @@ namespace Client.BrickLogic
             _tiles = new();
 
             CreateBlockByTiles(pattern);
-            SetTilesColor(GetRandomColor());
+
+            _randomColor = GetRandomColor();
+            SetTilesColor(_randomColor);
         }
 
         /// <summary>
@@ -71,17 +75,18 @@ namespace Client.BrickLogic
         public Mesh Mesh => _prefab.Mesh;
         public Color GeneralColor => _generalColor;
 
-        public void SetCallbacks(IControllableBrickViewPresenter controllablePresenter,
-            IBrickViewPresenter brickPresenter)
+        public void SetCallbacks(IReadOnlyBrick brick, PlacingSurface placingSurface)
         {
-            controllablePresenter.OnPositionChanged += ChangePosition;
-            controllablePresenter.OnRotate90 += Rotate90;
+            _placingSurface = placingSurface;
+            _brick = brick;
 
-            brickPresenter.UnstableWarning += UpdateUnstableEffect;
-            brickPresenter.OnDestroy += Destroy;
+            _brick.OnPositionChanged += ChangePosition;
+            _brick.OnRotate90 += Rotate90;
 
-            _controllablePresenter = controllablePresenter;
-            _brickPresenter = brickPresenter;
+            _brick.UnstableWarning += UpdateUnstableEffect;
+            _brick.OnDestroy += Destroy;
+
+            ChangePosition(brick.Position);
         }
 
         /// <summary>
@@ -89,25 +94,24 @@ namespace Client.BrickLogic
         /// </summary>
         public void DisposeCallbacks()
         {
-            _controllablePresenter.OnPositionChanged -= ChangePosition;
-            _controllablePresenter.OnRotate90 -= Rotate90;
-
-            _brickPresenter.UnstableWarning -= UpdateUnstableEffect;
-            _brickPresenter.OnDestroy -= Destroy;
+            _brick.OnPositionChanged -= ChangePosition;
+            _brick.OnRotate90 -= Rotate90;
         }
 
         /// <summary>
         /// Изменяет позицию блока ( использует DOTween )
         /// </summary>
         /// <param name="newPosition"></param>
-        private void ChangePosition(Vector3 newPosition)
+        private void ChangePosition(Vector3Int newPosition)
         {
-            _transform.position = newPosition;
-            //_transform.DOMove(newPosition, _changePositionSmoothTime);
+            Vector3 worldPosition = _placingSurface.GetWorldPosition(newPosition);
+
+            _transform.position = worldPosition;
         }
 
         private void Rotate90(Vector3Int[] pattern)
         {
+#if UNITY_EDITOR
             foreach (BrickTileView tileView in _tiles)
             {
                 tileView.KillLoopUnstableEffect();
@@ -117,11 +121,10 @@ namespace Client.BrickLogic
             _tiles.Clear();
 
             CreateBlockByTiles(pattern);
-            SetTilesColor(GetRandomColor());
-
-            //print("Rotating");
-
-            //_transform.Rotate(Vector3.up, 90);
+            SetTilesColor(_randomColor);
+#else
+            _transform.Rotate(Vector3.up, 90);
+#endif
         }
 
         private void UpdateUnstableEffect(bool unstableWarning)

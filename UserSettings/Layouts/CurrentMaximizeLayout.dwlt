@@ -45,10 +45,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 583
+    x: 893
     y: 69
-    width: 886
-    height: 680
+    width: 576
+    height: 616
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 0
+    m_HSlider: 1
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
@@ -95,23 +95,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 886
-      height: 659
-    m_Scale: {x: 0.46145833, y: 0.46145833}
-    m_Translation: {x: 443, y: 329.5}
+      width: 576
+      height: 595
+    m_Scale: {x: 0.3, y: 0.3}
+    m_Translation: {x: 287.99997, y: 297.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -960
-      y: -714.04065
-      width: 1920
-      height: 1428.0813
+      x: -959.9999
+      y: -991.6666
+      width: 1919.9999
+      height: 1983.3333
     m_MinimalGUI: 1
-  m_defaultScale: 0.46145833
-  m_LastWindowPixelSize: {x: 886, y: 680}
+  m_defaultScale: 0.3
+  m_LastWindowPixelSize: {x: 576, y: 616}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -163,7 +163,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1471
-    height: 701
+    height: 637
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 197
-    height: 701
+    height: 637
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
@@ -217,7 +217,7 @@ MonoBehaviour:
     x: 0
     y: 69
     width: 196
-    height: 680
+    height: 616
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -227,7 +227,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 28fbffff
+      m_ExpandedIDs: a0e5ffff20fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -268,8 +268,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 197
     y: 0
-    width: 386
-    height: 701
+    width: 696
+    height: 637
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 8}
@@ -299,8 +299,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 197
     y: 69
-    width: 384
-    height: 680
+    width: 694
+    height: 616
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -619,10 +619,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 583
+    x: 893
     y: 0
-    width: 888
-    height: 701
+    width: 578
+    height: 637
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
@@ -646,11 +646,11 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 701
+    y: 637
     width: 1471
-    height: 260
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+    height: 324
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 11}
@@ -678,9 +678,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 770
+    y: 706
     width: 1470
-    height: 239
+    height: 303
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -698,22 +698,22 @@ MonoBehaviour:
     m_SkipHidden: 1
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Content/Prefabs/Enemies
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Content/Prefabs/Enemies
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Github\Tetra_Tower
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 08750000
-    m_LastClickedID: 29960
-    m_ExpandedIDs: 0000000006750000087500000a7500000c7500000e75000010750000127500001475000016750000187500001a7500001c750000
+    scrollPos: {x: 0, y: 120}
+    m_SelectedIDs: 6a920000
+    m_LastClickedID: 37482
+    m_ExpandedIDs: 0000000010750000127500001475000016750000187500001a7500001c7500001e7500002075000022750000247500002675000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -741,7 +741,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000006750000087500000a7500000c7500000e75000010750000127500001475000016750000187500001a7500001c750000
+    m_ExpandedIDs: 0000000010750000127500001475000016750000187500001a7500001c7500001e7500002075000022750000247500002675000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300000000000092720000389900009e760000c87600004673000020800000b0800000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -818,9 +818,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 770
+    y: 706
     width: 1470
-    height: 239
+    height: 303
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -922,7 +922,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 148
+    ID: 1284
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -989,7 +989,7 @@ MonoBehaviour:
       name: Tetra_ Tower
       fullName: Tetra_ Tower
       resultStatus: 2
-      duration: 53.146393
+      duration: 0.2830076
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1005,7 +1005,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Github/Tetra_Tower/Library/ScriptAssemblies/Tests.dll
       resultStatus: 2
-      duration: 53.10375
+      duration: 0.2609617
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1021,7 +1021,7 @@ MonoBehaviour:
       name: Tests
       fullName: Tests
       resultStatus: 2
-      duration: 53.075344
+      duration: 0.2576587
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1037,7 +1037,7 @@ MonoBehaviour:
       name: BrickCrashingTests
       fullName: Tests.BrickCrashingTests
       resultStatus: 2
-      duration: 53.072098
+      duration: 0.0975513
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1053,7 +1053,7 @@ MonoBehaviour:
       name: BrickCrashingTestWithTwoBlocks
       fullName: Tests.BrickCrashingTests.BrickCrashingTestWithTwoBlocks
       resultStatus: 1
-      duration: 0.0775456
+      duration: 0.0439631
       messages: 
       output: 
       stacktrace: 
@@ -1070,7 +1070,7 @@ MonoBehaviour:
       name: CrashingByGroundTest
       fullName: Tests.BrickCrashingTests.CrashingByGroundTest
       resultStatus: 1
-      duration: 0.0014337
+      duration: 0.0013655
       messages: 
       output: 
       stacktrace: 
@@ -1087,7 +1087,7 @@ MonoBehaviour:
       name: DestroyBlocksWithLowFootFactorTest
       fullName: Tests.BrickCrashingTests.DestroyBlocksWithLowFootFactorTest
       resultStatus: 1
-      duration: 0.0008665
+      duration: 0.0012672
       messages: 
       output: 
       stacktrace: 
@@ -1104,7 +1104,7 @@ MonoBehaviour:
       name: GroupCrashingTest
       fullName: Tests.BrickCrashingTests.GroupCrashingTest
       resultStatus: 1
-      duration: 0.0015034
+      duration: 0.0017839
       messages: 
       output: 
       stacktrace: 
@@ -1121,7 +1121,7 @@ MonoBehaviour:
       name: NegativeSupportCrashTest
       fullName: Tests.BrickCrashingTests.NegativeSupportCrashTest
       resultStatus: 2
-      duration: 52.9958
+      duration: 0.0148634
       messages: "  Expected: 0\r\n  But was:  2\r\n"
       output: 
       stacktrace: 'at Tests.BrickCrashingTests.NegativeSupportCrashTest () [0x00078]
@@ -1141,7 +1141,7 @@ MonoBehaviour:
       name: BrickMovementTests
       fullName: Tests.BrickMovementTests
       resultStatus: 1
-      duration: 0.0224737
+      duration: 0.031101
       messages: 
       output: 
       stacktrace: 
@@ -1157,7 +1157,7 @@ MonoBehaviour:
       name: BrickLowerTestOnMax
       fullName: Tests.BrickMovementTests.BrickLowerTestOnMax
       resultStatus: 1
-      duration: 0.0061415
+      duration: 0.0057416
       messages: 
       output: 
       stacktrace: 
@@ -1174,7 +1174,7 @@ MonoBehaviour:
       name: BrickLowerTestOnMin
       fullName: Tests.BrickMovementTests.BrickLowerTestOnMin
       resultStatus: 1
-      duration: 0.0006986
+      duration: 0.0007831
       messages: 
       output: 
       stacktrace: 
@@ -1191,7 +1191,7 @@ MonoBehaviour:
       name: BrickMovingInsideSurfaceLimitsTest
       fullName: Tests.BrickMovementTests.BrickMovingInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0006408
+      duration: 0.0007728
       messages: 
       output: 
       stacktrace: 
@@ -1208,7 +1208,7 @@ MonoBehaviour:
       name: ComputeWorldPositionTest
       fullName: Tests.BrickMovementTests.ComputeWorldPositionTest
       resultStatus: 1
-      duration: 0.0009289
+      duration: 0.0009661
       messages: 
       output: 
       stacktrace: 
@@ -1225,7 +1225,7 @@ MonoBehaviour:
       name: LowerOnMinHeightTest
       fullName: Tests.BrickMovementTests.LowerOnMinHeightTest
       resultStatus: 1
-      duration: 0.0005323
+      duration: 0.0006267
       messages: 
       output: 
       stacktrace: 
@@ -1242,7 +1242,7 @@ MonoBehaviour:
       name: MoveIntoBrickTest
       fullName: Tests.BrickMovementTests.MoveIntoBrickTest
       resultStatus: 1
-      duration: 0.0012273
+      duration: 0.0012762
       messages: 
       output: 
       stacktrace: 
@@ -1259,7 +1259,7 @@ MonoBehaviour:
       name: BricksHeightMapAndCrashingMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole
       resultStatus: 1
-      duration: 0.0120552
+      duration: 0.0319979
       messages: 
       output: 
       stacktrace: 
@@ -1275,7 +1275,7 @@ MonoBehaviour:
       name: BrickGroundingMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.BrickGroundingMovedIntoHole
       resultStatus: 1
-      duration: 0.0015976
+      duration: 0.0018989
       messages: 
       output: 
       stacktrace: 
@@ -1292,7 +1292,7 @@ MonoBehaviour:
       name: CorrectGroundingWithBlockMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.CorrectGroundingWithBlockMovedIntoHole
       resultStatus: 1
-      duration: 0.0005706
+      duration: 0.0006139
       messages: 
       output: 
       stacktrace: 
@@ -1309,7 +1309,7 @@ MonoBehaviour:
       name: MoveBrickIntoHoleTest
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.MoveBrickIntoHoleTest
       resultStatus: 1
-      duration: 0.000654
+      duration: 0.0006654
       messages: 
       output: 
       stacktrace: 
@@ -1326,7 +1326,7 @@ MonoBehaviour:
       name: BricksMapTests
       fullName: Tests.BricksMapTests
       resultStatus: 1
-      duration: 0.0081432
+      duration: 0.0124772
       messages: 
       output: 
       stacktrace: 
@@ -1342,7 +1342,7 @@ MonoBehaviour:
       name: KeyValueTest
       fullName: Tests.BricksMapTests.KeyValueTest
       resultStatus: 1
-      duration: 0.0015425
+      duration: 0.0016104
       messages: 
       output: 
       stacktrace: 
@@ -1359,7 +1359,7 @@ MonoBehaviour:
       name: BricksRotatingTests
       fullName: Tests.BricksRotatingTests
       resultStatus: 1
-      duration: 0.0097923
+      duration: 0.0095089
       messages: 
       output: 
       stacktrace: 
@@ -1375,7 +1375,7 @@ MonoBehaviour:
       name: RotationLimitIfNotInSurfaceTest
       fullName: Tests.BricksRotatingTests.RotationLimitIfNotInSurfaceTest
       resultStatus: 1
-      duration: 0.0020471
+      duration: 0.0021788
       messages: 
       output: 
       stacktrace: 
@@ -1392,7 +1392,7 @@ MonoBehaviour:
       name: BricksSurfaceTests
       fullName: Tests.BricksSurfaceTests
       resultStatus: 1
-      duration: 0.0161653
+      duration: 0.0169425
       messages: 
       output: 
       stacktrace: 
@@ -1408,7 +1408,7 @@ MonoBehaviour:
       name: ClearExtendOnCrashTest
       fullName: Tests.BricksSurfaceTests.ClearExtendOnCrashTest
       resultStatus: 1
-      duration: 0.0019267
+      duration: 0.0021539
       messages: 
       output: 
       stacktrace: 
@@ -1425,7 +1425,7 @@ MonoBehaviour:
       name: PatternsInsideSurfaceLimitsTest
       fullName: Tests.BricksSurfaceTests.PatternsInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0009514
+      duration: 0.0014024
       messages: 
       output: 
       stacktrace: 
@@ -1442,7 +1442,7 @@ MonoBehaviour:
       name: PositionsInsideSurfaceLimitsTest
       fullName: Tests.BricksSurfaceTests.PositionsInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0008979
+      duration: 0.0008542
       messages: 
       output: 
       stacktrace: 
@@ -1459,7 +1459,7 @@ MonoBehaviour:
       name: SurfaceExtendTest
       fullName: Tests.BricksSurfaceTests.SurfaceExtendTest
       resultStatus: 1
-      duration: 0.0009182
+      duration: 0.000844
       messages: 
       output: 
       stacktrace: 
@@ -1476,7 +1476,7 @@ MonoBehaviour:
       name: SurfaceWithoutExtendTest
       fullName: Tests.BricksSurfaceTests.SurfaceWithoutExtendTest
       resultStatus: 1
-      duration: 0.0006113
+      duration: 0.0007236
       messages: 
       output: 
       stacktrace: 
@@ -1493,7 +1493,7 @@ MonoBehaviour:
       name: FootFactorCalculatingTests
       fullName: Tests.FootFactorCalculatingTests
       resultStatus: 1
-      duration: 0.0201717
+      duration: 0.0221208
       messages: 
       output: 
       stacktrace: 
@@ -1509,7 +1509,7 @@ MonoBehaviour:
       name: CalculateFootFactorByGroundWithoutBricksTest
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorByGroundWithoutBricksTest
       resultStatus: 1
-      duration: 0.0018973
+      duration: 0.0021298
       messages: 
       output: 
       stacktrace: 
@@ -1526,7 +1526,7 @@ MonoBehaviour:
       name: CalculateFootFactorWithBricksTest
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithBricksTest
       resultStatus: 1
-      duration: 0.0010373
+      duration: 0.0016094
       messages: 
       output: 
       stacktrace: 
@@ -1543,7 +1543,7 @@ MonoBehaviour:
       name: CalculateFootFactorWithLBlock
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithLBlock
       resultStatus: 1
-      duration: 0.0006756
+      duration: 0.000731
       messages: 
       output: 
       stacktrace: 
@@ -1560,7 +1560,7 @@ MonoBehaviour:
       name: DestroyBrickOnNegativeSupportTest
       fullName: Tests.FootFactorCalculatingTests.DestroyBrickOnNegativeSupportTest
       resultStatus: 1
-      duration: 0.0013612
+      duration: 0.0012054
       messages: 
       output: 
       stacktrace: 
@@ -1577,7 +1577,7 @@ MonoBehaviour:
       name: UnstableEffectStoppingOnSupportTest
       fullName: Tests.FootFactorCalculatingTests.UnstableEffectStoppingOnSupportTest
       resultStatus: 1
-      duration: 0.0042632
+      duration: 0.0035643
       messages: 
       output: 
       stacktrace: 
@@ -1594,7 +1594,7 @@ MonoBehaviour:
       name: FootFactorDistanceCalculatingTests
       fullName: Tests.FootFactorDistanceCalculatingTests
       resultStatus: 1
-      duration: 0.0085977
+      duration: 0.0091919
       messages: 
       output: 
       stacktrace: 
@@ -1610,7 +1610,7 @@ MonoBehaviour:
       name: DistanceCalculatingWithoutBlocksTest
       fullName: Tests.FootFactorDistanceCalculatingTests.DistanceCalculatingWithoutBlocksTest
       resultStatus: 1
-      duration: 0.0011147
+      duration: 0.0013658
       messages: 
       output: 
       stacktrace: 
@@ -1627,7 +1627,7 @@ MonoBehaviour:
       name: HeighestPointTests
       fullName: Tests.HeighestPointTests
       resultStatus: 1
-      duration: 0.0077398
+      duration: 0.0080587
       messages: 
       output: 
       stacktrace: 
@@ -1643,7 +1643,7 @@ MonoBehaviour:
       name: HeighestPointTest
       fullName: Tests.HeighestPointTests.HeighestPointTest
       resultStatus: 1
-      duration: 0.0011228
+      duration: 0.0012514
       messages: 
       output: 
       stacktrace: 
@@ -1660,7 +1660,7 @@ MonoBehaviour:
       name: RotatedBrickCollisionTests
       fullName: Tests.RotatedBrickCollisionTests
       resultStatus: 1
-      duration: 0.0107716
+      duration: 0.0097711
       messages: 
       output: 
       stacktrace: 
@@ -1676,7 +1676,7 @@ MonoBehaviour:
       name: CorrectUpBlockFastLowering
       fullName: Tests.RotatedBrickCollisionTests.CorrectUpBlockFastLowering
       resultStatus: 1
-      duration: 0.0008815
+      duration: 0.0012302
       messages: 
       output: 
       stacktrace: 
@@ -1693,7 +1693,7 @@ MonoBehaviour:
       name: CorrectUpBlockLowering
       fullName: Tests.RotatedBrickCollisionTests.CorrectUpBlockLowering
       resultStatus: 1
-      duration: 0.000704
+      duration: 0.0007902
       messages: 
       output: 
       stacktrace: 
@@ -1705,15 +1705,15 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1046
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.RotatedBrickCollisionTests][suite]
-    m_ResultText: "NegativeSupportCrashTest (52,996s)\n---\nExpected: 0\r\n  But
-      was:  2\n---\nat Tests.BrickCrashingTests.NegativeSupportCrashTest () [0x00078]
-      in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\BrickCrashingTests.cs:92"
+    m_ResultText: "NegativeSupportCrashTest (0,015s)\n---\nExpected: 0\r\n  But was: 
+      2\n---\nat Tests.BrickCrashingTests.NegativeSupportCrashTest () [0x00078] in
+      C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\BrickCrashingTests.cs:92"
     m_ResultStacktrace: 'at Tests.BrickCrashingTests.NegativeSupportCrashTest ()
       [0x00078] in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\BrickCrashingTests.cs:92
 
 '
     m_TestListState:
-      scrollPos: {x: 0, y: 8}
+      scrollPos: {x: 0, y: 40}
       m_SelectedIDs: fab7c584
       m_LastClickedID: -2067417094
       m_ExpandedIDs: ebbba383604d49b57e13ccc57b2d0fd6878c50d6406f10d97f0762db170e37dc6e3560dce557abf7c3f8a5fbc6d5ba06a7c26707f8521a0a86e0d7118359db41dc7d8a4fab0d1f5927641a5affffff7f

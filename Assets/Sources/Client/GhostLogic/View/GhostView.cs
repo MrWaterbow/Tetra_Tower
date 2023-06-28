@@ -1,4 +1,4 @@
-﻿using Server.GhostLogic;
+﻿using Server.BrickLogic;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Client.GhostLogic
         [SerializeField] private GhostTileView _prefab;
         [SerializeField] private Transform _transform;
 
-        private IGhostViewPresenter _presenter;
+        private IReadOnlyBricksDatabase _database;
         private IGhostTileViewFactory _tileFactory;
 
         private List<GhostTileView> _tiles;
@@ -57,21 +57,14 @@ namespace Client.GhostLogic
         /// Подписывается на ивенты от презентера при этом назначая его
         /// </summary>
         /// <param name="presenter"></param>
-        public void SetCallbacks(IGhostViewPresenter presenter)
+        public void SetCallbacks(IReadOnlyBricksDatabase database)
         {
-            presenter.OnPositionChanged += ChangePosition;
-            presenter.OnRotate90 += Rotate90;
+            _database = database;
 
-            _presenter = presenter;
-        }
+            _database.ControllableBrick.OnPositionChanged += ChangePosition;
+            _database.ControllableBrick.OnRotate90 += Rotate90;
 
-        /// <summary>
-        /// Подписывается на ивенты от презентера.
-        /// </summary>
-        public void SetCallbacks()
-        {
-            _presenter.OnPositionChanged += ChangePosition;
-            _presenter.OnRotate90 += Rotate90;
+            ChangePosition(_database.ControllableBrick.Position);
         }
 
         /// <summary>
@@ -79,17 +72,20 @@ namespace Client.GhostLogic
         /// </summary>
         public void DisposeCallbacks()
         {
-            _presenter.OnPositionChanged -= ChangePosition;
-            _presenter.OnRotate90 -= Rotate90;
+            _database.ControllableBrick.OnPositionChanged -= ChangePosition;
+            _database.ControllableBrick.OnRotate90 -= Rotate90;
         }
 
         /// <summary>
         /// Изменяет позицию блока (использует DOTween).
         /// </summary>
         /// <param name="newPosition"></param>
-        private void ChangePosition(Vector3 newPosition)
+        private void ChangePosition(Vector3Int newPosition)
         {
-            _transform.position = newPosition;
+            newPosition.y = _database.GetHeightByBlock(_database.ControllableBrick);
+            Vector3 worldPosition = _database.Surface.GetWorldPosition(newPosition);
+
+            _transform.position = worldPosition;
         }
 
         private void Rotate90(Vector3Int[] pattern)
