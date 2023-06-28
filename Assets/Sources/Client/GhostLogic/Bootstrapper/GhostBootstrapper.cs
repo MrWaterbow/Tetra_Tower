@@ -67,6 +67,7 @@ namespace Client.GhostLogic
         {
             DisposeCallbacks();
 
+            _instance.RefreshTransform();
             _instance.SetCallbacks();
 
             SetPresenterCallbacksAndInvoke();

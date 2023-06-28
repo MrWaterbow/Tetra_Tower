@@ -12,6 +12,8 @@ namespace Server.BrickLogic
         /// Ивент, который вызывается при смене позиции блока.
         /// </summary>
         event Action<Vector3Int> OnPositionChanged;
+        event Action<Vector3Int[]> OnRotate90;
+
         event Action OnDestroy;
         event Action<bool> UnstableWarning;
 

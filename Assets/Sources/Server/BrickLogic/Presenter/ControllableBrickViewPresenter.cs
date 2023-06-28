@@ -9,6 +9,7 @@ namespace Server.BrickLogic
         /// Вызывается, если позиция блока сменилась.
         /// </summary>
         public event Action<Vector3> OnPositionChanged;
+        public event Action<Vector3Int[]> OnRotate90;
 
         /// <summary>
         /// Чтение данных из базы данных.
@@ -27,6 +28,7 @@ namespace Server.BrickLogic
         public void SetAndInvokeCallbacks()
         {
             _database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+            _database.ControllableBrick.OnRotate90 += InvokeOnRotate90;
 
             OnPositionChanged?.Invoke(GetWorldPosition(_database.ControllableBrick.Position));
         }
@@ -37,6 +39,7 @@ namespace Server.BrickLogic
         public void DisposeCallbacks()
         {
             _database.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
+            _database.ControllableBrick.OnRotate90 -= InvokeOnRotate90;
         }
 
         /// <summary>
@@ -46,6 +49,11 @@ namespace Server.BrickLogic
         private void InvokeOnPositionChanged(Vector3Int position)
         {
             OnPositionChanged?.Invoke(GetWorldPosition(position));
+        }
+
+        private void InvokeOnRotate90(Vector3Int[] pattern)
+        {
+            OnRotate90?.Invoke(pattern);
         }
 
         /// <summary>

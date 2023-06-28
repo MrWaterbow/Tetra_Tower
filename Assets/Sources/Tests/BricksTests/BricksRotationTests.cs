@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using Server.BrickLogic;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Blanks = Server.BrickLogic.BricksMatrixRotationBlanks;
 
@@ -29,7 +31,18 @@ namespace Tests
         }
 
         [Test]
-        public void RotationTest()
+        public void CenterRecoringTest()
+        {
+            BrickBlank LBrick = BrickBlanks.LBrick;
+            Vector2Int Center = LBrick.Center;
+
+            Assert.AreEqual(1, LBrick.Matrix[Center.x, Center.y]);
+            Assert.AreEqual(1, LBrick.Matrix[Center.y, 0]);
+            Assert.AreEqual(0, LBrick.Matrix[0, Center.x]);
+        }
+
+        [Test]
+        public void MatrixRotationTest()
         {
             Brick LBrick = new(Vector3Int.zero, BrickBlanks.LBrick);
             _database.ControllableBrick = LBrick;
@@ -52,7 +65,7 @@ namespace Tests
         }
 
         [Test]
-        public void NegativeRotationTest()
+        public void NegativeMatrixRotationTest()
         {
             Brick LBrick = new(Vector3Int.zero, BrickBlanks.LBrick);
             _database.ControllableBrick = LBrick;
@@ -72,6 +85,52 @@ namespace Tests
             _rotatingWrapper.TryRotateMinus90();
 
             Assert.AreEqual(Blanks.LBlock0DegressRotatedMatrix, _database.ControllableBrick.Matrix);
+        }
+
+        [Test]
+        public void PatternRotationTest()
+        {
+            Brick LBrick = new(Vector3Int.zero, BrickBlanks.LBrick);
+            _database.ControllableBrick = LBrick;
+
+            Assert.AreEqual(Vector3Int.zero, LBrick.Pattern[0]);
+            Assert.AreEqual(Vector3Int.right, LBrick.Pattern[1]);
+            Assert.AreEqual(Vector3Int.left, LBrick.Pattern[2]);
+            Assert.AreEqual(Vector3Int.left + Vector3Int.forward, LBrick.Pattern[3]);
+
+            Assert.AreEqual(4, LBrick.Pattern.Length);
+
+            _rotatingWrapper.TryRotate90();
+
+            //{ 0, 1, 1 },
+            //{ 0, 1, 0 },
+            //{ 0, 1, 0 }
+
+            Assert.AreEqual(Vector3Int.forward, LBrick.Pattern[0]);
+            Assert.AreEqual(Vector3Int.zero, LBrick.Pattern[1]);
+            Assert.AreEqual(Vector3Int.back, LBrick.Pattern[2]);
+            Assert.AreEqual(Vector3Int.forward + Vector3Int.right, LBrick.Pattern[3]);
+
+            Assert.AreEqual(4, LBrick.Pattern.Length);
+        }
+
+        [Test]
+        public void IndicesSearchingTest()
+        {
+            Brick LBrick = new(Vector3Int.zero, BrickBlanks.LBrick);
+
+            Vector2Int[] indices = LBrick.GetIndicesOfMatrix().ToArray();
+
+            //{ 1, 0, 0 },
+            //{ 1, 1, 1 },
+            //{ 0, 0, 0 }
+
+            Assert.AreEqual(4, indices.Length);
+
+            Assert.AreEqual(Vector2Int.zero, indices[0]);
+            Assert.AreEqual(Vector2Int.right, indices[1]);
+            Assert.AreEqual(Vector2Int.up + Vector2Int.right, indices[2]);
+            Assert.AreEqual(Vector2Int.up * 2 + Vector2Int.right, indices[3]);
         }
     }
 }

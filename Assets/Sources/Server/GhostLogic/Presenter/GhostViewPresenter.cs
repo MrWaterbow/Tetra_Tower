@@ -7,6 +7,7 @@ namespace Server.GhostLogic
     public class GhostViewPresenter : IGhostViewPresenter
     {
         public event Action<Vector3> OnPositionChanged;
+        public event Action<Vector3Int[]> OnRotate90;
 
         private readonly IReadOnlyBricksDatabase _database;
 
@@ -18,6 +19,7 @@ namespace Server.GhostLogic
         public void SetAndInvokeCallbacks()
         {
             _database.ControllableBrick.OnPositionChanged += InvokeOnPositionChanged;
+            _database.ControllableBrick.OnRotate90 += InvokeRotate90;
 
             OnPositionChanged?.Invoke(GetWorldPosition());
         }
@@ -25,6 +27,7 @@ namespace Server.GhostLogic
         public void DisposeCallbacks()
         {
             _database.ControllableBrick.OnPositionChanged -= InvokeOnPositionChanged;
+            _database.ControllableBrick.OnRotate90 -= InvokeRotate90;
         }
 
         /// <summary>
@@ -34,6 +37,11 @@ namespace Server.GhostLogic
         private void InvokeOnPositionChanged(Vector3Int position)
         {
             OnPositionChanged?.Invoke(GetWorldPosition());
+        }
+
+        private void InvokeRotate90(Vector3Int[] pattern)
+        {
+            OnRotate90?.Invoke(pattern);
         }
 
         private Vector3 GetWorldPosition()

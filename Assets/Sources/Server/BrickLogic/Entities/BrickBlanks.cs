@@ -21,7 +21,8 @@ namespace Server.BrickLogic
                 { 1, 0, 0 },
                 { 1, 1, 1 },
                 { 0, 0, 0 }
-            });
+            },
+            new(1, 1));
 
         /// <summary>
         /// Заготовка O блока.
@@ -34,15 +35,17 @@ namespace Server.BrickLogic
             Vector3Int.right + Vector3Int.forward, },
             new int[,]
             {
-
-            });
+                { 1, 1 },
+                { 1, 1 }
+            },
+            new(0, 1));
 
         /// <summary>
         /// Список всех возможных паттернов блока.
         /// </summary>
         public static readonly BrickBlank[] AllPatterns = new[]
         {
-            OBrick,
+            //OBrick,
             LBrick,
         };
 
@@ -55,8 +58,10 @@ namespace Server.BrickLogic
                 Vector3Int.right + Vector3Int.up },
                 new int[,]
                 {
-
-                });
+                    { 1, 1 },
+                    { 1, 1 }
+                },
+                Vector2Int.zero);
         }
     }
 }
