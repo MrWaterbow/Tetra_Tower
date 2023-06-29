@@ -121,13 +121,13 @@ namespace Server.BrickLogic
 
             bricks.AddLast(brick);
 
-            LinkedList<IReadOnlyBrick> upperBricks = _database.GetUpperBricks(brick);
+            LinkedList<IReadOnlyBrick> upperBricks = _database.GetOnlyFirstUpperBricks(brick);
 
             if (stable)
             {
                 foreach (IReadOnlyBrick upperBrick in upperBricks)
                 {
-                    if (bricks.Contains(upperBrick) || ComputeFootFactor(upperBrick, new()) <= 0) continue;
+                    if (bricks.Contains(upperBrick) || ProductiveComputeFootFactor(upperBrick) <= 0.5f) continue;
 
                     bricks.AddLast(upperBrick);
                 }
@@ -150,7 +150,7 @@ namespace Server.BrickLogic
                     Vector3Int bricksMapKey = tilePosition - Vector3Int.up;
                     Vector2Int heightMapKey = new(tilePosition.x, tilePosition.z);
 
-                    if (IsStableTile(tilePosition, bricksMapKey, heightMapKey) == stable && destroyingBricks.Contains(_database.GetBrickByKey(bricksMapKey)) == false)
+                    if (IsStableTile(bricksMapKey, heightMapKey) == stable && destroyingBricks.Contains(_database.GetBrickByKey(bricksMapKey)) == false)
                     {
                         tiles.AddLast(tilePosition);
                     }
@@ -158,6 +158,25 @@ namespace Server.BrickLogic
             }
 
             return tiles;
+        }
+
+        private float ProductiveComputeFootFactor(IReadOnlyBrick brick)
+        {
+            int unstableTilesCount = 0;
+
+            foreach (Vector3Int tile in brick.Pattern)
+            {
+                Vector3Int tilePosition = tile + brick.Position;
+                Vector3Int underTilePosition = tilePosition - Vector3Int.up;
+                Vector2Int keyPosition = new(tilePosition.x, tilePosition.z);
+
+                if(IsStableTile(underTilePosition, keyPosition) == false)
+                {
+                    unstableTilesCount++;
+                }
+            }
+
+            return unstableTilesCount / brick.Pattern.Length;
         }
 
         private bool IsNegativeSupportBrick(IReadOnlyBrick upperBrick, IReadOnlyBrick startBrick)
@@ -172,7 +191,7 @@ namespace Server.BrickLogic
                     Vector3Int upperTilePosition = upperTile + upperBrick.Position;
                     Vector2Int upperTileKeyPosition = new(upperTilePosition.x, upperTilePosition.z);
 
-                    if (tileKeyPosition == upperTileKeyPosition && IsStableTile(tilePosition, tilePosition - Vector3Int.up, tileKeyPosition) == false)
+                    if (tileKeyPosition == upperTileKeyPosition && IsStableTile(tilePosition - Vector3Int.up, tileKeyPosition) == false)
                     {
                         return true;
                     }
@@ -182,7 +201,7 @@ namespace Server.BrickLogic
             return false;
         }
 
-        private bool IsStableTile(Vector3Int tilePosition, Vector3Int bricksMapKey, Vector2Int heightMapKey)
+        private bool IsStableTile(Vector3Int bricksMapKey, Vector2Int heightMapKey)
         {
             if (_database.GetBrickByKey(bricksMapKey) != null || bricksMapKey.y < 0 && _database.Surface.PositionIntoSurfaceSize(heightMapKey) && _database.Surface.PositionIntoSurfaceTiles(heightMapKey))
             {
