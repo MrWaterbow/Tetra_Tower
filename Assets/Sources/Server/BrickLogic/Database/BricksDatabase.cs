@@ -245,7 +245,27 @@ namespace Server.BrickLogic
                 }
             }
         }
-        
+
+        public LinkedList<IReadOnlyBrick> GetOnlyFirstUpperBricks(IReadOnlyBrick brick)
+        {
+            LinkedList<IReadOnlyBrick> upperBricks = new();
+
+            foreach (Vector3Int tile in brick.Pattern)
+            {
+                Vector3Int tilePosition = tile + brick.Position;
+                Vector3Int upperPosition = tilePosition + Vector3Int.up;
+
+                if(_bricksMap.TryGetValue(upperPosition, out Brick upperBrick))
+                {
+                    if (upperBrick == null) continue;
+
+                    upperBricks.AddLast(upperBrick);
+                }
+            }
+
+            return upperBricks;
+        }
+
         /// <summary>
         /// Дает блоки соединенные с указанным сверху
         /// </summary>
