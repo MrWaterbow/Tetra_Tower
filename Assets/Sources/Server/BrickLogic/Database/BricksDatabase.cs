@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Server.AsteroidLogic;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Server.BrickLogic
@@ -131,7 +133,7 @@ namespace Server.BrickLogic
         /// Проверка блока находится ли он на земле.
         /// </summary>
         /// <returns></returns>
-        public bool PatternOnGround(Vector3Int[] pattern, Vector3Int position)
+        public bool PatternOnGround(IReadOnlyCollection<Vector3Int> pattern, Vector3Int position)
         {
             bool onGround = false;
 
@@ -216,6 +218,26 @@ namespace Server.BrickLogic
             _heighestPoint--;
 
             brick.Destroy();
+        }
+
+        public void DestroyTilesByAsteroid(Asteroid asteroid)
+        {
+            foreach (Vector3Int tile in asteroid.DestroyArea)
+            {
+
+            }
+        }
+
+        public void RemoveTile(Vector3Int position)
+        {
+            Brick brick = GetBrickByKey(position);
+
+            if (brick == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            brick.RemoveTile(position);
         }
 
         /// <summary>

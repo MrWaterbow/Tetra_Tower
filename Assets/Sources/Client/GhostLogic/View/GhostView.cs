@@ -14,7 +14,7 @@ namespace Client.GhostLogic
 
         private List<GhostTileView> _tiles;
 
-        public void Initialize(Vector3Int[] pattern, Color color)
+        public void Initialize(IReadOnlyCollection<Vector3Int> pattern, Color color)
         {
             ClearTiles();
 
@@ -37,7 +37,7 @@ namespace Client.GhostLogic
             _tiles.Clear();
         }
 
-        private void CreateBlockByTiles(Vector3Int[] pattern)
+        private void CreateBlockByTiles(IReadOnlyCollection<Vector3Int> pattern)
         {
             foreach (Vector3Int tile in pattern)
             {
@@ -88,7 +88,7 @@ namespace Client.GhostLogic
             _transform.position = worldPosition;
         }
 
-        private void Rotate90(Vector3Int[] pattern)
+        private void Rotate90(IReadOnlyCollection<Vector3Int> pattern)
         {
             _transform.Rotate(Vector3.up, 90);
         }

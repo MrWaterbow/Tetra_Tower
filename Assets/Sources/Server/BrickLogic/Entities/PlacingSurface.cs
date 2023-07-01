@@ -46,7 +46,7 @@ namespace Server.BrickLogic
         /// <param name="pattern"></param>
         /// <param name="position"></param>
         /// <returns></returns>
-        public bool PatternIntoSurfaceTiles(Vector3Int[] pattern, Vector2Int position)
+        public bool PatternIntoSurfaceTiles(IReadOnlyCollection<Vector3Int> pattern, Vector2Int position)
         {
             foreach (Vector3Int tile in pattern)
             {

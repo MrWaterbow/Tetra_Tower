@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Server.BrickLogic
 {
@@ -16,7 +13,7 @@ namespace Server.BrickLogic
         /// Ивент вызывается при смене позиции блока.
         /// </summary>
         public event Action<Vector3Int> OnPositionChanged;
-        public event Action<Vector3Int[]> OnRotate90;
+        public event Action<IReadOnlyCollection<Vector3Int>> OnRotate90;
 
         public event Action<bool> UnstableWarning;
         public event Action OnDestroy;
@@ -28,7 +25,7 @@ namespace Server.BrickLogic
         /// <summary>
         /// Массив кубиков из которых состоит блок.
         /// </summary>
-        private Vector3Int[] _pattern;
+        private LinkedList<Vector3Int> _pattern;
         private Vector3Int[][] _patternRotation;
         private int _rotationCounter;
         private readonly int _rotationCounterBorder;
@@ -41,11 +38,11 @@ namespace Server.BrickLogic
         }
 
         /// <summary>
-        /// //Конструктор позволяет назначить position и pattern блока.
+        /// //Конструктор позволяет назначить tileWorldPosition и pattern блока.
         /// </summary>
         /// <param name="position">Позиция блока</param>
         /// <param name="pattern">Массив кубиков из которых состоит блок</param>
-        public Brick(Vector3Int position, Vector3Int[] pattern, Vector3Int[][] rotationPattern) : this(position)
+        public Brick(Vector3Int position, LinkedList<Vector3Int> pattern, Vector3Int[][] rotationPattern) : this(position)
         {
             _pattern = pattern;
             _patternRotation = rotationPattern;
@@ -66,7 +63,7 @@ namespace Server.BrickLogic
         /// <summary>
         /// Возвращает копию паттерна блока.
         /// </summary>
-        public Vector3Int[] Pattern => _pattern;
+        public IReadOnlyCollection<Vector3Int> Pattern => _pattern;
 
         public bool UnstableEffect => _unstableEffect;
 
@@ -94,7 +91,12 @@ namespace Server.BrickLogic
                 _rotationCounter++;
             }
 
-            _pattern = _patternRotation[_rotationCounter - 1];
+            _pattern.Clear();
+
+            foreach (Vector3Int tile in _patternRotation[_rotationCounter - 1])
+            {
+                _pattern.AddLast(tile);
+            }
 
             OnRotate90?.Invoke(_pattern);
             OnPositionChanged?.Invoke(_position);
@@ -126,6 +128,16 @@ namespace Server.BrickLogic
         public void Destroy()
         {
             OnDestroy?.Invoke();
+        }
+
+        public void RemoveTile(Vector3Int tileWorldPosition)
+        {
+            Vector3Int tilePosition = _position - tileWorldPosition;
+
+            if(_pattern.Remove(tilePosition) == false)
+            {
+                throw new NullReferenceException("Tile not found");
+            }
         }
 
         public void InvokeUnstableWarning(bool value)

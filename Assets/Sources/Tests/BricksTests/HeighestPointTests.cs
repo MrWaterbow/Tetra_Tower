@@ -42,5 +42,23 @@ namespace Tests
 
             Assert.AreEqual(3, _database.HeighestPoint);
         }
+
+        [Test]
+        public void HeighestPointReduceBug()
+        {
+            Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
+            Brick brick2 = new(Vector3Int.right * 2 + Vector3Int.forward * 2, BrickBlanks.OBrick);
+            BricksCrashWrapper crashWrapper = new(_database);
+
+            _databaseAccess.SetAndAddRecentControllableBrick(brick);
+            _databaseAccess.SetAndAddRecentControllableBrick(brick2);
+
+            Assert.AreEqual(1, _database.HeighestPoint);
+
+            _databaseAccess.PlaceControllableBrick();
+            crashWrapper.TryCrashAll();
+
+            Assert.AreEqual(1, _database.HeighestPoint);
+        }
     }
 }

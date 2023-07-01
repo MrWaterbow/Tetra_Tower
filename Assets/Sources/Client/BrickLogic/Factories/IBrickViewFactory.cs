@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Client.BrickLogic
 {
@@ -9,6 +10,6 @@ namespace Client.BrickLogic
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        BrickView Create(Vector3 position, Vector3Int[] pattern);
+        BrickView Create(Vector3 position, IReadOnlyCollection<Vector3Int> pattern);
     }
 }
