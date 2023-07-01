@@ -23,6 +23,13 @@ namespace Server.AsteroidLogic
 
         public float FlyTimer => _flyTimer;
 
+        public void ToTarget()
+        {
+            _flyTimer = 0f;
+
+            FlyTick();
+        }
+
         public void FlyTick()
         {
             _flyTimer -= Time.deltaTime;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Server.AsteroidLogic
 {
@@ -13,12 +14,12 @@ namespace Server.AsteroidLogic
 
         public void ThrowRandomAsteroid()
         {
-
+            throw new Exception("Сначало надо придумать алгоритм");
         }
 
         public void ThrowAsteroid(Vector3Int target)
         {
-
+            _database.AddAsteroid(target);
         }
     }
 }

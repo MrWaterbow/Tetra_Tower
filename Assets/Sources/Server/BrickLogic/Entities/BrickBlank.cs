@@ -8,9 +8,15 @@ namespace Server.BrickLogic
         public readonly LinkedList<Vector3Int> Pattern;
         public readonly Vector3Int[][] PatternRotation;
 
-        public BrickBlank(LinkedList<Vector3Int> brickPattern, Vector3Int[][] patternRotation)
+        public BrickBlank(Vector3Int[] brickPattern, Vector3Int[][] patternRotation)
         {
-            Pattern = brickPattern;
+            Pattern = new();
+
+            foreach (Vector3Int tile in brickPattern)
+            {
+                Pattern.AddLast(tile);
+            }
+
             PatternRotation = patternRotation;
         }
     }
