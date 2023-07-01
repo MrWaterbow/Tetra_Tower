@@ -22,6 +22,7 @@ namespace Server.AsteroidLogic
         }
 
         public float FlyTimer => _flyTimer;
+        public bool IsReachedTarget => FlyTimer <= 0;
 
         public void ToTarget()
         {

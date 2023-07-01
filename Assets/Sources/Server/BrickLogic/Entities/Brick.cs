@@ -44,7 +44,12 @@ namespace Server.BrickLogic
         /// <param name="pattern">ћассив кубиков из которых состоит блок</param>
         public Brick(Vector3Int position, LinkedList<Vector3Int> pattern, Vector3Int[][] rotationPattern) : this(position)
         {
-            _pattern = pattern;
+            _pattern = new();
+            foreach (Vector3Int tile in pattern)
+            {
+                _pattern.AddLast(tile);
+            }
+
             _patternRotation = rotationPattern;
             _rotationCounter = 1;
             _rotationCounterBorder = rotationPattern.Length;
@@ -132,7 +137,7 @@ namespace Server.BrickLogic
 
         public void RemoveTile(Vector3Int tileWorldPosition)
         {
-            Vector3Int tilePosition = _position - tileWorldPosition;
+            Vector3Int tilePosition = tileWorldPosition - _position;
 
             if(_pattern.Remove(tilePosition) == false)
             {

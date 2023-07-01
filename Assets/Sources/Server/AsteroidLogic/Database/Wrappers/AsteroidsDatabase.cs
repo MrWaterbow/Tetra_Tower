@@ -9,7 +9,7 @@ namespace Server.AsteroidLogic
     {
         private readonly BricksDatabase _bricksDatabase;
 
-        private readonly LinkedList<Asteroid> _asteroids;
+        private readonly HashSet<Asteroid> _asteroids;
         private readonly IAsteroidFactory _factory;
 
         public AsteroidsDatabase(BricksDatabase database, IAsteroidFactory factory)
@@ -28,8 +28,7 @@ namespace Server.AsteroidLogic
             }
 
             Asteroid instance = _factory.Create(target);
-            _asteroids.AddLast(instance);
-            instance.OnCrash += Crash;
+            _asteroids.Add(instance);
         }
 
         public void FlyTick()
@@ -38,16 +37,39 @@ namespace Server.AsteroidLogic
             {
                 asteroid.FlyTick();
             }
+
+            CheckCrashing();
         }
 
-        public void Crash(Asteroid asteroid)
+        public void AllToTargets()
+        {
+            foreach (Asteroid asteroid in _asteroids)
+            {
+                asteroid.ToTarget();
+            }
+
+            CheckCrashing();
+        }
+
+        public void CheckCrashing()
+        {
+            foreach (Asteroid asteroid in _asteroids)
+            {
+                if(asteroid.IsReachedTarget)
+                {
+                    CrashTiles(asteroid);
+                }
+            }
+
+            _asteroids.RemoveWhere(asteroid => asteroid.IsReachedTarget);
+        }
+
+        private void CrashTiles(Asteroid asteroid)
         {
             foreach (Vector3Int destroyTile in asteroid.DestroyArea)
             {
                 _bricksDatabase.RemoveTile(destroyTile + asteroid.Target);
             }
-
-            _asteroids.Remove(asteroid);
         }
     }
 }

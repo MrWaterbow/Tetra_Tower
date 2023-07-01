@@ -231,6 +231,12 @@ namespace Server.BrickLogic
             }
 
             brick.RemoveTile(position);
+            ClearBrickMap(position);
+        }
+
+        private void ClearBrickMap(Vector3Int position)
+        {
+            _bricksMap.Remove(position);
         }
 
         /// <summary>
