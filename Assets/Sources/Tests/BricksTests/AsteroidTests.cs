@@ -12,6 +12,7 @@ namespace Tests
         private AsteroidsDatabase _asteroidsDatabase;
 
         private AsteroidWrapper _asteroidWrapper;
+        private BricksCrashWrapper _crashWrapper;
         private BricksDatabaseAccess _bricksAccess;
 
         [SetUp]
@@ -23,6 +24,7 @@ namespace Tests
             _asteroidsDatabase = new(_bricksDatabase, factory);
 
             _asteroidWrapper = new(_asteroidsDatabase);
+            _crashWrapper = new(_bricksDatabase);
             _bricksAccess = new(_bricksDatabase);
         }
 
@@ -42,6 +44,43 @@ namespace Tests
             Assert.IsTrue(brick.Pattern.Contains(Vector3Int.right));
             Assert.IsTrue(brick.Pattern.Contains(Vector3Int.forward));
             Assert.IsTrue(brick.Pattern.Contains(Vector3Int.right + Vector3Int.forward));
+        }
+
+        [Test]
+        public void DestroyIfTileRemovedTest()
+        {
+            Brick brick = new(Vector3Int.left, BrickBlanks.OBrick);
+
+            _crashWrapper.SetCallbacks();
+            _bricksAccess.SetAndAddRecentControllableBrick(brick);
+            _bricksAccess.PlaceControllableBrick();
+
+            _crashWrapper.TryCrashAll();
+
+            Assert.AreEqual(1, _bricksDatabase.Bricks.Count);
+
+            _bricksDatabase.RemoveTile(Vector3Int.zero);
+
+            _crashWrapper.TryCrashAll();
+
+            Assert.AreEqual(0, _bricksDatabase.Bricks.Count);
+        }
+
+        [Test]
+        public void AsteroidStrikeTest()
+        {
+            Brick brick = new(Vector3Int.left, BrickBlanks.OBrick);
+
+            _crashWrapper.SetCallbacks();
+            _bricksAccess.SetAndAddRecentControllableBrick(brick);
+            _bricksAccess.PlaceControllableBrick();
+
+            _asteroidWrapper.ThrowAsteroid(Vector3Int.zero);
+            _asteroidsDatabase.AllToTargets();
+
+            _crashWrapper.TryCrashAll();
+
+            Assert.AreEqual(0, _bricksDatabase.Bricks.Count);
         }
     }
 }

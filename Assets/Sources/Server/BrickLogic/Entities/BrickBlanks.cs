@@ -13,13 +13,13 @@ namespace Server.BrickLogic
         /// Заготовка L блока.
         /// </summary>
         public static readonly BrickBlank LBrick = new(
-            new[] 
+            new(new[] 
             {
                 Vector3Int.zero,
                 Vector3Int.right,
                 Vector3Int.left,
                 Vector3Int.left + Vector3Int.forward
-            },
+            }),
             new Vector3Int[][]
             {
                 RotationBlank.LBlock0DegressRotated,
@@ -51,10 +51,10 @@ namespace Server.BrickLogic
         public static class TestBlocks
         {
             public static readonly BrickBlank UpBrick = new(
-                new[] {
+                new(new[] {
                 Vector3Int.zero,
                 Vector3Int.up,
-                Vector3Int.right + Vector3Int.up },
+                Vector3Int.right + Vector3Int.up }),
                 new Vector3Int[1][]);
         }
     }
