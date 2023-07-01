@@ -176,7 +176,7 @@ namespace Server.BrickLogic
                 }
             }
 
-            return unstableTilesCount / brick.Pattern.Length;
+            return unstableTilesCount / brick.Pattern.Count;
         }
 
         private bool IsNegativeSupportBrick(IReadOnlyBrick upperBrick, IReadOnlyBrick startBrick)

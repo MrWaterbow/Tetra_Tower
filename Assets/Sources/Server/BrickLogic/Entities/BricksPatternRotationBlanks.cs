@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Server.BrickLogic
 {
     public static class BricksPatternRotationBlanks
     {
-        public static readonly Vector3Int[] OBlockStaticPattern = new Vector3Int[]
+        public static readonly LinkedList<Vector3Int> OBlockStaticPattern = new(new[]
         {
             Vector3Int.zero,
             Vector3Int.zero + Vector3Int.forward,
             Vector3Int.right,
             Vector3Int.right + Vector3Int.forward,
-        };
+        });
 
         public static readonly Vector3Int[] LBlock0DegressRotated = new Vector3Int[]
         {

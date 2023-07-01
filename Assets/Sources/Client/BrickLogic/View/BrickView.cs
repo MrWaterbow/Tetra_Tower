@@ -33,7 +33,7 @@ namespace Client.BrickLogic
 
         private bool _unstableEffect;
 
-        public void Initialize(Vector3Int[] pattern)
+        public void Initialize(IReadOnlyCollection<Vector3Int> pattern)
         {
             _tileFactory = new TileViewFactory(_prefab, _transform);
             _tiles = new();
@@ -53,7 +53,7 @@ namespace Client.BrickLogic
             return _colors[Random.Range(0, _colors.Length)];
         }
 
-        private void CreateBlockByTiles(Vector3Int[] pattern)
+        private void CreateBlockByTiles(IReadOnlyCollection<Vector3Int> pattern)
         {
             foreach (Vector3Int tile in pattern)
             {
@@ -109,7 +109,7 @@ namespace Client.BrickLogic
             _transform.position = worldPosition;
         }
 
-        private void Rotate90(Vector3Int[] pattern)
+        private void Rotate90(IReadOnlyCollection<Vector3Int> pattern)
         {
 #if UNITY_EDITOR
             foreach (BrickTileView tileView in _tiles)

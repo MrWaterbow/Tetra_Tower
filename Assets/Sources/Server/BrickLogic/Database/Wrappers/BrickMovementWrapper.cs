@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Server.BrickLogic
@@ -60,7 +61,7 @@ namespace Server.BrickLogic
             return _database.ControllableBrick.Position + direction;
         }
 
-        private bool BrickMovedIntoAnotherBrick(Vector3Int[] pattern, Vector3Int position)
+        private bool BrickMovedIntoAnotherBrick(IReadOnlyCollection<Vector3Int> pattern, Vector3Int position)
         {
             bool movedInto = false;
 

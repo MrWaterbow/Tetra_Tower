@@ -37,7 +37,7 @@ namespace Server.BrickLogic
         /// Поставлен ли блок на землю.
         /// </summary>
         /// <returns></returns>
-        bool PatternOnGround(Vector3Int[] pattern, Vector3Int position);
+        bool PatternOnGround(IReadOnlyCollection<Vector3Int> pattern, Vector3Int position);
         bool ControllableBrickOnGround();
     }
 }
