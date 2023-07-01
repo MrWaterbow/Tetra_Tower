@@ -25,7 +25,7 @@ namespace Server.BrickLogic
         /// <summary>
         /// Массив кубиков из которых состоит блок.
         /// </summary>
-        private LinkedList<Vector3Int> _pattern;
+        private HashSet<Vector3Int> _pattern;
         private Vector3Int[][] _patternRotation;
         private int _rotationCounter;
         private readonly int _rotationCounterBorder;
@@ -42,12 +42,12 @@ namespace Server.BrickLogic
         /// </summary>
         /// <param name="position">Позиция блока</param>
         /// <param name="pattern">Массив кубиков из которых состоит блок</param>
-        public Brick(Vector3Int position, LinkedList<Vector3Int> pattern, Vector3Int[][] rotationPattern) : this(position)
+        public Brick(Vector3Int position, HashSet<Vector3Int> pattern, Vector3Int[][] rotationPattern) : this(position)
         {
             _pattern = new();
             foreach (Vector3Int tile in pattern)
             {
-                _pattern.AddLast(tile);
+                _pattern.Add(tile);
             }
 
             _patternRotation = rotationPattern;
@@ -100,7 +100,7 @@ namespace Server.BrickLogic
 
             foreach (Vector3Int tile in _patternRotation[_rotationCounter - 1])
             {
-                _pattern.AddLast(tile);
+                _pattern.Add(tile);
             }
 
             OnRotate90?.Invoke(_pattern);
