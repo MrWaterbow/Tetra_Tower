@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1011
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 795
+  controlID: 137
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 773
+  controlID: 138
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 774
+  controlID: 139
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -428,7 +428,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 40d6ffff02d9ffffd8dbffffb6deffff50ebffff84efffff10f3ffff26f5ffff28fbffff
+      m_ExpandedIDs: 16e6ffff2ae8ffffdcebffff9aeeffff56f1ffff18f4ffff3af8ffff1afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.22579671, y: -0.04439828, z: 0.010299467, w: -0.9731153}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: -0.22579505, y: -0.044397954, z: 0.01029939, w: -0.9731081}
   m_Size:
     m_Target: 3.278722
     speed: 2
@@ -833,9 +833,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 120}
-    m_SelectedIDs: 6a920000
-    m_LastClickedID: 37482
-    m_ExpandedIDs: 00000000fa740000fc740000fe74000000750000027500000475000006750000087500000a7500000c7500000e75000010750000
+    m_SelectedIDs: 7c7a0000
+    m_LastClickedID: 31356
+    m_ExpandedIDs: 000000000e75000010750000127500001475000016750000187500001a7500001c7500001e750000207500002275000024750000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -863,7 +863,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fa740000fc740000fe74000000750000027500000475000006750000087500000a7500000c7500000e75000010750000
+    m_ExpandedIDs: 000000000e75000010750000127500001475000016750000187500001a7500001c7500001e750000207500002275000024750000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1017,7 +1017,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 821
+    ID: 154
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -1083,9 +1083,9 @@ MonoBehaviour:
       uniqueId: '[Tetra_ Tower][suite]'
       name: Tetra_ Tower
       fullName: Tetra_ Tower
-      resultStatus: 1
-      duration: 0.2577697
-      messages: 
+      resultStatus: 2
+      duration: 0.0209762
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1099,9 +1099,9 @@ MonoBehaviour:
       uniqueId: '[Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Github/Tetra_Tower/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 1
-      duration: 0.2339774
-      messages: 
+      resultStatus: 2
+      duration: 0.0112928
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1115,9 +1115,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][suite]
       name: Tests
       fullName: Tests
-      resultStatus: 1
-      duration: 0.2304716
-      messages: 
+      resultStatus: 2
+      duration: 0.0071101
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1128,12 +1128,52 @@ MonoBehaviour:
       parentId: 1049
       parentUniqueId: '[Tests.dll][suite]'
     - id: 1001
+      uniqueId: Tests.dll/Tests/[Tests][Tests.AsteroidTests][suite]
+      name: AsteroidTests
+      fullName: Tests.AsteroidTests
+      resultStatus: 2
+      duration: 0.0035538
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1045
+      parentUniqueId: Tests.dll/[Tests][suite]
+    - id: 1002
+      uniqueId: Tests.dll/Tests/AsteroidTests/[Tests][Tests.AsteroidTests.RemoveTileTest]
+      name: RemoveTileTest
+      fullName: Tests.AsteroidTests.RemoveTileTest
+      resultStatus: 2
+      duration: 0.0006823
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object.'
+      output: 
+      stacktrace: "  at Server.BrickLogic.BricksDatabase.RemoveTile (UnityEngine.Vector3Int
+        position) [0x00012] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Server\\BrickLogic\\Database\\BricksDatabase.cs:230
+        \r\n  at Tests.AsteroidTests.RemoveTileTest () [0x0002a] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\AsteroidTests.cs:37
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <c2a97e0383e8404c9fc0ae19d58f57f1>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/Tests/[Tests][Tests.AsteroidTests][suite]
+    - id: 1001
       uniqueId: Tests.dll/Tests/[Tests][Tests.BrickCrashingTests][suite]
       name: BrickCrashingTests
       fullName: Tests.BrickCrashingTests
-      resultStatus: 1
-      duration: 0.0804891
-      messages: 
+      resultStatus: 2
+      duration: 0.0413679
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1148,7 +1188,7 @@ MonoBehaviour:
       name: BrickCrashingTestWithTwoBlocks
       fullName: Tests.BrickCrashingTests.BrickCrashingTestWithTwoBlocks
       resultStatus: 1
-      duration: 0.047204
+      duration: 0.0079828
       messages: 
       output: 
       stacktrace: 
@@ -1165,7 +1205,7 @@ MonoBehaviour:
       name: CrashingByGroundTest
       fullName: Tests.BrickCrashingTests.CrashingByGroundTest
       resultStatus: 1
-      duration: 0.001271
+      duration: 0.0012444
       messages: 
       output: 
       stacktrace: 
@@ -1182,7 +1222,7 @@ MonoBehaviour:
       name: DestroyBlocksWithLowFootFactorTest
       fullName: Tests.BrickCrashingTests.DestroyBlocksWithLowFootFactorTest
       resultStatus: 1
-      duration: 0.000948
+      duration: 0.0009548
       messages: 
       output: 
       stacktrace: 
@@ -1198,11 +1238,14 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/BrickCrashingTests/[Tests][Tests.BrickCrashingTests.GroupCrashingTest]
       name: GroupCrashingTest
       fullName: Tests.BrickCrashingTests.GroupCrashingTest
-      resultStatus: 1
-      duration: 0.0011368
-      messages: 
+      resultStatus: 2
+      duration: 0.0147728
+      messages: "  Expected: 0\r\n  But was:  1\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Tests.BrickCrashingTests.GroupCrashingTest () [0x00072] in
+        C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\BrickCrashingTests.cs:75
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1216,7 +1259,7 @@ MonoBehaviour:
       name: NegativeSupportCrashTest
       fullName: Tests.BrickCrashingTests.NegativeSupportCrashTest
       resultStatus: 1
-      duration: 0.0009668
+      duration: 0.0008414
       messages: 
       output: 
       stacktrace: 
@@ -1233,7 +1276,7 @@ MonoBehaviour:
       name: BrickMovementTests
       fullName: Tests.BrickMovementTests
       resultStatus: 1
-      duration: 0.039665
+      duration: 0.0397671
       messages: 
       output: 
       stacktrace: 
@@ -1249,7 +1292,7 @@ MonoBehaviour:
       name: BrickLowerTestOnMax
       fullName: Tests.BrickMovementTests.BrickLowerTestOnMax
       resultStatus: 1
-      duration: 0.0061324
+      duration: 0.0062772
       messages: 
       output: 
       stacktrace: 
@@ -1266,7 +1309,7 @@ MonoBehaviour:
       name: BrickLowerTestOnMin
       fullName: Tests.BrickMovementTests.BrickLowerTestOnMin
       resultStatus: 1
-      duration: 0.0007262
+      duration: 0.0006159
       messages: 
       output: 
       stacktrace: 
@@ -1283,7 +1326,7 @@ MonoBehaviour:
       name: BrickMovingInsideSurfaceLimitsTest
       fullName: Tests.BrickMovementTests.BrickMovingInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0007153
+      duration: 0.0007456
       messages: 
       output: 
       stacktrace: 
@@ -1300,7 +1343,7 @@ MonoBehaviour:
       name: ComputeWorldPositionTest
       fullName: Tests.BrickMovementTests.ComputeWorldPositionTest
       resultStatus: 1
-      duration: 0.0010144
+      duration: 0.0009267
       messages: 
       output: 
       stacktrace: 
@@ -1317,7 +1360,7 @@ MonoBehaviour:
       name: LowerOnMinHeightTest
       fullName: Tests.BrickMovementTests.LowerOnMinHeightTest
       resultStatus: 1
-      duration: 0.000567
+      duration: 0.0005574
       messages: 
       output: 
       stacktrace: 
@@ -1334,7 +1377,7 @@ MonoBehaviour:
       name: MoveIntoBrickTest
       fullName: Tests.BrickMovementTests.MoveIntoBrickTest
       resultStatus: 1
-      duration: 0.0008838
+      duration: 0.0008289
       messages: 
       output: 
       stacktrace: 
@@ -1351,7 +1394,7 @@ MonoBehaviour:
       name: BricksHeightMapAndCrashingMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole
       resultStatus: 1
-      duration: 0.0110166
+      duration: 0.0158758
       messages: 
       output: 
       stacktrace: 
@@ -1367,7 +1410,7 @@ MonoBehaviour:
       name: BrickGroundingMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.BrickGroundingMovedIntoHole
       resultStatus: 1
-      duration: 0.0016057
+      duration: 0.0010863
       messages: 
       output: 
       stacktrace: 
@@ -1384,7 +1427,7 @@ MonoBehaviour:
       name: CorrectGroundingWithBlockMovedIntoHole
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.CorrectGroundingWithBlockMovedIntoHole
       resultStatus: 1
-      duration: 0.0006203
+      duration: 0.0005023
       messages: 
       output: 
       stacktrace: 
@@ -1401,7 +1444,7 @@ MonoBehaviour:
       name: MoveBrickIntoHoleTest
       fullName: Tests.BricksHeightMapAndCrashingMovedIntoHole.MoveBrickIntoHoleTest
       resultStatus: 1
-      duration: 0.0005593
+      duration: 0.0005361
       messages: 
       output: 
       stacktrace: 
@@ -1417,9 +1460,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/[Tests][Tests.BricksMapTests][suite]
       name: BricksMapTests
       fullName: Tests.BricksMapTests
-      resultStatus: 1
-      duration: 0.0136117
-      messages: 
+      resultStatus: 2
+      duration: 0.0106912
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1433,11 +1476,16 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/BricksMapTests/[Tests][Tests.BricksMapTests.KeyValueTest]
       name: KeyValueTest
       fullName: Tests.BricksMapTests.KeyValueTest
-      resultStatus: 1
-      duration: 0.0015962
-      messages: 
+      resultStatus: 2
+      duration: 0.004294
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object'
       output: 
-      stacktrace: 
+      stacktrace: "  at Tests.BricksMapTests.KeyValueTest () [0x00001] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\BricksMapTests.cs:30
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <c2a97e0383e8404c9fc0ae19d58f57f1>:0 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1451,7 +1499,7 @@ MonoBehaviour:
       name: BricksRotatingTests
       fullName: Tests.BricksRotatingTests
       resultStatus: 1
-      duration: 0.0089082
+      duration: 0.0102545
       messages: 
       output: 
       stacktrace: 
@@ -1467,7 +1515,7 @@ MonoBehaviour:
       name: RotationLimitIfNotInSurfaceTest
       fullName: Tests.BricksRotatingTests.RotationLimitIfNotInSurfaceTest
       resultStatus: 1
-      duration: 0.0020071
+      duration: 0.0023324
       messages: 
       output: 
       stacktrace: 
@@ -1483,9 +1531,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/[Tests][Tests.BricksSurfaceTests][suite]
       name: BricksSurfaceTests
       fullName: Tests.BricksSurfaceTests
-      resultStatus: 1
-      duration: 0.0153987
-      messages: 
+      resultStatus: 2
+      duration: 0.0152626
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1499,11 +1547,14 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/BricksSurfaceTests/[Tests][Tests.BricksSurfaceTests.ClearExtendOnCrashTest]
       name: ClearExtendOnCrashTest
       fullName: Tests.BricksSurfaceTests.ClearExtendOnCrashTest
-      resultStatus: 1
-      duration: 0.0015136
-      messages: 
+      resultStatus: 2
+      duration: 0.001787
+      messages: "  Expected: True\r\n  But was:  False\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Tests.BricksSurfaceTests.ClearExtendOnCrashTest () [0x00036]
+        in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\BricksSurfaceTests.cs:110
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1517,7 +1568,7 @@ MonoBehaviour:
       name: PatternsInsideSurfaceLimitsTest
       fullName: Tests.BricksSurfaceTests.PatternsInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.000765
+      duration: 0.000882
       messages: 
       output: 
       stacktrace: 
@@ -1534,7 +1585,7 @@ MonoBehaviour:
       name: PositionsInsideSurfaceLimitsTest
       fullName: Tests.BricksSurfaceTests.PositionsInsideSurfaceLimitsTest
       resultStatus: 1
-      duration: 0.0007686
+      duration: 0.0012784
       messages: 
       output: 
       stacktrace: 
@@ -1551,7 +1602,7 @@ MonoBehaviour:
       name: SurfaceExtendTest
       fullName: Tests.BricksSurfaceTests.SurfaceExtendTest
       resultStatus: 1
-      duration: 0.0007166
+      duration: 0.0008785
       messages: 
       output: 
       stacktrace: 
@@ -1568,7 +1619,7 @@ MonoBehaviour:
       name: SurfaceWithoutExtendTest
       fullName: Tests.BricksSurfaceTests.SurfaceWithoutExtendTest
       resultStatus: 1
-      duration: 0.0005206
+      duration: 0.0006291
       messages: 
       output: 
       stacktrace: 
@@ -1584,9 +1635,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/[Tests][Tests.FootFactorCalculatingTests][suite]
       name: FootFactorCalculatingTests
       fullName: Tests.FootFactorCalculatingTests
-      resultStatus: 1
-      duration: 0.023737
-      messages: 
+      resultStatus: 2
+      duration: 0.0232887
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1600,11 +1651,14 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.CalculateFootFactorByGroundWithoutBricksTest]
       name: CalculateFootFactorByGroundWithoutBricksTest
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorByGroundWithoutBricksTest
-      resultStatus: 1
-      duration: 0.0020687
-      messages: 
+      resultStatus: 2
+      duration: 0.0020905
+      messages: "  Expected: 4.0f\r\n  But was:  3.0f\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Tests.FootFactorCalculatingTests.CalculateFootFactorByGroundWithoutBricksTest
+        () [0x00011] in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\FootFactorCalculatingTests.cs:26
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1617,11 +1671,14 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.CalculateFootFactorWithBricksTest]
       name: CalculateFootFactorWithBricksTest
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithBricksTest
-      resultStatus: 1
-      duration: 0.0010009
-      messages: 
+      resultStatus: 2
+      duration: 0.0017774
+      messages: "  Expected: 0.0f\r\n  But was:  -1.41421366f\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Tests.FootFactorCalculatingTests.CalculateFootFactorWithBricksTest
+        () [0x0005b] in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\FootFactorCalculatingTests.cs:63
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1635,7 +1692,7 @@ MonoBehaviour:
       name: CalculateFootFactorWithLBlock
       fullName: Tests.FootFactorCalculatingTests.CalculateFootFactorWithLBlock
       resultStatus: 1
-      duration: 0.0006793
+      duration: 0.0012414
       messages: 
       output: 
       stacktrace: 
@@ -1652,7 +1709,7 @@ MonoBehaviour:
       name: DestroyBrickOnNegativeSupportTest
       fullName: Tests.FootFactorCalculatingTests.DestroyBrickOnNegativeSupportTest
       resultStatus: 1
-      duration: 0.0074927
+      duration: 0.0038899
       messages: 
       output: 
       stacktrace: 
@@ -1668,11 +1725,14 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/FootFactorCalculatingTests/[Tests][Tests.FootFactorCalculatingTests.UnstableEffectStoppingOnSupportTest]
       name: UnstableEffectStoppingOnSupportTest
       fullName: Tests.FootFactorCalculatingTests.UnstableEffectStoppingOnSupportTest
-      resultStatus: 1
-      duration: 0.0014004
-      messages: 
+      resultStatus: 2
+      duration: 0.0020403
+      messages: "  Expected: 0.0f\r\n  But was:  1.41421366f\r\n"
       output: 
-      stacktrace: 
+      stacktrace: 'at Tests.FootFactorCalculatingTests.UnstableEffectStoppingOnSupportTest
+        () [0x0003b] in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\FootFactorCalculatingTests.cs:79
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1686,7 +1746,7 @@ MonoBehaviour:
       name: FootFactorDistanceCalculatingTests
       fullName: Tests.FootFactorDistanceCalculatingTests
       resultStatus: 1
-      duration: 0.0091399
+      duration: 0.0105255
       messages: 
       output: 
       stacktrace: 
@@ -1702,7 +1762,7 @@ MonoBehaviour:
       name: DistanceCalculatingWithoutBlocksTest
       fullName: Tests.FootFactorDistanceCalculatingTests.DistanceCalculatingWithoutBlocksTest
       resultStatus: 1
-      duration: 0.0010404
+      duration: 0.0014526
       messages: 
       output: 
       stacktrace: 
@@ -1718,9 +1778,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/Tests/[Tests][Tests.HeighestPointTests][suite]
       name: HeighestPointTests
       fullName: Tests.HeighestPointTests
-      resultStatus: 1
-      duration: 0.0090527
-      messages: 
+      resultStatus: 2
+      duration: 0.023998
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1730,12 +1790,32 @@ MonoBehaviour:
       categories: []
       parentId: 1050
       parentUniqueId: Tests.dll/[Tests][suite]
+    - id: 1038
+      uniqueId: Tests.dll/Tests/HeighestPointTests/[Tests][Tests.HeighestPointTests.HeighestPointReduceBug]
+      name: HeighestPointReduceBug
+      fullName: Tests.HeighestPointTests.HeighestPointReduceBug
+      resultStatus: 2
+      duration: 0.0030466
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 
+      stacktrace: 'at Tests.HeighestPointTests.HeighestPointReduceBug () [0x0008c]
+        in C:\Github\Tetra_Tower\Assets\Sources\Tests\BricksTests\HeighestPointTests.cs:61
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1036
+      parentUniqueId: Tests.dll/Tests/[Tests][Tests.HeighestPointTests][suite]
     - id: 1041
       uniqueId: Tests.dll/Tests/HeighestPointTests/[Tests][Tests.HeighestPointTests.HeighestPointTest]
       name: HeighestPointTest
       fullName: Tests.HeighestPointTests.HeighestPointTest
       resultStatus: 1
-      duration: 0.0012544
+      duration: 0.010114
       messages: 
       output: 
       stacktrace: 
@@ -1752,7 +1832,7 @@ MonoBehaviour:
       name: RotatedBrickCollisionTests
       fullName: Tests.RotatedBrickCollisionTests
       resultStatus: 1
-      duration: 0.0107298
+      duration: 0.0091391
       messages: 
       output: 
       stacktrace: 
@@ -1768,7 +1848,7 @@ MonoBehaviour:
       name: CorrectUpBlockFastLowering
       fullName: Tests.RotatedBrickCollisionTests.CorrectUpBlockFastLowering
       resultStatus: 1
-      duration: 0.000802
+      duration: 0.0008849
       messages: 
       output: 
       stacktrace: 
@@ -1785,7 +1865,7 @@ MonoBehaviour:
       name: CorrectUpBlockLowering
       fullName: Tests.RotatedBrickCollisionTests.CorrectUpBlockLowering
       resultStatus: 1
-      duration: 0.0006965
+      duration: 0.0005728
       messages: 
       output: 
       stacktrace: 
@@ -1797,13 +1877,26 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1046
       parentUniqueId: Tests.dll/Tests/[Tests][Tests.RotatedBrickCollisionTests][suite]
-    m_ResultText: GroupCrashingTest (0,001s)
-    m_ResultStacktrace: 
+    m_ResultText: "RemoveTileTest (0,001s)\n---\nSystem.NullReferenceException :
+      Object reference not set to an instance of an object.\n---\nat Server.BrickLogic.BricksDatabase.RemoveTile
+      (UnityEngine.Vector3Int position) [0x00012] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Server\\BrickLogic\\Database\\BricksDatabase.cs:230
+      \r\n  at Tests.AsteroidTests.RemoveTileTest () [0x0002a] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\AsteroidTests.cs:37
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <c2a97e0383e8404c9fc0ae19d58f57f1>:0"
+    m_ResultStacktrace: "  at Server.BrickLogic.BricksDatabase.RemoveTile (UnityEngine.Vector3Int
+      position) [0x00012] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Server\\BrickLogic\\Database\\BricksDatabase.cs:230
+      \r\n  at Tests.AsteroidTests.RemoveTileTest () [0x0002a] in C:\\Github\\Tetra_Tower\\Assets\\Sources\\Tests\\BricksTests\\AsteroidTests.cs:37
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <c2a97e0383e8404c9fc0ae19d58f57f1>:0 "
     m_TestListState:
-      scrollPos: {x: 0, y: 40}
-      m_SelectedIDs: e77aeee5
-      m_LastClickedID: -437355801
-      m_ExpandedIDs: ebbba383604d49b57e13ccc57b2d0fd6878c50d6406f10d97f0762db170e37dc6e3560dce557abf7c3f8a5fbc6d5ba06a7c26707f8521a0a86e0d7118359db41dc7d8a4fab0d1f5927641a5affffff7f
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: d9f10422
+      m_LastClickedID: 570749401
+      m_ExpandedIDs: ebbba383604d49b57e13ccc57b2d0fd6878c50d6406f10d97f0762db170e37dc6e3560dce557abf7c3f8a5fb3058c4fec6d5ba06a7c26707f8521a0a86e0d7118359db41dc7d8a4fab0d1f5927641a5affffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

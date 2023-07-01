@@ -12,6 +12,16 @@ namespace Server.BrickLogic
             _database = database;
         }
 
+        public void SetCallbacks()
+        {
+            _database.OnUpdateBricks += TryCrashAll;
+        }
+
+        public void RemoveCallbacks()
+        {
+            _database.OnUpdateBricks -= TryCrashAll;
+        }
+
         public void TryCrashAll()
         {
             LinkedList<IReadOnlyBrick> destroyingBricks = new();

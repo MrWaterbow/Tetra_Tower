@@ -29,6 +29,7 @@ namespace Server.AsteroidLogic
 
             Asteroid instance = _factory.Create(target);
             _asteroids.AddLast(instance);
+            instance.OnCrash += Crash;
         }
 
         public void FlyTick()
@@ -41,6 +42,10 @@ namespace Server.AsteroidLogic
 
         public void Crash(Asteroid asteroid)
         {
+            foreach (Vector3Int destroyTile in asteroid.DestroyArea)
+            {
+                _bricksDatabase.RemoveTile(destroyTile + asteroid.Target);
+            }
 
             _asteroids.Remove(asteroid);
         }

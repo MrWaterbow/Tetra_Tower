@@ -1,5 +1,4 @@
-﻿using Server.AsteroidLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,8 @@ namespace Server.BrickLogic
 {
     public sealed class BricksDatabase : IReadOnlyBricksDatabase
     {
+        public event Action OnUpdateBricks;
+
         /// <summary>
         /// Карта блоков - это словарь, который хранит ссылку на блок по позиции.
         /// </summary>
@@ -117,7 +118,7 @@ namespace Server.BrickLogic
                 return tilePosition.y - i;
             }
 
-            throw new System.Exception("tiles not found");
+            throw new Exception("Tiles not found");
         }
 
         /// <summary>
@@ -218,14 +219,6 @@ namespace Server.BrickLogic
             _heighestPoint--;
 
             brick.Destroy();
-        }
-
-        public void DestroyTilesByAsteroid(Asteroid asteroid)
-        {
-            foreach (Vector3Int tile in asteroid.DestroyArea)
-            {
-
-            }
         }
 
         public void RemoveTile(Vector3Int position)
