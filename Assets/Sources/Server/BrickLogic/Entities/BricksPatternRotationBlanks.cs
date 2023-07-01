@@ -5,7 +5,7 @@ namespace Server.BrickLogic
 {
     public static class BricksPatternRotationBlanks
     {
-        public static readonly LinkedList<Vector3Int> OBlockStaticPattern = new(new[]
+        public static readonly HashSet<Vector3Int> OBlockStaticPattern = new(new[]
         {
             Vector3Int.zero,
             Vector3Int.forward,
