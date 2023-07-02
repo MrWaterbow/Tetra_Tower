@@ -12,21 +12,25 @@ namespace Server.AsteroidLogic
             _database = database;
         }
 
-        public void TryThrowRandomAsteroid()
+        public IReadOnlyAsteroid TryThrowRandomAsteroid()
         {
             try
             {
                 Vector3Int target = _database.TryGetRandomBricksMapKey();
 
-                ThrowAsteroid(target);
+                return ThrowAsteroid(target);
             }
-            catch
-            { }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            throw new NullReferenceException("Asteroid creating error");
         }
 
-        public void ThrowAsteroid(Vector3Int target)
+        public IReadOnlyAsteroid ThrowAsteroid(Vector3Int target)
         {
-            _database.AddAsteroid(target);
+            return _database.AddAsteroid(target);
         }
 
         public void FlyTick()

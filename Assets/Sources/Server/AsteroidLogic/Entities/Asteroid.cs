@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Server.AsteroidLogic
 {
-    public sealed class Asteroid
+    public sealed class Asteroid : IReadOnlyAsteroid
     {
-        public event Action<Vector3Int, float> OnFlyTick;
+        public event Action<float> OnFlyTick;
         public event Action<Asteroid> OnCrash;
 
         public readonly Vector3Int[] DestroyArea;
@@ -21,6 +21,8 @@ namespace Server.AsteroidLogic
             _flyTime = flyTimer;
         }
 
+        Vector3Int IReadOnlyAsteroid.Target => Target;
+
         public float FlyTimer => _flyTimer;
         public bool IsReachedTarget => FlyTimer <= 0;
 
@@ -35,7 +37,7 @@ namespace Server.AsteroidLogic
         {
             _flyTimer -= Time.deltaTime;
 
-            OnFlyTick?.Invoke(Target, _flyTimer / _flyTime);
+            OnFlyTick?.Invoke(_flyTimer / _flyTime);
 
             CheckCrash();
         }

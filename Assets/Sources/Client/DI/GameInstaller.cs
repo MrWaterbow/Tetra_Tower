@@ -1,3 +1,4 @@
+using Client.AsteroidLogic;
 using Client.BrickLogic;
 using Client.GhostLogic;
 using Server.AsteroidLogic;
@@ -14,6 +15,7 @@ namespace Client.DI
     internal sealed class GameInstaller : MonoInstaller
     {
         [SerializeField] private BrickView _brickPrefab;
+        [SerializeField] private AsteroidView _asteroidPrefab;
         [SerializeField] private GhostView _ghostPrefab;
 
         [Space]
@@ -25,6 +27,7 @@ namespace Client.DI
         [SerializeField] private Vector3Int _startPosition;
         [SerializeField] private Vector2Int _surfaceSize;
         [SerializeField] private Transform _worldPositionAnchor;
+        [SerializeField] private Transform _asteroidSpawnPoint;
 
         [Space]
 
@@ -47,7 +50,9 @@ namespace Client.DI
             IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickBlanks.AllPatterns, _startPosition, bricksDatabase);
             IAsteroidFactory asteroidFactory = new AsteroidFactory(_asteroidDestroyArea, _asteroidFlyTimer);
 
+            // Создание фабрики для визуального блока
             IBrickViewFactory brickViewFactory = new BrickViewFactory(_brickPrefab);
+            IAsteroidViewFactory asteroidViewFactory = new AsteroidViewFactory(_asteroidPrefab, _asteroidSpawnPoint);
 
             // Создание фабрики для призрака
             IGhostViewFactory ghostViewFactory = new GhostViewFactory(_ghostPrefab);
@@ -71,6 +76,7 @@ namespace Client.DI
             Container.Bind<IBrickFactory>().FromInstance(brickFactory).AsSingle();
             Container.Bind<IAsteroidFactory>().FromInstance(asteroidFactory).AsSingle();
             Container.Bind<IBrickViewFactory>().FromInstance(brickViewFactory).AsSingle();
+            Container.Bind<IAsteroidViewFactory>().FromInstance(asteroidViewFactory).AsSingle();
             Container.Bind<IGhostViewFactory>().FromInstance(ghostViewFactory).AsSingle();
             Container.Bind<BrickMovementWrapper>().FromInstance(brickMovementWrapper).AsSingle();
             Container.Bind<BricksDatabaseAccess>().FromInstance(bricksDatabaseAccess).AsSingle();

@@ -94,6 +94,26 @@ namespace Tests
         }
 
         [Test]
+        public void UnstableEffectStopping()
+        {
+            Brick brick = new(Vector3Int.left, BrickBlanks.OBrick);
+            Brick brick2 = new(Vector3Int.right, BrickBlanks.OBrick);
+            Brick brick3 = new(Vector3Int.up, BrickBlanks.OBrick);
+
+            BricksDatabaseAccess access = new(_database);
+
+            access.SetAndAddRecentControllableBrick(brick);
+            access.SetAndAddRecentControllableBrick(brick3);
+            access.SetAndAddRecentControllableBrick(brick2);
+
+            Assert.AreEqual(0f, _crashWrapper.ComputeFootFactor(brick));
+
+            access.PlaceControllableBrick();
+
+            Assert.Greater(_crashWrapper.ComputeFootFactor(brick), 0f);
+        }
+
+        [Test]
         public void DestroyBrickOnNegativeSupportTest()
         {
             Brick destroyingBrick = new(Vector3Int.left, BrickBlanks.OBrick);
