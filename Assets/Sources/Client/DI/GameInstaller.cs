@@ -1,5 +1,6 @@
 using Client.BrickLogic;
 using Client.GhostLogic;
+using Server.AsteroidLogic;
 using Server.BrickLogic;
 using Server.Factories;
 using UnityEngine;
@@ -24,7 +25,15 @@ namespace Client.DI
         [SerializeField] private Vector3Int _startPosition;
         [SerializeField] private Vector2Int _surfaceSize;
         [SerializeField] private Transform _worldPositionAnchor;
+
+        [Space]
+
         [SerializeField] private ButtonsBrickInput _brickInput;
+
+        [Space]
+
+        [SerializeField] private Vector3Int[] _asteroidDestroyArea;
+        [SerializeField] private float _asteroidFlyTimer;
 
         private Vector3 _worldPositionOffset;
 
@@ -36,28 +45,39 @@ namespace Client.DI
 
             // Создание фабрики для блока
             IBrickFactory brickFactory = new RandomPatternBrickFactory(BrickBlanks.AllPatterns, _startPosition, bricksDatabase);
+            IAsteroidFactory asteroidFactory = new AsteroidFactory(_asteroidDestroyArea, _asteroidFlyTimer);
+
             IBrickViewFactory brickViewFactory = new BrickViewFactory(_brickPrefab);
 
             // Создание фабрики для призрака
             IGhostViewFactory ghostViewFactory = new GhostViewFactory(_ghostPrefab);
+
+            // База данных для астероидов
+            AsteroidsDatabase asteroidsDatabase = new(bricksDatabase, asteroidFactory);
 
             // Создание модулей для работы с базой данных
             BrickMovementWrapper brickMovementWrapper = new(bricksDatabase);
             BricksRotatingWrapper brickRotatingWrapper = new(bricksDatabase);
             BricksDatabaseAccess bricksDatabaseAccess = new(bricksDatabase);
             BricksCrashWrapper bricksCrashWrapper = new(bricksDatabase);
+            AsteroidWrapper asteroidWrapper = new(asteroidsDatabase);
+
+            bricksCrashWrapper.SetCallbacks();
 
             // Создание презентера для кнопок управления
             IBrickInputPresenter brickInputPresenter = new BrickInputPresenter(brickMovementWrapper, brickRotatingWrapper);
 
+            Container.Bind<IReadOnlyBricksDatabase>().FromInstance(bricksDatabase).AsSingle();
             Container.Bind<IBrickFactory>().FromInstance(brickFactory).AsSingle();
+            Container.Bind<IAsteroidFactory>().FromInstance(asteroidFactory).AsSingle();
             Container.Bind<IBrickViewFactory>().FromInstance(brickViewFactory).AsSingle();
             Container.Bind<IGhostViewFactory>().FromInstance(ghostViewFactory).AsSingle();
-            Container.Bind<IReadOnlyBricksDatabase>().FromInstance(bricksDatabase).AsSingle();
             Container.Bind<BrickMovementWrapper>().FromInstance(brickMovementWrapper).AsSingle();
             Container.Bind<BricksDatabaseAccess>().FromInstance(bricksDatabaseAccess).AsSingle();
             Container.Bind<BricksCrashWrapper>().FromInstance(bricksCrashWrapper).AsSingle();
+            Container.Bind<AsteroidWrapper>().FromInstance(asteroidWrapper).AsSingle();
             Container.Bind<IBrickInputPresenter>().FromInstance(brickInputPresenter).AsSingle();
+
             Container.Bind<IBricksRuntimeData>().FromInstance(_brickBootstrapper).AsSingle();
         }
 

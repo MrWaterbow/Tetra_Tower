@@ -14,6 +14,7 @@ namespace Server.BrickLogic
         /// </summary>
         event Action<Vector3Int> OnPositionChanged;
         event Action<IReadOnlyCollection<Vector3Int>> OnRotate90;
+        event Action<IReadOnlyCollection<Vector3Int>> OnTileRemoved;
 
         event Action OnDestroy;
         event Action<bool> UnstableWarning;

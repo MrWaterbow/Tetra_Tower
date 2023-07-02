@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Server.BrickLogic
@@ -234,6 +235,11 @@ namespace Server.BrickLogic
             ClearBrickMap(position);
         }
 
+        public void UpdateBricks()
+        {
+            OnUpdateBricks?.Invoke();
+        }
+
         private void ClearBrickMap(Vector3Int position)
         {
             _bricksMap.Remove(position);
@@ -323,6 +329,13 @@ namespace Server.BrickLogic
         public void AddBrick(Brick brick)
         {
             _bricks.Add(brick);
+        }
+
+        public Vector3Int TryGetRandomBricksMapKey()
+        {
+            if (_bricksMap.Count == 0) throw new IndexOutOfRangeException();
+
+            return _bricksMap.ElementAt(UnityEngine.Random.Range(0, _bricksMap.Count)).Key;
         }
     }
 }

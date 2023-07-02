@@ -83,6 +83,7 @@ namespace Client.BrickLogic
             _brick.OnPositionChanged += ChangePosition;
             _brick.OnRotate90 += Rotate90;
 
+            _brick.OnTileRemoved += UpdatePattern;
             _brick.UnstableWarning += UpdateUnstableEffect;
             _brick.OnDestroy += Destroy;
 
@@ -112,6 +113,14 @@ namespace Client.BrickLogic
         private void Rotate90(IReadOnlyCollection<Vector3Int> pattern)
         {
 #if UNITY_EDITOR
+            UpdatePattern(pattern);
+#else
+            _transform.Rotate(Vector3.up, 90);
+#endif
+        }
+
+        private void UpdatePattern(IReadOnlyCollection<Vector3Int> pattern)
+        {
             foreach (BrickTileView tileView in _tiles)
             {
                 tileView.KillLoopUnstableEffect();
@@ -122,9 +131,6 @@ namespace Client.BrickLogic
 
             CreateBlockByTiles(pattern);
             SetTilesColor(_randomColor);
-#else
-            _transform.Rotate(Vector3.up, 90);
-#endif
         }
 
         private void UpdateUnstableEffect(bool unstableWarning)
