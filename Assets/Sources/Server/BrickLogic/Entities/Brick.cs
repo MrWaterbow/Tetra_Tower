@@ -14,6 +14,7 @@ namespace Server.BrickLogic
         /// </summary>
         public event Action<Vector3Int> OnPositionChanged;
         public event Action<IReadOnlyCollection<Vector3Int>> OnRotate90;
+        public event Action<IReadOnlyCollection<Vector3Int>> OnTileRemoved;
 
         public event Action<bool> UnstableWarning;
         public event Action OnDestroy;
@@ -143,6 +144,8 @@ namespace Server.BrickLogic
             {
                 throw new NullReferenceException("Tile not found");
             }
+
+            OnTileRemoved?.Invoke(_pattern);
         }
 
         public void InvokeUnstableWarning(bool value)

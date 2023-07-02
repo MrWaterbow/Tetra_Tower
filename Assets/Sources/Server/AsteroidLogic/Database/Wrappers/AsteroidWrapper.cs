@@ -12,14 +12,31 @@ namespace Server.AsteroidLogic
             _database = database;
         }
 
-        public void ThrowRandomAsteroid()
+        public void TryThrowRandomAsteroid()
         {
-            throw new Exception("Сначало надо придумать алгоритм");
+            try
+            {
+                Vector3Int target = _database.TryGetRandomBricksMapKey();
+
+                ThrowAsteroid(target);
+            }
+            catch
+            { }
         }
 
         public void ThrowAsteroid(Vector3Int target)
         {
             _database.AddAsteroid(target);
+        }
+
+        public void FlyTick()
+        {
+            _database.FlyTick();
+        }
+
+        public void AllToTarget()
+        {
+            _database.AllToTargets();
         }
     }
 }

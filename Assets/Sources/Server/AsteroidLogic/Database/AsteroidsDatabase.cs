@@ -61,6 +61,8 @@ namespace Server.AsteroidLogic
                 }
             }
 
+            _bricksDatabase.UpdateBricks();
+
             _asteroids.RemoveWhere(asteroid => asteroid.IsReachedTarget);
         }
 
@@ -70,6 +72,11 @@ namespace Server.AsteroidLogic
             {
                 _bricksDatabase.RemoveTile(destroyTile + asteroid.Target);
             }
+        }
+
+        public Vector3Int TryGetRandomBricksMapKey()
+        {
+            return _bricksDatabase.TryGetRandomBricksMapKey();
         }
     }
 }
