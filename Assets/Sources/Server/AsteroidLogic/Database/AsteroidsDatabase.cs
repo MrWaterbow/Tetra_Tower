@@ -20,7 +20,7 @@ namespace Server.AsteroidLogic
             _factory = factory;
         }
 
-        public void AddAsteroid(Vector3Int target)
+        public IReadOnlyAsteroid AddAsteroid(Vector3Int target)
         {
             if(_bricksDatabase.GetBrickByKey(target) == null)
             {
@@ -29,6 +29,8 @@ namespace Server.AsteroidLogic
 
             Asteroid instance = _factory.Create(target);
             _asteroids.Add(instance);
+
+            return instance;
         }
 
         public void FlyTick()

@@ -189,7 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &10621123
 GameObject:
@@ -385,15 +385,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _brickPrefab: {fileID: 2924173047908104221, guid: 04e413ce033e11a40a28920ebd9f0faf, type: 3}
+  _asteroidPrefab: {fileID: 4763396351559766123, guid: de433ae923e100f4198d5bf8f9994335, type: 3}
   _ghostPrefab: {fileID: 3688605834632060143, guid: 9eba08440d2d86d41ae8948ea9774d67, type: 3}
   _brickBootstrapper: {fileID: 371654050}
   _startPosition: {x: 0, y: 5, z: 0}
   _surfaceSize: {x: 3, y: 3}
   _worldPositionAnchor: {fileID: 2125726324}
+  _asteroidSpawnPoint: {fileID: 1989299151}
   _brickInput: {fileID: 127704352}
   _asteroidDestroyArea:
   - {x: 0, y: 0, z: 0}
-  _asteroidFlyTimer: 4
+  _asteroidFlyTimer: 2.5
 --- !u!114 &129096733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,7 +771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069879b598f57c144b4092444aea33f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lowerTick: 99
+  _lowerTick: 3
   _startBrickPosition: {x: 0, y: 5, z: 0}
 --- !u!1 &427632497
 GameObject:
@@ -885,7 +887,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541241257
 GameObject:
@@ -2116,10 +2118,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1979752294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d88d00c9e667bd469f2ab08733116e4, type: 3}
+  m_Script: {fileID: 11500000, guid: bec72f860cf6b9142a5afb8ca9f39dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _asteroidSpawnRate: 5
+  _spawnIfCounterValueIs: 4
+--- !u!1 &1989299150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1989299151}
+  m_Layer: 0
+  m_Name: AsteroidSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1989299151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989299150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.86, y: 5.69, z: 2.76}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2012905826
 GameObject:
   m_ObjectHideFlags: 0

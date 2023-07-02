@@ -31,16 +31,16 @@ namespace Tests
             Brick brick = new(Vector3Int.zero, BrickBlanks.OBrick);
             Brick upBrick = new(Vector3Int.up, BrickBlanks.TestBlocks.UpBrick);
 
-            Assert.AreEqual(0, _database.HeighestPoint);
+            Assert.AreEqual(0, _database.GetHeighestPoint());
 
             _databaseAccess.SetAndAddRecentControllableBrick(brick);
             _databaseAccess.SetAndAddRecentControllableBrick(upBrick);
 
-            Assert.AreEqual(1, _database.HeighestPoint);
+            Assert.AreEqual(1, _database.GetHeighestPoint());
 
             _databaseAccess.PlaceControllableBrick();
 
-            Assert.AreEqual(3, _database.HeighestPoint);
+            Assert.AreEqual(3, _database.GetHeighestPoint());
         }
 
         [Test]
@@ -53,12 +53,12 @@ namespace Tests
             _databaseAccess.SetAndAddRecentControllableBrick(brick);
             _databaseAccess.SetAndAddRecentControllableBrick(brick2);
 
-            Assert.AreEqual(1, _database.HeighestPoint);
+            Assert.AreEqual(1, _database.GetHeighestPoint());
 
             _databaseAccess.PlaceControllableBrick();
             crashWrapper.TryCrashAll();
 
-            Assert.AreEqual(1, _database.HeighestPoint);
+            Assert.AreEqual(1, _database.GetHeighestPoint());
         }
     }
 }

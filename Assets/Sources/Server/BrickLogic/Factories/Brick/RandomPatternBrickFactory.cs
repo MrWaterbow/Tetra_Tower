@@ -36,7 +36,7 @@ namespace Server.Factories
         {
             Vector3Int position = _startPosition;
 
-            position.y = _database.HeighestPoint;
+            position.y = _database.GetHeighestPoint();
             position.y += _startPosition.y;
 
             BrickBlank randomBlank = _patterns[Random.Range(0, _patterns.Length)];

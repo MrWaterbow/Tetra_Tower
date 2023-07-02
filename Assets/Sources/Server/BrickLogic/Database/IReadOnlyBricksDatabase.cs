@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Server.BrickLogic
@@ -8,6 +9,7 @@ namespace Server.BrickLogic
     /// </summary>
     public interface IReadOnlyBricksDatabase
     {
+        event Action OnAddBrick;
         /// <summary>
         /// Доступ к чтению списка поставленных блоков.
         /// </summary>
@@ -20,7 +22,6 @@ namespace Server.BrickLogic
         /// Возвращает копию поверхности на которую ставятся блоки.
         /// </summary>
         PlacingSurface Surface { get; }
-        int HeighestPoint { get; }
 
         /// <summary>
         /// Возвращает высоту по паттерну блока.
@@ -39,5 +40,6 @@ namespace Server.BrickLogic
         /// <returns></returns>
         bool PatternOnGround(IReadOnlyCollection<Vector3Int> pattern, Vector3Int position);
         bool ControllableBrickOnGround();
+        int GetHeighestPoint();
     }
 }

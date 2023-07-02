@@ -73,7 +73,7 @@ namespace Tests
             _crashWrapper.TryCrashAll();
 
             Assert.AreEqual(0, _database.Bricks.Count);
-            Assert.AreEqual(0, _database.HeighestPoint);
+            Assert.AreEqual(0, _database.GetHeighestPoint());
         }
 
         [Test]

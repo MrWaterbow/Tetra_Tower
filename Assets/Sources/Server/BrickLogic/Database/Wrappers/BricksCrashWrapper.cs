@@ -186,6 +186,8 @@ namespace Server.BrickLogic
                 }
             }
 
+            if (unstableTilesCount == 0) return 1f;
+
             return unstableTilesCount / brick.Pattern.Count;
         }
 
